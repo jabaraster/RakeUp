@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content-type="text/html; charset=UTF-8" />
+    <title>Index.</title>
+  </head>
+  <body>
+    <h2 wicket:id="label"></h2>
+    <form wicket:id="form">
+      <input type="submit" wicket:id="updater" value="カウントアップ！" />
+    </form>
+
+    <fieldset>
+      <legend>現在のDBレコード数：<span wicket:id="sampleCount"></span></legend>
+      <form wicket:id="insertForm">
+        <div wicket:id="feedback" />
+        <ul>
+          <li></li>
+          <li>名前：<textarea wicket:id="text" /></li>
+          <li><input type="submit" wicket:id="inserter" /></li>
+        </ul>
+      </form>
+      <h3>レコード一覧</h3>
+      <table wicket:id="samplesContainer">
+        <tr><th>コード</th><th>名前</th></tr>
+        <tr wicket:id="samples"><td wicket:id="code"></td><td wicket:id="name"></td></tr>
+      </table>
+    </fieldset>
+  </body>
+</html>

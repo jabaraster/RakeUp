@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="mainPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>jabara.jpa.entity.EntityBase</class>
+        <class>jabara.rakeup.entity.EEntry</class>
+        <class>jabara.rakeup.entity.ELabelableEntityBase</class>
+        <class>jabara.rakeup.entity.EKeyword</class>
+        <class>jabara.rakeup.entity.ESource</class>
+        <class>jabara.rakeup.entity.ESample</class>
+		<validation-mode>CALLBACK</validation-mode>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.use_sql_comments" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+
+			<!--
+			デフォルトのDB接続設定.
+			Supplierクラスを利用している場合、以下の用にJVM引数を与えることで設定を上書きできます.
+			  -Ddatabase.url=postgres://postgres:postgres@localhost:5432/sandbox
+			
+			これを利用し、Herokuで動かす場合は次のようにJVM引数を指定すると所定のDBに接続できます.
+			  -Ddatabase.url=${DATABASE_URL}
+			 -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="postgres" />
+
+			<!--
+			JPA起動時にテーブルを再作成する設定.
+			Supplierクラスを利用している場合、以下の環境変数によって設定を上書きできます..
+			  HIBERNATE_HBM2DDL_AUTO
+			 -->
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+
+		</properties>
+	</persistence-unit>
+</persistence>
