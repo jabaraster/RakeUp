@@ -11,8 +11,12 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @author jabaraster
@@ -29,14 +33,22 @@ public class EEntry extends EntityBase<EEntry> {
     /**
      * 
      */
+    @NotNull
+    @Length(min = 1, max = MAX_CHAR_COUNT_TEXT)
     @Column(nullable = false, length = MAX_CHAR_COUNT_TEXT * 3)
     protected String          text;
 
     /**
      * 
      */
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     protected List<EKeyword>  keywords            = new ArrayList<EKeyword>();
+
+    /**
+     * 
+     */
+    @OneToMany(fetch = FetchType.LAZY)
+    protected List<ELink>     links               = new ArrayList<ELink>();
 
     /**
      * 
@@ -49,6 +61,21 @@ public class EEntry extends EntityBase<EEntry> {
      */
     public List<EKeyword> getKeywords() {
         return this.keywords;
+    }
+
+    /**
+     * @return １行表示に適した長さのテキスト.
+     */
+    public String getOneLineText() {
+        if (this.text == null) {
+            return ""; //$NON-NLS-1$
+        }
+
+        final int LINE_CHAR_COUNT = 30;
+        if (this.text.length() < LINE_CHAR_COUNT) {
+            return this.text;
+        }
+        return this.text.substring(0, LINE_CHAR_COUNT);
     }
 
     /**

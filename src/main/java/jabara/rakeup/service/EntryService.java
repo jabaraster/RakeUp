@@ -28,7 +28,8 @@ public interface EntryService {
 
     /**
      * @param pText
+     * @param pKeywords
      * @return 永続化されたエンティティ.
      */
-    EEntry insert(String pText);
+    EEntry insert(String pText, String pKeywords);
 }

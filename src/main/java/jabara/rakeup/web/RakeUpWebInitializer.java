@@ -58,7 +58,7 @@ public class RakeUpWebInitializer implements ServletContextListener {
         // Filterは後に登録したものがより早く適用される.
         // このためWicketFilterが処理するリクエストにもDumpFilterを適用するには
         // WicketFilterより後にDumpFilterを登録するようにする.
-        initializeDumpFilter(servletContext);
+        // initializeDumpFilter(servletContext);
 
         initializeEncodingFilter(servletContext);
 

@@ -2,29 +2,35 @@
 <html>
   <head>
     <meta content-type="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
     <title>Index.</title>
+    <wicket:link>
+      <link href="./style.css" rel="stylesheet" type="text/css" />
+      <link href="./RakeUp.css" rel="stylesheet" type="text/css" />
+    </wicket:link>
   </head>
   <body>
-    <h2 wicket:id="label"></h2>
-    <form wicket:id="form">
-      <input type="submit" wicket:id="updater" value="カウントアップ！" />
-    </form>
 
     <fieldset>
-      <legend>現在のDBレコード数：<span wicket:id="sampleCount"></span></legend>
+      <legend>新規投稿</legend>
       <form wicket:id="insertForm">
-        <div wicket:id="feedback" />
+        <nav wicket:id="feedback" />
         <ul>
-          <li></li>
-          <li>名前：<textarea wicket:id="text" /></li>
+          <li>キーワード：<input type="text" wicket:id="keywords" />(複数は , で区切る)</li>
+          <li>内容：<textarea wicket:id="text"></textarea></li>
           <li><input type="submit" wicket:id="inserter" /></li>
         </ul>
       </form>
-      <h3>レコード一覧</h3>
-      <table wicket:id="samplesContainer">
-        <tr><th>コード</th><th>名前</th></tr>
-        <tr wicket:id="samples"><td wicket:id="code"></td><td wicket:id="name"></td></tr>
-      </table>
     </fieldset>
+
+    <fieldset>
+      <legend>レコード一覧</legend>
+      <div wicket:id="entriesContainer">
+        <article wicket:id="entries">
+          <h1 wicket:id="oneLineText"></h1>
+        </article>
+      </div>
+    </fieldset>
+
   </body>
 </html>
