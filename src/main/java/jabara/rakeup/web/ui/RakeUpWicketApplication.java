@@ -57,6 +57,7 @@ public class RakeUpWicketApplication extends WebApplication {
     private void mountPages() {
         this.mountPage("/entry/edit/new", NewEntryPage.class); //$NON-NLS-1$
         this.mountPage("/entry/edit", EditEntryPage.class); //$NON-NLS-1$
+        this.mountPage("/entry", ShowEntryPage.class); //$NON-NLS-1$
     }
 
     /**

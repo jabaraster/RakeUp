@@ -89,6 +89,16 @@ public class IndexPage extends RakeUpWebPageBase {
                         }
                     };
                     pItem.add(goEdit);
+
+                    final Link<?> goDetail = new Link<String>("goDetail") {
+                        @Override
+                        public void onClick() {
+                            final PageParameters parameters = new PageParameters();
+                            parameters.set(0, pItem.getModelObject().getId());
+                            this.setResponsePage(ShowEntryPage.class, parameters);
+                        }
+                    };
+                    pItem.add(goDetail);
                 }
             };
         }

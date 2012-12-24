@@ -7,6 +7,7 @@ import jabara.general.NotFound;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.service.impl.EntryServiceImpl;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.google.inject.ImplementedBy;
@@ -21,6 +22,13 @@ public interface EntryService {
      * @return 全レコード数を返します.
      */
     int countAll();
+
+    /**
+     * @param pMarkdownText
+     * @return HTML
+     * @throws IOException
+     */
+    String encodeMarkdown(String pMarkdownText) throws IOException;
 
     /**
      * @param pId

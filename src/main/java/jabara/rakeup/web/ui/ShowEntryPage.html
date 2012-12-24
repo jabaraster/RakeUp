@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content-type="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <title>Index.</title>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+    <link href="./RakeUp.css" rel="stylesheet" type="text/css" />
+    <link href="./ShowEntryPage.css" rel="stylesheet" type="text/css" />
+    <script src="./RakeUp.js"></script>
+  </head>
+  <body>
+
+<wicket:extend>
+
+  <article>
+    <a wicket:id="goEdit">編集</a>
+    <h1 wicket:id="title"></h1>
+    <span wicket:id="keywords"><wicket:container wicket:id="label" /></span>
+    <div wicket:id="body" class="code">
+    </div>
+  </article>
+
+</wicket:extend>
+
+  </body>
+</html>

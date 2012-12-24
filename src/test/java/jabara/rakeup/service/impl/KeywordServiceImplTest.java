@@ -119,7 +119,7 @@ public class KeywordServiceImplTest {
      */
     @SuppressWarnings({ "nls", "resource" })
     public static void main(final String[] pArgs) throws IOException {
-        final URL url = new URL("https://api.github.com/markdown?callback=foo");
+        final URL url = new URL("https://api.github.com/markdown");
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);

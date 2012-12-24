@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+.highlight .kd {
+    color: #0000cc;
+}
+
+.highlight .nd {
+    color: #888899;
+}
+
+.highlight .s {
+    color: #009900;
+}
+
+.highlight .na {
+    color: #009999;
+}
+
+.highlight .k {
+    color: #993300;
+}
+
+.highlight .n {
+    color: #999900;
+}
+
+.highlight .c1 {
+    color: #0099cc;
+}
+
