@@ -4,33 +4,25 @@
     <meta content-type="text/html; charset=UTF-8" />
     <meta charset="UTF-8" />
     <title>Index.</title>
-    <wicket:link>
-      <link href="./style.css" rel="stylesheet" type="text/css" />
-      <link href="./RakeUp.css" rel="stylesheet" type="text/css" />
-    </wicket:link>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+    <link href="./RakeUp.css" rel="stylesheet" type="text/css" />
+    <link href="./IndexPage.css" rel="stylesheet" type="text/css" />
+    <script src="./RakeUp.js"></script>
   </head>
   <body>
 
-    <fieldset>
-      <legend>新規投稿</legend>
-      <form wicket:id="insertForm">
-        <nav wicket:id="feedback" />
-        <ul>
-          <li>キーワード：<input type="text" wicket:id="keywords" />(複数は , で区切る)</li>
-          <li>内容：<textarea wicket:id="text"></textarea></li>
-          <li><input type="submit" wicket:id="inserter" /></li>
-        </ul>
-      </form>
-    </fieldset>
+<wicket:extend>
 
-    <fieldset>
-      <legend>レコード一覧</legend>
-      <div wicket:id="entriesContainer">
-        <article wicket:id="entries">
-          <h1 wicket:id="oneLineText"></h1>
-        </article>
-      </div>
-    </fieldset>
+  <h1>レコード一覧</h1>
+  <div wicket:id="entriesContainer">
+    <article wicket:id="entries">
+      <h3 wicket:id="title"></h3>
+      <span wicket:id="keywords"><wicket:container wicket:id="label" /></span>
+      <a wicket:id="goEdit">編集</a>
+    </article>
+  </div>
+
+</wicket:extend>
 
   </body>
 </html>

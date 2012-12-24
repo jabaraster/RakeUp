@@ -3,21 +3,23 @@
  */
 package jabara.rakeup.service.impl;
 
+import jabara.general.ArgUtil;
+import jabara.general.NotFound;
 import jabara.jpa.entity.EntityBase_;
 import jabara.jpa_guice.DaoBase;
 import jabara.rakeup.entity.EEntry;
+import jabara.rakeup.entity.EEntry_;
 import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.EntryService;
 import jabara.rakeup.service.KeywordService;
-import jabara.rakeup.service.NotFound;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import com.google.inject.Inject;
@@ -47,6 +49,26 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
     }
 
     /**
+     * @see jabara.rakeup.service.EntryService#findById(long)
+     */
+    @Override
+    public EEntry findById(final long pId) throws NotFound {
+        final EntityManager em = getEntityManager();
+        final CriteriaBuilder builder = em.getCriteriaBuilder();
+        final CriteriaQuery<EEntry> query = builder.createQuery(EEntry.class);
+        final Root<EEntry> root = query.from(EEntry.class);
+
+        query.distinct(true);
+        root.fetch(EEntry_.keywords, JoinType.LEFT);
+
+        query.where(builder.equal(root.get(EntityBase_.id), Long.valueOf(pId)));
+
+        final EEntry ret = getSingleResult(em.createQuery(query));
+        Collections.sort(ret.getKeywords());
+        return ret;
+    }
+
+    /**
      * @see jabara.rakeup.service.EntryService#getAll()
      */
     @Override
@@ -54,53 +76,49 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder builder = em.getCriteriaBuilder();
         final CriteriaQuery<EEntry> query = builder.createQuery(EEntry.class);
-        query.from(EEntry.class);
+        final Root<EEntry> root = query.from(EEntry.class);
+
+        query.distinct(true);
+        root.fetch(EEntry_.keywords, JoinType.LEFT);
+
         return em.createQuery(query).getResultList();
     }
 
     /**
-     * @see jabara.rakeup.service.EntryService#insert(java.lang.String, java.lang.String)
+     * @param pEntry
      */
     @Override
-    public EEntry insert(final String pText, final String pKeywords) {
-        final List<EKeyword> keywords = parseKeyword(pKeywords);
+    public void insert(final EEntry pEntry) {
+        ArgUtil.checkNull(pEntry, "pEntry"); //$NON-NLS-1$
 
-        final EEntry newSample = new EEntry();
-        newSample.setText(pText);
-        newSample.getKeywords().addAll(keywords);
-
-        getEntityManager().persist(newSample);
-
-        return newSample;
-
+        final EntityManager em = getEntityManager();
+        for (final EKeyword keyword : pEntry.getKeywords()) {
+            this.keywordService.insertOrUpdate(keyword);
+        }
+        em.persist(pEntry);
     }
 
-    private EKeyword findOrInsert(final String pLabel) {
-        try {
-            return this.keywordService.findByLabel(pLabel);
-        } catch (final NotFound e) {
-            return this.keywordService.insert(pLabel);
-        }
-    }
+    /**
+     * @see jabara.rakeup.service.EntryService#update(jabara.rakeup.entity.EEntry)
+     */
+    @Override
+    public void update(final EEntry pEntry) {
+        ArgUtil.checkNull(pEntry, "pEntry"); //$NON-NLS-1$
 
-    private List<EKeyword> parseKeyword(final String pKeywords) {
-        if (pKeywords == null) {
-            return Collections.emptyList();
+        final EntityManager em = getEntityManager();
+        if (em.contains(pEntry)) {
+            return;
         }
-        if (pKeywords.trim().equals("")) { //$NON-NLS-1$
-            return Collections.emptyList();
-        }
+        final EEntry merged = em.merge(pEntry);
+        merged.setSource(pEntry.getSource());
+        merged.setText(pEntry.getText());
+        merged.setTitle(pEntry.getTitle());
 
-        final String[] labels = pKeywords.trim().split(","); //$NON-NLS-1$
-        final List<EKeyword> ret = new ArrayList<EKeyword>();
-        for (final String label : labels) {
-            if (label.trim().length() == 0) {
-                continue;
-            }
-            ret.add(findOrInsert(label.trim()));
+        merged.getKeywords().clear();
+        merged.getKeywords().addAll(pEntry.getKeywords());
+        for (final EKeyword keyword : merged.getKeywords()) {
+            this.keywordService.insertOrUpdate(keyword);
         }
-
-        return ret;
     }
 
 }

@@ -3,6 +3,7 @@
  */
 package jabara.rakeup.service;
 
+import jabara.general.NotFound;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.service.impl.EntryServiceImpl;
 
@@ -22,14 +23,24 @@ public interface EntryService {
     int countAll();
 
     /**
+     * @param pId
+     * @return IDがpIdのエンティティオブジェクト.
+     * @throws NotFound 該当オブジェクトがない場合.
+     */
+    EEntry findById(long pId) throws NotFound;
+
+    /**
      * @return 全ての永続化された{@link EEntry}オブジェクト.
      */
     List<EEntry> getAll();
 
     /**
-     * @param pText
-     * @param pKeywords
-     * @return 永続化されたエンティティ.
+     * @param pEntry
      */
-    EEntry insert(String pText, String pKeywords);
+    void insert(EEntry pEntry);
+
+    /**
+     * @param pEntry
+     */
+    void update(EEntry pEntry);
 }

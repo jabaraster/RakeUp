@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -23,12 +22,24 @@ import org.hibernate.validator.constraints.Length;
  */
 @Entity
 public class EEntry extends EntityBase<EEntry> {
-    private static final long serialVersionUID    = 5059894538997252116L;
+    private static final long serialVersionUID     = 5059894538997252116L;
 
     /**
      * 
      */
-    public static final int   MAX_CHAR_COUNT_TEXT = 10000;
+    public static final int   MAX_CHAR_COUNT_TEXT  = 10000;
+    /**
+     * 
+     */
+    public static final int   MAX_CHAR_COUNT_TITLE = 100;
+
+    /**
+     * 
+     */
+    @NotNull
+    @Length(min = 1, max = MAX_CHAR_COUNT_TITLE)
+    @Column(nullable = false, length = MAX_CHAR_COUNT_TITLE * 3)
+    protected String          title;
 
     /**
      * 
@@ -42,13 +53,7 @@ public class EEntry extends EntityBase<EEntry> {
      * 
      */
     @ManyToMany(fetch = FetchType.LAZY)
-    protected List<EKeyword>  keywords            = new ArrayList<EKeyword>();
-
-    /**
-     * 
-     */
-    @OneToMany(fetch = FetchType.LAZY)
-    protected List<ELink>     links               = new ArrayList<ELink>();
+    protected List<EKeyword>  keywords             = new ArrayList<EKeyword>();
 
     /**
      * 
@@ -93,6 +98,13 @@ public class EEntry extends EntityBase<EEntry> {
     }
 
     /**
+     * @return titleを返す.
+     */
+    public String getTitle() {
+        return this.title;
+    }
+
+    /**
      * @param pSource the source to set
      */
     public void setSource(final ESource pSource) {
@@ -104,5 +116,12 @@ public class EEntry extends EntityBase<EEntry> {
      */
     public void setText(final String pText) {
         this.text = pText;
+    }
+
+    /**
+     * @param pTitle titleを設定.
+     */
+    public void setTitle(final String pTitle) {
+        this.title = pTitle;
     }
 }

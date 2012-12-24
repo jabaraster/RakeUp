@@ -3,6 +3,7 @@
  */
 package jabara.rakeup.entity;
 
+import jabara.general.ArgUtil;
 import jabara.jpa.entity.EntityBase;
 import jabara.rakeup.model.ILabelable;
 
@@ -17,7 +18,7 @@ import org.hibernate.validator.constraints.Length;
  * @param <E> このクラスを継承する具象クラスの型.
  */
 @MappedSuperclass
-public abstract class ELabelableEntityBase<E extends ELabelableEntityBase<E>> extends EntityBase<E> implements ILabelable {
+public abstract class ELabelableEntityBase<E extends ELabelableEntityBase<E>> extends EntityBase<E> implements ILabelable, Comparable<E> {
     private static final long serialVersionUID     = -4842690979880163206L;
 
     /**
@@ -45,6 +46,17 @@ public abstract class ELabelableEntityBase<E extends ELabelableEntityBase<E>> ex
      */
     public ELabelableEntityBase(final String pLabel) {
         this.label = pLabel;
+    }
+
+    /**
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(final E pOther) {
+        ArgUtil.checkNull(pOther, "pOther"); //$NON-NLS-1$
+        final String my = this.label == null ? "" : this.label; //$NON-NLS-1$
+        final String ot = pOther.label == null ? "" : pOther.label; //$NON-NLS-1$
+        return my.compareTo(ot);
     }
 
     /**

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content-type="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <title>Index.</title>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+    <link href="./RakeUp.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+
+<wicket:panel>
+
+  <ul>
+    <li>
+      <span class="required">タイトル</span>：<input type="text" wicket:id="title" />
+      <div wicket:id="titleFeedback" />
+    </li>
+    <li>キーワード：<input type="text" wicket:id="keywords" /></li>
+    <li>
+      <span class="required">本文</span>
+      <div wicket:id="bodyFeedback" />
+      <textarea wicket:id="body"></textarea>
+    </li>
+  </ul>
+
+</wicket:panel>
+
+  </body>
+</html>

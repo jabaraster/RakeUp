@@ -4,32 +4,29 @@
 package jabara.rakeup.web.ui;
 
 import jabara.rakeup.entity.EEntry;
+import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.EntryService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.google.inject.Inject;
 
 /**
  * @author jabaraster
  */
-public class IndexPage extends WebPage {
+public class IndexPage extends RakeUpWebPageBase {
     private static final long  serialVersionUID = -3725581870632049658L;
 
     @Inject
@@ -40,20 +37,30 @@ public class IndexPage extends WebPage {
     private ListView<EEntry>   entries;
     private WebMarkupContainer entriesContainer;
 
-    private Form<?>            insertForm;
-    private FeedbackPanel      feedback;
-    private TextField<String>  keywords;
-    private TextArea<String>   text;
-    private AjaxButton         inserter;
-
     /**
      * 
      */
     public IndexPage() {
-        this.add(getInsertForm());
         this.add(getEntriesContainer());
-
         this.entriesValue.addAll(this.entryService.getAll());
+    }
+
+    /**
+     * @see jabara.rakeup.web.ui.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     */
+    @Override
+    public void renderHead(final IHeaderResponse pResponse) {
+        super.renderHead(pResponse);
+
+        addPageCssReference(pResponse);
+    }
+
+    /**
+     * @see jabara.rakeup.web.ui.RakeUpWebPageBase#getTitleLabelModel()
+     */
+    @Override
+    protected IModel<String> getTitleLabelModel() {
+        return new Model<String>(this.getClass().getSimpleName());
     }
 
     @SuppressWarnings({ "serial", "nls" })
@@ -63,7 +70,25 @@ public class IndexPage extends WebPage {
                 @Override
                 protected void populateItem(final ListItem<EEntry> pItem) {
                     pItem.setModel(new CompoundPropertyModel<EEntry>(pItem.getModelObject()));
-                    pItem.add(new Label("oneLineText"));
+                    pItem.add(new Label("title"));
+
+                    final ListView<EKeyword> keywords = new ListView<EKeyword>("keywords") {
+                        @Override
+                        protected void populateItem(@SuppressWarnings("hiding") final ListItem<EKeyword> pItem) {
+                            pItem.add(new Label("label", pItem.getModelObject().getLabel()));
+                        }
+                    };
+                    pItem.add(keywords);
+
+                    final Link<?> goEdit = new Link<String>("goEdit") {
+                        @Override
+                        public void onClick() {
+                            final PageParameters parameters = new PageParameters();
+                            parameters.set(0, pItem.getModelObject().getId());
+                            this.setResponsePage(EditEntryPage.class, parameters);
+                        }
+                    };
+                    pItem.add(goEdit);
                 }
             };
         }
@@ -80,71 +105,5 @@ public class IndexPage extends WebPage {
         }
 
         return this.entriesContainer;
-    }
-
-    private FeedbackPanel getFeedback() {
-        if (this.feedback == null) {
-            this.feedback = new FeedbackPanel("feedback"); //$NON-NLS-1$
-            this.feedback.setOutputMarkupId(true); // Ajaxで扱うコンポーネントはこのoutputMarkupIdをtrueにする必要があります. <br>
-        }
-        return this.feedback;
-    }
-
-    @SuppressWarnings({ "serial", "nls" })
-    private AjaxButton getInserter() {
-        if (this.inserter == null) {
-            this.inserter = new IndicatingAjaxButton("inserter") { // IndicatingAjaxButtonはAjax処理中にぐるぐるアニメが表示されるボタン.
-                @SuppressWarnings("synthetic-access")
-                @Override
-                protected void onError(final AjaxRequestTarget pTarget, @SuppressWarnings("unused") final Form<?> pForm) {
-                    pTarget.add(getFeedback());
-                }
-
-                @SuppressWarnings("synthetic-access")
-                @Override
-                protected void onSubmit(final AjaxRequestTarget pTarget, @SuppressWarnings("unused") final Form<?> pForm) {
-                    onInserterClick(pTarget);
-                }
-            };
-        }
-        return this.inserter;
-    }
-
-    private Form<?> getInsertForm() {
-        if (this.insertForm == null) {
-            this.insertForm = new Form<Object>("insertForm"); //$NON-NLS-1$
-            this.insertForm.add(getFeedback());
-            this.insertForm.add(getKeywords());
-            this.insertForm.add(getText());
-            this.insertForm.add(getInserter());
-        }
-        return this.insertForm;
-    }
-
-    @SuppressWarnings("nls")
-    private TextField<String> getKeywords() {
-        if (this.keywords == null) {
-            this.keywords = new TextField<String>("keywords", new Model<String>(""));
-        }
-        return this.keywords;
-    }
-
-    private TextArea<String> getText() {
-        if (this.text == null) {
-            this.text = new TextArea<String>("text", new Model<String>()); //$NON-NLS-1$
-            this.text.setRequired(true);
-        }
-        return this.text;
-    }
-
-    private void onInserterClick(final AjaxRequestTarget pTarget) {
-        this.entryService.insert(getText().getModelObject(), getKeywords().getModelObject());
-
-        final List<EEntry> all = this.entryService.getAll();
-        this.entriesValue.clear();
-        this.entriesValue.addAll(all);
-        pTarget.add(getEntriesContainer());
-
-        this.setResponsePage(this);
     }
 }
