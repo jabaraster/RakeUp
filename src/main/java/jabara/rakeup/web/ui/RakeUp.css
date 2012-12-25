@@ -5,7 +5,8 @@ body {
 }
 
 textarea {
-	width: 30em;
+	width: 90%;
+	height: 25em;
 }
 
 article {

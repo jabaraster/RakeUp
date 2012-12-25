@@ -1,9 +1,14 @@
 @CHARSET "UTF-8";
 
-article span {
+article > h3 > a, article > h3 > a:visited {
+	color: #000000;
+}
+
+article > span {
 	padding: 0.2em;
 	border: solid 1px #333333;
 	border-radius: 4px;
 	margin-right: 0.3em;
 	background: #ffffff;
+	cursor: pointer;
 }

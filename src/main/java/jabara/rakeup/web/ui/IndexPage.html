@@ -14,11 +14,12 @@
 <wicket:extend>
 
   <h1>レコード一覧</h1>
+  フィルタ：<span wicket:id="currentFilter"></span>
+  <a wicket:id="filterClearer">フィルタのクリア</a>
   <div wicket:id="entriesContainer">
     <article wicket:id="entries">
-      <h3 wicket:id="title"></h3>
-      <span wicket:id="keywords"><wicket:container wicket:id="label" /></span>
-      <a wicket:id="goDetail">詳細</a>
+      <h3><a wicket:id="goDetail"><span wicket:id="title">クリックしたら詳細画面へ</span></a></h3>
+      <span wicket:id="keywords"><a wicket:id="goFiltered"><span wicket:id="label"></span></a></span>
       <a wicket:id="goEdit">編集</a>
     </article>
   </div>
