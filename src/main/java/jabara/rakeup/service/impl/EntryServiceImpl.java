@@ -134,6 +134,8 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
             query.where(builder.or(where.toArray(new Predicate[where.size()])));
         }
 
+        query.orderBy(builder.desc(root.get(EntityBase_.created)));
+
         return em.createQuery(query).getResultList();
     }
 
