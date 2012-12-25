@@ -3,7 +3,6 @@
  */
 package jabara.rakeup;
 
-import org.apache.log4j.Logger;
 
 /**
  * 
@@ -25,7 +24,6 @@ public final class RakeUpEnv {
      */
     public static String getPassword() {
         final String p = System.getenv(ENV_PASSWORD);
-        Logger.getLogger(RakeUpEnv.class).warn(p);
         return p == null ? "password" : p; //$NON-NLS-1$
     }
 }
