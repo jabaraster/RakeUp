@@ -11,7 +11,7 @@ import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.KeywordService;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
@@ -30,23 +30,23 @@ import com.google.inject.Inject;
  * @author jabaraster
  */
 public class EntryPanel extends Panel {
-    private static final long                             serialVersionUID = -8970586401384139213L;
+    private static final long                            serialVersionUID = -8970586401384139213L;
 
     @Inject
-    KeywordService                                        keywordService;
+    KeywordService                                       keywordService;
 
     @SuppressWarnings("synthetic-access")
-    private final IProducer2<Set<String>, List<EKeyword>> keywordProducer  = new KeywordProcuder();
+    private final IProducer2<Set<String>, Set<EKeyword>> keywordProducer  = new KeywordProcuder();
 
-    private final EEntry                                  entry;
+    private final EEntry                                 entry;
 
-    private TextField<String>                             title;
-    private FeedbackPanel                                 titleFeedback;
+    private TextField<String>                            title;
+    private FeedbackPanel                                titleFeedback;
 
-    private TextField<Set<EKeyword>>                      keywords;
+    private TextField<Set<EKeyword>>                     keywords;
 
-    private TextArea<String>                              body;
-    private FeedbackPanel                                 bodyFeedback;
+    private TextArea<String>                             body;
+    private FeedbackPanel                                bodyFeedback;
 
     /**
      * @param pId id値.
@@ -112,8 +112,8 @@ public class EntryPanel extends Panel {
                 @SuppressWarnings({ "synthetic-access" })
                 @Override
                 public <C> IConverter<C> getConverter(final Class<C> pType) {
-                    if (List.class.isAssignableFrom(pType)) {
-                        return (IConverter<C>) new LabelableListConverter<EKeyword>(EntryPanel.this.keywordProducer);
+                    if (Set.class.isAssignableFrom(pType)) {
+                        return (IConverter<C>) new LabelableSetConverter<EKeyword>(EntryPanel.this.keywordProducer);
                     }
                     return super.getConverter(pType);
                 }
@@ -146,8 +146,8 @@ public class EntryPanel extends Panel {
         return this.titleFeedback;
     }
 
-    private List<EKeyword> findKeywordByLabels(final Set<String> pLabels) {
-        return this.keywordService.findByLabels(pLabels);
+    private Set<EKeyword> findKeywordByLabels(final Set<String> pLabels) {
+        return new HashSet<EKeyword>(this.keywordService.findByLabels(pLabels));
     }
 
     private static class KeywordListModel implements IModel<Set<EKeyword>> {
@@ -191,12 +191,12 @@ public class EntryPanel extends Panel {
 
     }
 
-    private class KeywordProcuder implements IProducer2<Set<String>, List<EKeyword>>, Serializable {
+    private class KeywordProcuder implements IProducer2<Set<String>, Set<EKeyword>>, Serializable {
         private static final long serialVersionUID = 8522095809221201898L;
 
         @SuppressWarnings("synthetic-access")
         @Override
-        public List<EKeyword> produce(final Set<String> pLabels) {
+        public Set<EKeyword> produce(final Set<String> pLabels) {
             return findKeywordByLabels(pLabels);
         }
     }

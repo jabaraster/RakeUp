@@ -7,9 +7,7 @@ import jabara.general.ArgUtil;
 import jabara.general.IProducer2;
 import jabara.rakeup.model.ILabelable;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -20,15 +18,15 @@ import org.apache.wicket.util.convert.IConverter;
  * @author jabaraster
  * @param <E> 変換対象の型.
  */
-public class LabelableListConverter<E extends ILabelable> implements IConverter<List<E>> {
-    private static final long                      serialVersionUID = 3167579504225939678L;
+public class LabelableSetConverter<E extends ILabelable> implements IConverter<Set<E>> {
+    private static final long                     serialVersionUID = 3167579504225939678L;
 
-    private final IProducer2<Set<String>, List<E>> objectGenerator;
+    private final IProducer2<Set<String>, Set<E>> objectGenerator;
 
     /**
      * @param pObjectGenerator ラベルに応じたオブジェクトを提供して下さい.
      */
-    public LabelableListConverter(final IProducer2<Set<String>, List<E>> pObjectGenerator) {
+    public LabelableSetConverter(final IProducer2<Set<String>, Set<E>> pObjectGenerator) {
         ArgUtil.checkNull(pObjectGenerator, "pEntityGenerator"); //$NON-NLS-1$
         this.objectGenerator = pObjectGenerator;
     }
@@ -37,13 +35,13 @@ public class LabelableListConverter<E extends ILabelable> implements IConverter<
      * @see org.apache.wicket.util.convert.IConverter#convertToObject(java.lang.String, java.util.Locale)
      */
     @Override
-    public List<E> convertToObject(final String pValue, @SuppressWarnings("unused") final Locale pLocale) {
+    public Set<E> convertToObject(final String pValue, @SuppressWarnings("unused") final Locale pLocale) {
         if (pValue == null) {
-            return new ArrayList<E>();
+            return new HashSet<E>();
         }
 
         final Set<String> labels = parseLabels(pValue);
-        final List<E> list = new ArrayList<E>();
+        final Set<E> list = new HashSet<E>();
         list.addAll(this.objectGenerator.produce(labels));
         return list;
     }
@@ -52,7 +50,7 @@ public class LabelableListConverter<E extends ILabelable> implements IConverter<
      * @see org.apache.wicket.util.convert.IConverter#convertToString(java.lang.Object, java.util.Locale)
      */
     @Override
-    public String convertToString(final List<E> pValue, @SuppressWarnings("unused") final Locale pLocale) {
+    public String convertToString(final Set<E> pValue, @SuppressWarnings("unused") final Locale pLocale) {
         if (pValue.isEmpty()) {
             return ""; //$NON-NLS-1$
         }
