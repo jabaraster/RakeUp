@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -53,6 +54,7 @@ public class EEntry extends EntityBase<EEntry> {
      * 
      */
     @ManyToMany(fetch = FetchType.LAZY)
+    @OrderBy("label")
     protected List<EKeyword>  keywords             = new ArrayList<EKeyword>();
 
     /**

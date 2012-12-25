@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -64,7 +65,6 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
     /**
      * @see jabara.rakeup.service.EntryService#encodeMarkdown(java.lang.String)
      */
-    @SuppressWarnings("resource")
     @Override
     public String encodeMarkdown(final String pMarkdownText) throws IOException {
         if (pMarkdownText == null) {
@@ -140,7 +140,7 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
     }
 
     /**
-     * @param pEntry
+     * @param pEntry -
      */
     @Override
     public void insert(final EEntry pEntry) {
@@ -174,6 +174,11 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
         for (final EKeyword keyword : merged.getKeywords()) {
             this.keywordService.insertOrUpdate(keyword);
         }
+    }
+
+    EntryServiceImpl setEntityManagerFactory(final EntityManagerFactory e) {
+        this.emf = e;
+        return this;
     }
 
 }
