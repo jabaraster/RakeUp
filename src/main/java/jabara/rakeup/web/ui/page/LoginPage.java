@@ -43,6 +43,7 @@ public class LoginPage extends WebPage {
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
         RakeUpWebPageBase.renderCommonHead(pResponse);
+        RakeUpWebPageBase.addPageCssReference(pResponse, this.getClass());
         pResponse.renderOnDomReadyJavaScript(JavaScriptUtil.getFocusScript(getPassword()));
     }
 

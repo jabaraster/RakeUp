@@ -1,5 +1,13 @@
 @CHARSET "UTF-8";
 
+article > span {
+    padding: 0.2em;
+    border: solid 1px #333333;
+    border-radius: 4px;
+    margin-right: 0.3em;
+    background: #ffffff;
+}
+
 .highlight .kd {
     color: #0000cc;
 }

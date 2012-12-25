@@ -11,6 +11,7 @@ import jabara.rakeup.web.ui.component.PageLink;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -66,7 +67,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
      * @param pResponse ヘッダ描画用オブジェクト.
      */
     protected void addPageCssReference(final IHeaderResponse pResponse) {
-        pResponse.renderCSSReference(new CssResourceReference(this.getClass(), this.getClass().getSimpleName() + ".css")); //$NON-NLS-1$
+        addPageCssReference(pResponse, this.getClass());
     }
 
     /**
@@ -107,6 +108,16 @@ public abstract class RakeUpWebPageBase extends WebPage {
 
         }
         return this.navigationLinks;
+    }
+
+    /**
+     * @param pResponse 書き込み用レスポンス.
+     * @param pPageType CSSファイルの基準となるページクラス.
+     */
+    public static void addPageCssReference(final IHeaderResponse pResponse, final Class<? extends Page> pPageType) {
+        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
+        ArgUtil.checkNull(pPageType, "pPageType"); //$NON-NLS-1$
+        pResponse.renderCSSReference(new CssResourceReference(pPageType, pPageType.getSimpleName() + ".css")); //$NON-NLS-1$
     }
 
     /**
