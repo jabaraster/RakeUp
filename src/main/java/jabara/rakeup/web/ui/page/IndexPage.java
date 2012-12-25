@@ -16,6 +16,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxLink;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -116,7 +117,7 @@ public class IndexPage extends RakeUpWebPageBase {
                     final ListView<EKeyword> keywords = new ListView<EKeyword>("keywords", entry.getKeywordsAsList()) {
                         @Override
                         protected void populateItem(@SuppressWarnings("hiding") final ListItem<EKeyword> pItem) {
-                            final AjaxLink<?> goFiltered = new AjaxLink<Object>("goFiltered") {
+                            final AjaxLink<?> goFiltered = new IndicatingAjaxLink<Object>("goFiltered") {
                                 @SuppressWarnings("synthetic-access")
                                 @Override
                                 public void onClick(final AjaxRequestTarget pTarget) {
