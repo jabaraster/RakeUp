@@ -214,11 +214,6 @@
       <attribute value="jar:file:/Users/jabaraster/.m2/repository/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/servlet-api/3.0.pre1/servlet-api-3.0.pre1.jar" sourcepath="M2_REPO/org/mortbay/jetty/servlet-api/3.0.pre1/servlet-api-3.0.pre1-sources.jar">
-    <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/mortbay/jetty/servlet-api/3.0.pre1/servlet-api-3.0.pre1-javadoc.jar!/" name="javadoc_location"/>
-    </attributes>
-  </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1-sources.jar">
     <attributes>
       <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1-javadoc.jar!/" name="javadoc_location"/>
