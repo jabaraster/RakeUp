@@ -43,7 +43,7 @@ public class EntryPanel extends Panel {
     private TextField<String>                             title;
     private FeedbackPanel                                 titleFeedback;
 
-    private TextField<List<EKeyword>>                     keywords;
+    private TextField<Set<EKeyword>>                      keywords;
 
     private TextArea<String>                              body;
     private FeedbackPanel                                 bodyFeedback;
@@ -102,13 +102,13 @@ public class EntryPanel extends Panel {
      * @return キーワード入力欄.
      */
     @SuppressWarnings({ "serial", "unchecked" })
-    public TextField<List<EKeyword>> getKeywords() {
+    public TextField<Set<EKeyword>> getKeywords() {
         if (this.keywords == null) {
 
-            final IModel<List<EKeyword>> m = new KeywordListModel(this.entry);
-            final Class<List<EKeyword>> t = (Class<List<EKeyword>>) this.entry.getKeywords().getClass();
+            final IModel<Set<EKeyword>> m = new KeywordListModel(this.entry);
+            final Class<Set<EKeyword>> t = (Class<Set<EKeyword>>) this.entry.getKeywords().getClass();
 
-            this.keywords = new TextField<List<EKeyword>>("keywords", m, t) { //$NON-NLS-1$
+            this.keywords = new TextField<Set<EKeyword>>("keywords", m, t) { //$NON-NLS-1$
                 @SuppressWarnings({ "synthetic-access" })
                 @Override
                 public <C> IConverter<C> getConverter(final Class<C> pType) {
@@ -150,7 +150,7 @@ public class EntryPanel extends Panel {
         return this.keywordService.findByLabels(pLabels);
     }
 
-    private static class KeywordListModel implements IModel<List<EKeyword>> {
+    private static class KeywordListModel implements IModel<Set<EKeyword>> {
         private static final long serialVersionUID = -3015768162652905768L;
 
         private final EEntry      entry;
@@ -174,15 +174,15 @@ public class EntryPanel extends Panel {
          * @see org.apache.wicket.model.IModel#getObject()
          */
         @Override
-        public List<EKeyword> getObject() {
-            return this.entry.getKeywordsAsList();
+        public Set<EKeyword> getObject() {
+            return this.entry.getKeywords();
         }
 
         /**
          * @see org.apache.wicket.model.IModel#setObject(java.lang.Object)
          */
         @Override
-        public void setObject(final List<EKeyword> pObject) {
+        public void setObject(final Set<EKeyword> pObject) {
             this.entry.getKeywords().clear();
             if (pObject != null) {
                 this.entry.getKeywords().addAll(pObject);
