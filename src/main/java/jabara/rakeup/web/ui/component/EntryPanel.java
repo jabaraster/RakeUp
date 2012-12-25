@@ -49,8 +49,8 @@ public class EntryPanel extends Panel {
     private FeedbackPanel                                 bodyFeedback;
 
     /**
-     * @param pId
-     * @param pEntry
+     * @param pId id値.
+     * @param pEntry 操作対象のエントリ.
      */
     public EntryPanel(final String pId, final EEntry pEntry) {
         super(pId);

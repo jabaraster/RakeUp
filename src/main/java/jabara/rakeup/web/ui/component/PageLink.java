@@ -1,7 +1,7 @@
 /**
  * 
  */
-package jabara.rakeup.web.ui;
+package jabara.rakeup.web.ui.component;
 
 import jabara.general.ArgUtil;
 
@@ -19,8 +19,8 @@ public class PageLink implements Serializable {
     private final Class<? extends Page> pageType;
 
     /**
-     * @param pPage
-     * @param pRel
+     * @param pPage ページクラス.
+     * @param pRel リンクラベル.
      */
     public PageLink(final Class<? extends Page> pPage, final String pRel) {
         ArgUtil.checkNull(pPage, "pPage"); //$NON-NLS-1$

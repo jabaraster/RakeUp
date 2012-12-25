@@ -23,14 +23,14 @@ import org.apache.wicket.util.convert.IConverter;
 public class LabelableListConverter<E extends ILabelable> implements IConverter<List<E>> {
     private static final long                      serialVersionUID = 3167579504225939678L;
 
-    private final IProducer2<Set<String>, List<E>> entityGenerator;
+    private final IProducer2<Set<String>, List<E>> objectGenerator;
 
     /**
-     * @param pEntityGenerator
+     * @param pObjectGenerator ラベルに応じたオブジェクトを提供して下さい.
      */
-    public LabelableListConverter(final IProducer2<Set<String>, List<E>> pEntityGenerator) {
-        ArgUtil.checkNull(pEntityGenerator, "pEntityGenerator"); //$NON-NLS-1$
-        this.entityGenerator = pEntityGenerator;
+    public LabelableListConverter(final IProducer2<Set<String>, List<E>> pObjectGenerator) {
+        ArgUtil.checkNull(pObjectGenerator, "pEntityGenerator"); //$NON-NLS-1$
+        this.objectGenerator = pObjectGenerator;
     }
 
     /**
@@ -44,7 +44,7 @@ public class LabelableListConverter<E extends ILabelable> implements IConverter<
 
         final Set<String> labels = parseLabels(pValue);
         final List<E> list = new ArrayList<E>();
-        list.addAll(this.entityGenerator.produce(labels));
+        list.addAll(this.objectGenerator.produce(labels));
         return list;
     }
 

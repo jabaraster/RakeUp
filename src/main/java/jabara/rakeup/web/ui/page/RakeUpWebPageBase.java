@@ -1,7 +1,12 @@
 /**
  * 
  */
-package jabara.rakeup.web.ui;
+package jabara.rakeup.web.ui.page;
+
+import jabara.general.ArgUtil;
+import jabara.rakeup.web.ui.RakeUpWicketApplication;
+import jabara.rakeup.web.ui.component.JavaScriptUtil;
+import jabara.rakeup.web.ui.component.PageLink;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +56,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
-        pResponse.renderCSSReference(new CssResourceReference(RakeUpWebPageBase.class, "style.css")); //$NON-NLS-1$
-        pResponse.renderCSSReference(new CssResourceReference(RakeUpWebPageBase.class, "RakeUp.css")); //$NON-NLS-1$
-        pResponse.renderJavaScriptReference(new JavaScriptResourceReference(RakeUpWebPageBase.class, "RakeUp.js")); //$NON-NLS-1$
+        renderCommonHead(pResponse);
     }
 
     /**
@@ -104,5 +107,15 @@ public abstract class RakeUpWebPageBase extends WebPage {
 
         }
         return this.navigationLinks;
+    }
+
+    /**
+     * @param pResponse 全ての画面に共通して必要なheadタグ内容を出力します.
+     */
+    public static void renderCommonHead(final IHeaderResponse pResponse) {
+        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
+        pResponse.renderCSSReference(new CssResourceReference(RakeUpWebPageBase.class, "style.css")); //$NON-NLS-1$
+        pResponse.renderCSSReference(new CssResourceReference(RakeUpWebPageBase.class, "RakeUp.css")); //$NON-NLS-1$
+        pResponse.renderJavaScriptReference(new JavaScriptResourceReference(RakeUpWebPageBase.class, JavaScriptUtil.COMMON_JS_FILE_PATH));
     }
 }

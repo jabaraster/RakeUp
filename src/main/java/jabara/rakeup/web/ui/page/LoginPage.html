@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content-type="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <title>ログイン - RakeUp</title>
+    <wicket:remove>
+      <link href="./style.css" rel="stylesheet" type="text/css" />
+      <link href="./RakeUp.css" rel="stylesheet" type="text/css" />
+      <link href="./IndexPage.css" rel="stylesheet" type="text/css" />
+    </wicket:remove>
+    <script src="./RakeUp.js"></script>
+  </head>
+  <body>
+
+  <form wicket:id="form">
+    <div wicket:id="feedback" />
+    <ul>
+      <li>パスワードを入力：<input type="password" wicket:id="password" /></li>
+      <li><input type="submit" wicket:id="submitter" value="認証実行" /></li>
+    </ul>
+  </form>
+
+  </body>
+</html>

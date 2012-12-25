@@ -1,13 +1,14 @@
 /**
  * 
  */
-package jabara.rakeup.web.ui;
+package jabara.rakeup.web.ui.page;
 
 import jabara.general.NotFound;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.service.EntryService;
 import jabara.rakeup.web.ui.component.EntryPanel;
 import jabara.rakeup.web.ui.component.ErrorClassAppender;
+import jabara.rakeup.web.ui.component.JavaScriptUtil;
 
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -67,17 +68,17 @@ public class EditEntryPage extends RakeUpWebPageBase {
     }
 
     /**
-     * @see jabara.rakeup.web.ui.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
 
-        pResponse.renderOnDomReadyJavaScript("RakeUp.focus('" + getEntry().getTitle().getMarkupId() + "')"); //$NON-NLS-1$ //$NON-NLS-2$
+        pResponse.renderOnDomReadyJavaScript(JavaScriptUtil.getFocusScript(getEntry().getTitle()));
     }
 
     /**
-     * @see jabara.rakeup.web.ui.RakeUpWebPageBase#getTitleLabelModel()
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#getTitleLabelModel()
      */
     @Override
     protected IModel<String> getTitleLabelModel() {

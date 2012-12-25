@@ -1,7 +1,7 @@
 /**
  * 
  */
-package jabara.rakeup.web.ui;
+package jabara.rakeup.web.ui.page;
 
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.entity.EKeyword;
@@ -54,7 +54,7 @@ public class IndexPage extends RakeUpWebPageBase {
     }
 
     /**
-     * @see jabara.rakeup.web.ui.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
@@ -64,7 +64,7 @@ public class IndexPage extends RakeUpWebPageBase {
     }
 
     /**
-     * @see jabara.rakeup.web.ui.RakeUpWebPageBase#getTitleLabelModel()
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#getTitleLabelModel()
      */
     @Override
     protected IModel<String> getTitleLabelModel() {
