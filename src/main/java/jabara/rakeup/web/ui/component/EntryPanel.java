@@ -175,7 +175,7 @@ public class EntryPanel extends Panel {
          */
         @Override
         public List<EKeyword> getObject() {
-            return this.entry.getKeywords();
+            return this.entry.getKeywordsAsList();
         }
 
         /**

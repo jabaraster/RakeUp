@@ -6,7 +6,10 @@ package jabara.rakeup.entity;
 import jabara.jpa.entity.EntityBase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,7 +58,7 @@ public class EEntry extends EntityBase<EEntry> {
      */
     @ManyToMany(fetch = FetchType.LAZY)
     @OrderBy("label")
-    protected List<EKeyword>  keywords             = new ArrayList<EKeyword>();
+    protected Set<EKeyword>   keywords             = new HashSet<EKeyword>();
 
     /**
      * 
@@ -66,8 +69,17 @@ public class EEntry extends EntityBase<EEntry> {
     /**
      * @return the keywords
      */
-    public List<EKeyword> getKeywords() {
+    public Set<EKeyword> getKeywords() {
         return this.keywords;
+    }
+
+    /**
+     * @return キーワード一覧をListにし、辞書順にソートして返します.
+     */
+    public List<EKeyword> getKeywordsAsList() {
+        final List<EKeyword> ret = new ArrayList<EKeyword>(this.keywords);
+        Collections.sort(ret);
+        return ret;
     }
 
     /**

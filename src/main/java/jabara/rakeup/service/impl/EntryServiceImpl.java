@@ -13,6 +13,7 @@ import jabara.rakeup.entity.EEntry_;
 import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.EntryService;
 import jabara.rakeup.service.KeywordService;
+import jabara.rakeup.web.ui.page.FilterCondition;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import net.arnx.jsonic.JSON;
@@ -104,6 +106,38 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
     }
 
     /**
+     * @see jabara.rakeup.service.EntryService#find(jabara.rakeup.web.ui.page.FilterCondition)
+     */
+    @Override
+    public List<EEntry> find(final FilterCondition pFilterCondition) {
+        ArgUtil.checkNull(pFilterCondition, "pFilterCondition"); //$NON-NLS-1$
+
+        final EntityManager em = getEntityManager();
+        final CriteriaBuilder builder = em.getCriteriaBuilder();
+        final CriteriaQuery<EEntry> query = builder.createQuery(EEntry.class);
+        final Root<EEntry> root = query.from(EEntry.class);
+
+        query.distinct(true);
+        root.fetch(EEntry_.keywords, JoinType.LEFT);
+
+        final List<Predicate> where = new ArrayList<Predicate>();
+        final List<EKeyword> keywords = this.keywordService.findPersistedByLabels(pFilterCondition.getKeywords());
+
+        for (final EKeyword keyword : keywords) {
+            where.add(builder.isMember(keyword, root.get(EEntry_.keywords)));
+        }
+        for (final String word : pFilterCondition.getTitleWords()) {
+            where.add(builder.like(root.get(EEntry_.title), "%" + word + "%")); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
+        if (!where.isEmpty()) {
+            query.where(builder.or(where.toArray(new Predicate[where.size()])));
+        }
+
+        return em.createQuery(query).getResultList();
+    }
+
+    /**
      * @see jabara.rakeup.service.EntryService#findById(long)
      */
     @Override
@@ -118,9 +152,7 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
 
         query.where(builder.equal(root.get(EntityBase_.id), Long.valueOf(pId)));
 
-        final EEntry ret = getSingleResult(em.createQuery(query));
-        Collections.sort(ret.getKeywords());
-        return ret;
+        return getSingleResult(em.createQuery(query));
     }
 
     /**
@@ -135,6 +167,8 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
 
         query.distinct(true);
         root.fetch(EEntry_.keywords, JoinType.LEFT);
+
+        query.orderBy(builder.desc(root.get(EntityBase_.created)));
 
         return em.createQuery(query).getResultList();
     }

@@ -14,8 +14,12 @@
 <wicket:extend>
 
   <h1><wicket:message key="exampleList">事例一覧</wicket:message></h1>
-  フィルタ：<span wicket:id="currentFilter"></span>
-  <a wicket:id="filterClearer">フィルタのクリア</a>
+
+  <form wicket:id="filterForm">
+    フィルタ：<input type="text" wicket:id="filterCondition" />
+    <input type="submit" wicket:id="filterExecutor" value="フィルタ実行" />
+  </form>
+
   <div wicket:id="entriesContainer">
     <article wicket:id="entries">
       <h3><a wicket:id="goDetail"><span wicket:id="title">クリックしたら詳細画面へ</span></a></h3>

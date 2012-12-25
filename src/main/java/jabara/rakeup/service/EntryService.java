@@ -6,6 +6,7 @@ package jabara.rakeup.service;
 import jabara.general.NotFound;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.service.impl.EntryServiceImpl;
+import jabara.rakeup.web.ui.page.FilterCondition;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +30,12 @@ public interface EntryService {
      * @throws IOException
      */
     String encodeMarkdown(String pMarkdownText) throws IOException;
+
+    /**
+     * @param pFilterCondition
+     * @return -
+     */
+    List<EEntry> find(FilterCondition pFilterCondition);
 
     /**
      * @param pId
