@@ -126,7 +126,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
     @SuppressWarnings("serial")
     private ListView<EKeyword> getKeywords() {
         if (this.keywords == null) {
-            this.keywords = new ListView<EKeyword>("keywords") { //$NON-NLS-1$
+            this.keywords = new ListView<EKeyword>("keywords", this.entryValue.getKeywordsAsList()) { //$NON-NLS-1$
                 @Override
                 protected void populateItem(final ListItem<EKeyword> pItem) {
                     pItem.add(new Label("label", pItem.getModelObject().getLabel())); //$NON-NLS-1$
