@@ -68,7 +68,7 @@ public class IndexPage extends RakeUpWebPageBase {
      */
     @Override
     protected IModel<String> getTitleLabelModel() {
-        return new Model<String>(this.getClass().getSimpleName());
+        return new Model<String>(this.getString("exampleList")); //$NON-NLS-1$
     }
 
     private void clearFilter() {

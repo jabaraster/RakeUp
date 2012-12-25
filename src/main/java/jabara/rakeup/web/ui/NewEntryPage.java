@@ -61,7 +61,7 @@ public class NewEntryPage extends RakeUpWebPageBase {
      */
     @Override
     protected IModel<String> getTitleLabelModel() {
-        return new Model<String>(this.getClass().getSimpleName());
+        return new Model<String>(this.getString("pageTitle")); //$NON-NLS-1$
     }
 
     private EntryPanel getEntry() {

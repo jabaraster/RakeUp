@@ -94,7 +94,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
             @SuppressWarnings("synthetic-access")
             @Override
             public String getObject() {
-                return ShowEntryPage.this.entryValue.getTitle() + " - エントリ詳細"; //$NON-NLS-1$
+                return ShowEntryPage.this.entryValue.getTitle();
             }
         };
     }

@@ -12,6 +12,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -38,7 +39,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
     }
 
     /**
-     * @param pParameters
+     * @param pParameters パラメータ情報.
      */
     public RakeUpWebPageBase(final PageParameters pParameters) {
         super(pParameters);
@@ -56,7 +57,10 @@ public abstract class RakeUpWebPageBase extends WebPage {
     }
 
     /**
-     * @param pResponse
+     * ページに固有のスタイルを記述したスタイルシートをheadタグに追加します. <br>
+     * 「ページに固有のページに固有のスタイルを記述したスタイルシート」とは、ページクラス名と同名のcssファイルのことを指します. <br>
+     * 
+     * @param pResponse ヘッダ描画用オブジェクト.
      */
     protected void addPageCssReference(final IHeaderResponse pResponse) {
         pResponse.renderCSSReference(new CssResourceReference(this.getClass(), this.getClass().getSimpleName() + ".css")); //$NON-NLS-1$
@@ -67,8 +71,14 @@ public abstract class RakeUpWebPageBase extends WebPage {
      */
     protected abstract IModel<String> getTitleLabelModel();
 
+    @SuppressWarnings({ "nls", "serial" })
     private void build() {
-        this.add(new Label("titleLabel", getTitleLabelModel())); //$NON-NLS-1$
+        this.add(new Label("titleLabel", new AbstractReadOnlyModel<String>() {
+            @Override
+            public String getObject() {
+                return getTitleLabelModel().getObject() + " - RakeUp";
+            }
+        }));
         this.add(getNavigationLinks());
 
         this.navigationLinksValue.addAll(RakeUpWicketApplication.getNavigationLinks());

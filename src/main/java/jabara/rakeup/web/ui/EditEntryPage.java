@@ -45,7 +45,7 @@ public class EditEntryPage extends RakeUpWebPageBase {
     private AjaxButton               submitter;
 
     /**
-     * @param pParameters
+     * @param pParameters パラメータ情報.
      */
     public EditEntryPage(final PageParameters pParameters) {
         super(pParameters);
@@ -81,7 +81,7 @@ public class EditEntryPage extends RakeUpWebPageBase {
      */
     @Override
     protected IModel<String> getTitleLabelModel() {
-        return new Model<String>(this.getClass().getSimpleName());
+        return new Model<String>(this.getString("pageTitle")); //$NON-NLS-1$
     }
 
     private EntryPanel getEntry() {
