@@ -8,12 +8,9 @@ import jabara.rakeup.web.ui.RakeUpSession;
 import jabara.rakeup.web.ui.component.JavaScriptUtil;
 
 import org.apache.wicket.Session;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -28,7 +25,7 @@ public class LoginPage extends WebPage {
     private StatelessForm<?>  form;
     private FeedbackPanel     feedback;
     private PasswordTextField password;
-    private AjaxButton        submitter;
+    private Button            submitter;
 
     /**
      * 
@@ -77,35 +74,23 @@ public class LoginPage extends WebPage {
     }
 
     @SuppressWarnings({ "serial", "nls" })
-    private AjaxButton getSubmitter() {
+    private Button getSubmitter() {
         if (this.submitter == null) {
-            this.submitter = new IndicatingAjaxButton("submitter") {
+            this.submitter = new Button("submitter") {
                 @SuppressWarnings("synthetic-access")
                 @Override
-                protected void onError(final AjaxRequestTarget pTarget, @SuppressWarnings("unused") final Form<?> pForm) {
-                    pTarget.add(getFeedback());
-                }
+                public void onSubmit() {
+                    final RakeUpSession session = (RakeUpSession) Session.get();
+                    try {
+                        session.authenticate(getPassword().getModelObject());
+                        this.setResponsePage(IndexPage.class);
 
-                @SuppressWarnings("synthetic-access")
-                @Override
-                protected void onSubmit(final AjaxRequestTarget pTarget, @SuppressWarnings("unused") final Form<?> pForm) {
-                    onSubmitterClick(pTarget);
+                    } catch (final FailAuthentication e) {
+                        error(getString("failAuthentication")); //$NON-NLS-1$
+                    }
                 }
             };
         }
         return this.submitter;
-    }
-
-    private void onSubmitterClick(final AjaxRequestTarget pTarget) {
-        final RakeUpSession session = (RakeUpSession) Session.get();
-        try {
-            session.authenticate(getPassword().getModelObject());
-            this.setResponsePage(IndexPage.class);
-
-        } catch (final FailAuthentication e) {
-            error(getString("failAuthentication")); //$NON-NLS-1$
-            pTarget.add(getFeedback());
-            pTarget.appendJavaScript(JavaScriptUtil.getFocusScript(getPassword()));
-        }
     }
 }
