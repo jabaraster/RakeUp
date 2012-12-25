@@ -1,7 +1,7 @@
 /**
  * 
  */
-package jabara.rakeup.web.ui;
+package jabara.rakeup.web.ui.page;
 
 import jabara.general.NotFound;
 import jabara.rakeup.entity.EEntry;
@@ -46,7 +46,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
     private MultiLineLabel      body;
 
     /**
-     * @param pParameters
+     * @param pParameters パラメータ情報.
      */
     public ShowEntryPage(final PageParameters pParameters) {
         super(pParameters);
@@ -75,7 +75,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
     }
 
     /**
-     * @see jabara.rakeup.web.ui.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
@@ -85,7 +85,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
     }
 
     /**
-     * @see jabara.rakeup.web.ui.RakeUpWebPageBase#getTitleLabelModel()
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#getTitleLabelModel()
      */
     @SuppressWarnings("serial")
     @Override
@@ -94,7 +94,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
             @SuppressWarnings("synthetic-access")
             @Override
             public String getObject() {
-                return ShowEntryPage.this.entryValue.getTitle() + " - エントリ詳細"; //$NON-NLS-1$
+                return ShowEntryPage.this.entryValue.getTitle();
             }
         };
     }

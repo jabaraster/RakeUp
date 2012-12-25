@@ -32,7 +32,7 @@
 
 			<!--
 			JPA起動時にテーブルを再作成する設定.
-			Supplierクラスを利用している場合、以下の環境変数によって設定を上書きできます..
+			DIクラスを利用している場合、以下の環境変数によって設定を上書きできます..
 			  HIBERNATE_HBM2DDL_AUTO
 			 -->
 			<!-- property name="hibernate.hbm2ddl.auto" value="create-drop" / -->

@@ -7,8 +7,8 @@ import jabara.general.NotFound;
 import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.impl.KeywordServiceImpl;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import com.google.inject.ImplementedBy;
 
@@ -30,17 +30,24 @@ public interface KeywordService {
      * @return 指定のラベルのエンティティを返します. <br>
      *         指定のラベルがDBにまだ保存されていない場合、エンティティをnewして返します. newしたエンティティはまだ永続化されていません. <br>
      */
-    List<EKeyword> findByLabels(Set<String> pLabels);
+    List<EKeyword> findByLabels(Collection<String> pLabels);
 
     /**
-     * @param pKeyword
+     * @param pLabels
+     * @return 指定のラベルを持つエンティティを返します. <br>
+     *         該当がないラベルは、無視されます. <br>
      */
-    void insertOrUpdate(EKeyword pKeyword);
+    List<EKeyword> findPersistedByLabels(Collection<String> pLabels);
 
     /**
      * @param pLabel ラベル文字列
      * @return INSERTしたエンティティオブジェクト.
      */
     EKeyword insert(String pLabel);
+
+    /**
+     * @param pKeyword
+     */
+    void insertOrUpdate(EKeyword pKeyword);
 
 }

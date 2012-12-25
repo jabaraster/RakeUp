@@ -24,21 +24,23 @@ public final class ErrorClassAppender extends AttributeAppender {
     private static final long serialVersionUID = -2276179876220020173L;
 
     /**
-     * @param pErrorClassModel
+     * @param pErrorClassModel エラー時にclass属性に追加する値.
      */
     public ErrorClassAppender(final IModel<?> pErrorClassModel) {
         super("class", pErrorClassModel); //$NON-NLS-1$
     }
 
     /**
-     * @param pErrorClass
+     * @param pErrorClass エラー時にclass属性に追加する値.
      */
     public ErrorClassAppender(final Serializable pErrorClass) {
         super("class", pErrorClass); //$NON-NLS-1$
     }
 
     /**
-     * @param pForm
+     * エラーのある入力項目にclass属性値を追加します. <br>
+     * 
+     * @param pForm このフォーム以下の入力項目が処理対象になります. <br>
      */
     public void addErrorClass(final Form<?> pForm) {
         ArgUtil.checkNull(pForm, "pForm"); //$NON-NLS-1$

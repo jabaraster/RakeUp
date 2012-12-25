@@ -4,14 +4,30 @@
 package jabara.rakeup.web.ui;
 
 import jabara.rakeup.service.DI;
+import jabara.rakeup.web.ui.component.PageLink;
+import jabara.rakeup.web.ui.page.EditEntryPage;
+import jabara.rakeup.web.ui.page.IndexPage;
+import jabara.rakeup.web.ui.page.LoginPage;
+import jabara.rakeup.web.ui.page.NewEntryPage;
+import jabara.rakeup.web.ui.page.RakeUpWebPageBase;
+import jabara.rakeup.web.ui.page.ShowEntryPage;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.Page;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.Session;
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.guice.GuiceComponentInjector;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.component.IRequestableComponent;
 
 /**
  * 
@@ -32,6 +48,14 @@ public class RakeUpWicketApplication extends WebApplication {
     }
 
     /**
+     * @see org.apache.wicket.protocol.http.WebApplication#newSession(org.apache.wicket.request.Request, org.apache.wicket.request.Response)
+     */
+    @Override
+    public Session newSession(final Request pRequest, @SuppressWarnings("unused") final Response pResponse) {
+        return new RakeUpSession(pRequest);
+    }
+
+    /**
      * @see org.apache.wicket.protocol.http.WebApplication#init()
      */
     @Override
@@ -41,6 +65,7 @@ public class RakeUpWicketApplication extends WebApplication {
         mountPages();
         initializeEncoding();
         initializeInjection();
+        initializeSecurity();
     }
 
     private void initializeEncoding() {
@@ -54,7 +79,46 @@ public class RakeUpWicketApplication extends WebApplication {
         getComponentInstantiationListeners().add(new GuiceComponentInjector(this, DI.getGuiceInjector()));
     }
 
+    private void initializeSecurity() {
+        getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy() {
+
+            /**
+             * @see org.apache.wicket.authorization.IAuthorizationStrategy#isActionAuthorized(org.apache.wicket.Component,
+             *      org.apache.wicket.authorization.Action)
+             */
+            @Override
+            public boolean isActionAuthorized(@SuppressWarnings("unused") final Component pComponent, @SuppressWarnings("unused") final Action pAction) {
+                return true;
+            }
+
+            @Override
+            public <T extends IRequestableComponent> boolean isInstantiationAuthorized(final Class<T> pComponentClass) {
+                if (!WebPage.class.isAssignableFrom(pComponentClass)) {
+                    return true;
+                }
+                final RakeUpSession session = (RakeUpSession) Session.get();
+                if (LoginPage.class.equals(pComponentClass)) {
+                    if (session.isAuthenticated()) {
+                        throw new RestartResponseAtInterceptPageException(IndexPage.class);
+                    }
+                    return true;
+                }
+
+                if (!RakeUpWebPageBase.class.isAssignableFrom(pComponentClass)) {
+                    return true;
+                }
+
+                if (session.isAuthenticated()) {
+                    return true;
+                }
+                throw new RestartResponseAtInterceptPageException(LoginPage.class);
+            }
+        });
+    }
+
     private void mountPages() {
+        this.mountPage("/login", LoginPage.class); //$NON-NLS-1$
+
         this.mountPage("/entry/edit/new", NewEntryPage.class); //$NON-NLS-1$
         this.mountPage("/entry/edit", EditEntryPage.class); //$NON-NLS-1$
         this.mountPage("/entry", ShowEntryPage.class); //$NON-NLS-1$

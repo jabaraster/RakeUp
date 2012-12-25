@@ -10,6 +10,8 @@ import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.entity.ELabelableEntityBase_;
 import jabara.rakeup.service.KeywordService;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,10 +47,10 @@ public class KeywordServiceImpl extends DaoBase implements KeywordService {
     }
 
     /**
-     * @see jabara.rakeup.service.KeywordService#findByLabels(java.util.Set)
+     * @see jabara.rakeup.service.KeywordService#findByLabels(java.util.Collection)
      */
     @Override
-    public List<EKeyword> findByLabels(final Set<String> pLabels) {
+    public List<EKeyword> findByLabels(final Collection<String> pLabels) {
         ArgUtil.checkNull(pLabels, "pLabels"); //$NON-NLS-1$
 
         final EntityManager em = getEntityManager();
@@ -56,22 +58,44 @@ public class KeywordServiceImpl extends DaoBase implements KeywordService {
         final CriteriaQuery<EKeyword> query = builder.createQuery(EKeyword.class);
         final Root<EKeyword> root = query.from(EKeyword.class);
 
-        query.where(root.get(ELabelableEntityBase_.label).in(pLabels));
+        final Set<String> labels = new HashSet<String>(pLabels);
+
+        query.where(root.get(ELabelableEntityBase_.label).in(labels));
 
         final List<EKeyword> dbResults = em.createQuery(query).getResultList();
 
         // DBにないものはnewする.
-        // pLabelsからdbResultの中のラベルを引き算すれば、それはDBにないものなのでnewの対象のラベル.
+        // labelsからdbResultの中のラベルを引き算すれば、それはDBにないものなのでnewの対象のラベル.
         // こうすれば２重ループを回す必要がなくなる.
-        final Set<String> newTarget = new HashSet<String>(pLabels);
         for (final EKeyword dbResult : dbResults) {
-            newTarget.remove(dbResult.getLabel());
+            labels.remove(dbResult.getLabel());
         }
 
-        for (final String label : newTarget) {
+        for (final String label : labels) {
             dbResults.add(new EKeyword(label));
         }
         return dbResults;
+    }
+
+    /**
+     * @see jabara.rakeup.service.KeywordService#findPersistedByLabels(java.util.Collection)
+     */
+    @Override
+    public List<EKeyword> findPersistedByLabels(final Collection<String> pLabels) {
+        ArgUtil.checkNull(pLabels, "pLabels"); //$NON-NLS-1$
+
+        if (pLabels.isEmpty()) {
+            return new ArrayList<EKeyword>();
+        }
+
+        final EntityManager em = getEntityManager();
+        final CriteriaBuilder builder = em.getCriteriaBuilder();
+        final CriteriaQuery<EKeyword> query = builder.createQuery(EKeyword.class);
+        final Root<EKeyword> root = query.from(EKeyword.class);
+
+        query.where(root.get(ELabelableEntityBase_.label).in(new HashSet<String>(pLabels)));
+
+        return em.createQuery(query).getResultList();
     }
 
     /**
