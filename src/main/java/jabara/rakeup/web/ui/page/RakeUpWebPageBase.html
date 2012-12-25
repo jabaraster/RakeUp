@@ -4,8 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <wicket:remove>
-      <linke rel="stylesheet" type="text/css" href="style.css" />
-      <linke rel="stylesheet" type="text/css" href="RakeUp.css" />
+      <link rel="stylesheet" type="text/css" href="style.css" />
+      <link rel="stylesheet" type="text/css" href="RakeUp.css" />
     </wicket:remove>
     <title wicket:id="titleLabel"></title>
   </head>
@@ -14,10 +14,15 @@
     <nav>
       <ul>
         <li wicket:id="navigationLinks"><a wicket:id="link"><span wicket:id="label">一覧</span></a></li>
+        <wicket:remove>
+          <li><a><span>新規投稿</span></a></li>
+        </wicket:remove>
       </ul>
     </nav>
+    <hr/>
 
     <wicket:child>
+      ここに子クラスのコンテンツが入ります。
     </wicket:child>
 
   </body>

@@ -8,14 +8,12 @@ import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.EntryService;
 
-import java.io.IOException;
-
-import org.apache.log4j.Logger;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.StatelessLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
@@ -30,20 +28,18 @@ import com.google.inject.Inject;
  * @author jabaraster
  */
 public class ShowEntryPage extends RakeUpWebPageBase {
-    private static final long   serialVersionUID = 1379075323513756763L;
-
-    private static final Logger _logger          = Logger.getLogger(ShowEntryPage.class);
+    private static final long  serialVersionUID = 1379075323513756763L;
 
     @Inject
-    EntryService                entryService;
+    EntryService               entryService;
 
-    private final EEntry        entryValue;
+    private final EEntry       entryValue;
 
-    private Link<?>             goEdit;
+    private StatelessLink<?>   goEdit;
 
-    private Label               title;
-    private ListView<EKeyword>  keywords;
-    private MultiLineLabel      body;
+    private Label              title;
+    private ListView<EKeyword> keywords;
+    private MultiLineLabel     body;
 
     /**
      * @param pParameters パラメータ情報.
@@ -62,14 +58,12 @@ public class ShowEntryPage extends RakeUpWebPageBase {
             this.add(getKeywords());
             this.add(getBody());
 
+            setStatelessHint(true);
+
         } catch (final StringValueConversionException _) {
             throw new RestartResponseException(IndexPage.class);
 
         } catch (final NotFound e) {
-            throw new RestartResponseException(IndexPage.class);
-
-        } catch (final IOException e) {
-            _logger.error(this.getClass().getSimpleName() + " 初期化中に例外.", e); //$NON-NLS-1$
             throw new RestartResponseException(IndexPage.class);
         }
     }
@@ -99,7 +93,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
         };
     }
 
-    private MultiLineLabel getBody() throws IOException {
+    private MultiLineLabel getBody() {
         if (this.body == null) {
             this.body = new MultiLineLabel("body", this.entryService.encodeMarkdown(this.entryValue.getText())); //$NON-NLS-1$
             this.body.setEscapeModelStrings(false);
@@ -110,7 +104,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
     @SuppressWarnings("serial")
     private Link<?> getGoEdit() {
         if (this.goEdit == null) {
-            this.goEdit = new Link<Object>("goEdit") { //$NON-NLS-1$
+            this.goEdit = new StatelessLink<Object>("goEdit") { //$NON-NLS-1$
                 @SuppressWarnings("synthetic-access")
                 @Override
                 public void onClick() {

@@ -34,8 +34,18 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
 @WebListener
 public class RakeUpWebInitializer implements ServletContextListener {
 
-    private static final String PATH_WICKET = "/ui/*";  //$NON-NLS-1$
-    private static final String PATH_REST   = "/rest/*"; //$NON-NLS-1$
+    /**
+     * 
+     */
+    public static final String PATH_WICKET = "/ui/*";  //$NON-NLS-1$
+    /**
+     * 
+     */
+    public static final String PATH_REST   = "/rest/*"; //$NON-NLS-1$
+    /**
+     * 
+     */
+    public static final String PATH_ALL    = "/*";     //$NON-NLS-1$
 
     /**
      * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
@@ -54,6 +64,8 @@ public class RakeUpWebInitializer implements ServletContextListener {
 
         initializeJersey(servletContext);
         initializeWicket(servletContext);
+
+        initializeRoutingFilter(servletContext);
 
         // Filterは後に登録したものがより早く適用される.
         // このためWicketFilterが処理するリクエストにもDumpFilterを適用するには
@@ -74,11 +86,11 @@ public class RakeUpWebInitializer implements ServletContextListener {
     }
 
     private static void initializeDumpFilter(final ServletContext pServletContext) {
-        addFiter(pServletContext, RequestDumpFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*"); //$NON-NLS-1$
+        addFiter(pServletContext, RequestDumpFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, PATH_ALL);
     }
 
     private static void initializeEncodingFilter(final ServletContext pServletContext) {
-        addFiter(pServletContext, UTF8EncodingFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*"); //$NON-NLS-1$
+        addFiter(pServletContext, UTF8EncodingFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, PATH_ALL);
     }
 
     private static void initializeJersey(final ServletContext pServletContext) {
@@ -89,6 +101,10 @@ public class RakeUpWebInitializer implements ServletContextListener {
 
     private static void initializeOther() {
         DI.get(EntityManagerFactory.class).createEntityManager();
+    }
+
+    private static void initializeRoutingFilter(final ServletContext pServletContext) {
+        addFiter(pServletContext, RoutingFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, PATH_ALL);
     }
 
     private static void initializeWicket(final ServletContext pServletContext) {
