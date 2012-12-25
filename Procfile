@@ -1,1 +1,1 @@
-web:    java -cp src/main/webapp/WEB-INF/classes:target/dependency/* -XX:+UseCompressedOops -Dwicket.configuration=deployment -Dweb.port=${PORT} -Ddatabase.url=${DATABASE_URL} -server RakeUpWebStarter 
+web:    java -cp src/main/webapp/WEB-INF/classes:target/dependency/* -XX:+UseCompressedOops -Dmemcached.server=${MEMCACHIER_SERVERS} -Dmemcached.username=${MEMCACHIER_USERNAME} -Dmemcached.password=${MEMCACHIER_PASSWORD} -Dwicket.configuration=deployment -Dweb.port=${PORT} -Ddatabase.url=${DATABASE_URL} -server RakeUpWebStarter 
