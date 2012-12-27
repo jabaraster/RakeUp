@@ -29,6 +29,7 @@
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jsp-2.1-glassfish</artifactId>
 			<version>9.1.02.B04.p0</version>
+			<!-- このライブラリが依存しているservlet-apiをクラスパスに含めるとServetAPIを提供するJARが重複していまうため、除外する. -->
 			<exclusions>
 				<exclusion>
 					<groupId>org.mortbay.jetty</groupId>
