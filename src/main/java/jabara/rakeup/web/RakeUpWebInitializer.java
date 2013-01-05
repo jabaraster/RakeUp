@@ -7,6 +7,7 @@ import jabara.rakeup.service.DI;
 import jabara.rakeup.web.rest.RakeUpRestApplication;
 import jabara.rakeup.web.ui.RakeUpWicketApplication;
 import jabara.servlet.RequestDumpFilter;
+import jabara.servlet.ResponseDumpFilter;
 import jabara.servlet.UTF8EncodingFilter;
 
 import java.util.EnumSet;
@@ -15,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
+import javax.servlet.FilterRegistration.Dynamic;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -25,6 +27,7 @@ import javax.servlet.annotation.WebListener;
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.eclipse.jetty.servlets.GzipFilter;
 
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 
@@ -34,8 +37,18 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
 @WebListener
 public class RakeUpWebInitializer implements ServletContextListener {
 
-    private static final String PATH_WICKET = "/ui/*";  //$NON-NLS-1$
-    private static final String PATH_REST   = "/rest/*"; //$NON-NLS-1$
+    /**
+     * 
+     */
+    public static final String PATH_WICKET = "/ui/*";  //$NON-NLS-1$
+    /**
+     * 
+     */
+    public static final String PATH_REST   = "/rest/*"; //$NON-NLS-1$
+    /**
+     * 
+     */
+    public static final String PATH_ALL    = "/*";     //$NON-NLS-1$
 
     /**
      * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
@@ -55,10 +68,14 @@ public class RakeUpWebInitializer implements ServletContextListener {
         initializeJersey(servletContext);
         initializeWicket(servletContext);
 
+        initializeRoutingFilter(servletContext);
+
+        initializeGzipFilter(servletContext);
+
         // Filterは後に登録したものがより早く適用される.
         // このためWicketFilterが処理するリクエストにもDumpFilterを適用するには
         // WicketFilterより後にDumpFilterを登録するようにする.
-        // initializeDumpFilter(servletContext);
+        initializeDumpFilter(servletContext);
 
         initializeEncodingFilter(servletContext);
 
@@ -74,11 +91,30 @@ public class RakeUpWebInitializer implements ServletContextListener {
     }
 
     private static void initializeDumpFilter(final ServletContext pServletContext) {
-        addFiter(pServletContext, RequestDumpFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*"); //$NON-NLS-1$
+        addFiter(pServletContext, RequestDumpFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, PATH_ALL);
+        addFiter(pServletContext, ResponseDumpFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, PATH_ALL);
     }
 
     private static void initializeEncodingFilter(final ServletContext pServletContext) {
-        addFiter(pServletContext, UTF8EncodingFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*"); //$NON-NLS-1$
+        addFiter(pServletContext, UTF8EncodingFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, PATH_ALL);
+    }
+
+    @SuppressWarnings("nls")
+    private static void initializeGzipFilter(final ServletContext pServletContext) {
+        final Dynamic filter = addFiter(pServletContext, GzipFilter.class);
+        filter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, PATH_ALL);
+        // filter.setInitParameter("minGzipSize", Integer.toString(40));
+        filter.setInitParameter("mimeTypes" //
+                , "text/html" //
+                        + ",text/plain" //
+                        + ",text/xml" //
+                        + ",text/css" //
+                        + ",application/json" //
+                        + ",application/xhtml+xml" //
+                        + ",application/javascript" //
+                        + ",application/x-javascript" //
+                        + ",image/svg+xml" //
+        );
     }
 
     private static void initializeJersey(final ServletContext pServletContext) {
@@ -89,6 +125,10 @@ public class RakeUpWebInitializer implements ServletContextListener {
 
     private static void initializeOther() {
         DI.get(EntityManagerFactory.class).createEntityManager();
+    }
+
+    private static void initializeRoutingFilter(final ServletContext pServletContext) {
+        addFiter(pServletContext, RoutingFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, PATH_ALL);
     }
 
     private static void initializeWicket(final ServletContext pServletContext) {
@@ -121,4 +161,5 @@ public class RakeUpWebInitializer implements ServletContextListener {
             // 処理なし
         }
     }
+
 }

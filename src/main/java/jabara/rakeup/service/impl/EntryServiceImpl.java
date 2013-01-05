@@ -25,6 +25,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,6 +43,7 @@ import javax.persistence.criteria.Root;
 
 import net.arnx.jsonic.JSON;
 
+import org.apache.log4j.Logger;
 import org.apache.wicket.util.io.IOUtils;
 
 import com.google.inject.Inject;
@@ -44,10 +52,12 @@ import com.google.inject.Inject;
  * @author jabaraster
  */
 public class EntryServiceImpl extends DaoBase implements EntryService {
-    private static final long serialVersionUID = 2363543705605502284L;
+    private static final long   serialVersionUID = 2363543705605502284L;
+
+    private static final Logger _logger          = Logger.getLogger(EntryServiceImpl.class);
 
     @Inject
-    KeywordService            keywordService;
+    KeywordService              keywordService;
 
     /**
      * @see jabara.rakeup.service.EntryService#countAll()
@@ -68,40 +78,42 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
      * @see jabara.rakeup.service.EntryService#encodeMarkdown(java.lang.String)
      */
     @Override
-    public String encodeMarkdown(final String pMarkdownText) throws IOException {
+    public String encodeMarkdown(final String pMarkdownText) {
         if (pMarkdownText == null) {
             return ""; //$NON-NLS-1$
         }
 
-        OutputStream httpOut = null;
-        InputStream in = null;
+        final ExecutorService worker = Executors.newSingleThreadExecutor();
+        final Future<String> future = worker.submit(new Callable<String>() {
+            @SuppressWarnings("synthetic-access")
+            @Override
+            public String call() throws Exception {
+                try {
+                    return encodeMarkdownCore(pMarkdownText);
+                } finally {
+                    worker.shutdown();
+                }
+            }
+        });
+
         try {
-            final URL url = new URL("https://api.github.com/markdown"); //$NON-NLS-1$
-            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST"); //$NON-NLS-1$
-            conn.setDoOutput(true);
+            return future.get(5, TimeUnit.SECONDS);
 
-            httpOut = conn.getOutputStream();
+        } catch (final InterruptedException e) {
+            if (_logger.isInfoEnabled()) {
+                _logger.info("Markdownのエンコードに失敗.", e); //$NON-NLS-1$
+            }
+            return pMarkdownText;
 
-            final Map<String, Object> map = new HashMap<String, Object>();
-            map.put("text", pMarkdownText); //$NON-NLS-1$
+        } catch (final ExecutionException e) {
+            _logger.warn("Markdownのエンコードに失敗.", e.getCause()); //$NON-NLS-1$
+            return pMarkdownText;
 
-            final String json = JSON.encode(map);
-            System.out.println(json);
-
-            httpOut.write(json.getBytes("UTF-8")); //$NON-NLS-1$
-            httpOut.flush();
-            httpOut.close();
-
-            in = conn.getInputStream();
-            final ByteArrayOutputStream mem = new ByteArrayOutputStream();
-            IOUtils.copy(in, mem);
-
-            return new String(mem.toByteArray(), "UTF-8"); //$NON-NLS-1$
-
-        } finally {
-            IoUtil.close(in);
-            IoUtil.close(httpOut);
+        } catch (final TimeoutException e) {
+            if (_logger.isInfoEnabled()) {
+                _logger.info("Markdownのエンコードに失敗.", e); //$NON-NLS-1$
+            }
+            return pMarkdownText;
         }
     }
 
@@ -215,6 +227,40 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
     EntryServiceImpl setEntityManagerFactory(final EntityManagerFactory e) {
         this.emf = e;
         return this;
+    }
+
+    @SuppressWarnings("resource")
+    private static String encodeMarkdownCore(final String pMarkdownText) throws IOException {
+        OutputStream httpOut = null;
+        InputStream in = null;
+        try {
+            final URL url = new URL("https://api.github.com/markdown"); //$NON-NLS-1$
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST"); //$NON-NLS-1$
+            conn.setDoOutput(true);
+
+            httpOut = conn.getOutputStream();
+
+            final Map<String, Object> map = new HashMap<String, Object>();
+            map.put("text", pMarkdownText); //$NON-NLS-1$
+
+            final String json = JSON.encode(map);
+            System.out.println(json);
+
+            httpOut.write(json.getBytes("UTF-8")); //$NON-NLS-1$
+            httpOut.flush();
+            httpOut.close();
+
+            in = conn.getInputStream();
+            final ByteArrayOutputStream mem = new ByteArrayOutputStream();
+            IOUtils.copy(in, mem);
+
+            return new String(mem.toByteArray(), "UTF-8"); //$NON-NLS-1$
+
+        } finally {
+            IoUtil.close(in);
+            IoUtil.close(httpOut);
+        }
     }
 
 }

@@ -13,8 +13,11 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.pages.RedirectPage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.StringValue;
 
 /**
  * @author jabaraster
@@ -28,11 +31,11 @@ public class LoginPage extends WebPage {
     private Button            submitter;
 
     /**
-     * 
+     * @param pParameters パラメータ情報.
      */
-    public LoginPage() {
+    public LoginPage(final PageParameters pParameters) {
+        super(pParameters);
         this.add(getForm());
-
         setStatelessHint(true);
     }
 
@@ -81,17 +84,27 @@ public class LoginPage extends WebPage {
                 @SuppressWarnings("synthetic-access")
                 @Override
                 public void onSubmit() {
-                    final RakeUpSession session = (RakeUpSession) Session.get();
-                    try {
-                        session.authenticate(getPassword().getModelObject());
-                        this.setResponsePage(IndexPage.class);
-
-                    } catch (final FailAuthentication e) {
-                        error(getString("failAuthentication")); //$NON-NLS-1$
-                    }
+                    onSubmitterClick();
                 }
             };
         }
         return this.submitter;
+    }
+
+    private void onSubmitterClick() {
+        final RakeUpSession session = (RakeUpSession) Session.get();
+        try {
+            session.authenticate(getPassword().getModelObject());
+
+            final StringValue redirectPath = getPageParameters().get("u"); //$NON-NLS-1$
+            if (!redirectPath.isEmpty()) {
+                this.setResponsePage(new RedirectPage(redirectPath.toString()));
+            } else {
+                this.setResponsePage(IndexPage.class);
+            }
+        } catch (final FailAuthentication e) {
+            error(getString("failAuthentication")); //$NON-NLS-1$
+            this.setResponsePage(this);
+        }
     }
 }

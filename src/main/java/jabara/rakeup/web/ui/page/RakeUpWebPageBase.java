@@ -15,7 +15,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.StatelessLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
@@ -95,7 +95,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
                 @Override
                 protected void populateItem(final ListItem<PageLink> pItem) {
                     final PageLink pageLink = pItem.getModelObject();
-                    final Link<?> link = new Link<String>("link") { //$NON-NLS-1$
+                    final StatelessLink<?> link = new StatelessLink<String>("link") { //$NON-NLS-1$
                         @Override
                         public void onClick() {
                             this.setResponsePage(pageLink.getPageType());

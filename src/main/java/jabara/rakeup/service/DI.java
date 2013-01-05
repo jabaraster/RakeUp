@@ -27,26 +27,26 @@ public final class DI {
     }
 
     /**
-     * @return Google Guiceの{@link Injector}を返します.
-     */
-    public static Injector getGuiceInjector() {
-        return _injector;
-    }
-
-    /**
      * 指定のオブジェクトを取得します. <br>
      * このメソッドを使っていいのは次のクラスだけです. <br>
      * <ul>
      * <li>JAX-RSのリソースクラス</li>
-     * <li>WicketのPageクラス</li>
      * </ul>
      * 
      * @param pType 取得するオブジェクトの型.
      * @return オブジェクト.
+     * @param <T> 取得するオブジェクトの型.
      */
     public static <T> T get(final Class<T> pType) {
         ArgUtil.checkNull(pType, "pType"); //$NON-NLS-1$
         return _injector.getInstance(pType);
+    }
+
+    /**
+     * @return Google Guiceの{@link Injector}を返します.
+     */
+    public static Injector getGuiceInjector() {
+        return _injector;
     }
 
     private static Injector createInjector() {

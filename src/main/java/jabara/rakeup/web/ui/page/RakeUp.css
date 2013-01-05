@@ -29,3 +29,13 @@ span.required:after {
 	content: '(*)';
 	color: red;
 }
+
+nav li {
+	list-style: none;
+	float: left;
+	width: 5em;
+}
+
+nav + hr {
+	clear: both;
+}

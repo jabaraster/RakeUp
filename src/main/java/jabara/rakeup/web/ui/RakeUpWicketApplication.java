@@ -28,6 +28,8 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * 
@@ -91,12 +93,19 @@ public class RakeUpWicketApplication extends WebApplication {
                 return true;
             }
 
+            /**
+             * @see org.apache.wicket.authorization.IAuthorizationStrategy#isInstantiationAuthorized(java.lang.Class)
+             */
             @Override
             public <T extends IRequestableComponent> boolean isInstantiationAuthorized(final Class<T> pComponentClass) {
+                // Pageに載っているUI部品は常に表示OKにする.
+                // どうせPage自体を表示NGにすれば部品も表示されないので、これでいい.
                 if (!WebPage.class.isAssignableFrom(pComponentClass)) {
                     return true;
                 }
                 final RakeUpSession session = (RakeUpSession) Session.get();
+
+                // 認証済みなのにログインページを表示しようとした場合、メインページにリダイレクトさせる.
                 if (LoginPage.class.equals(pComponentClass)) {
                     if (session.isAuthenticated()) {
                         throw new RestartResponseAtInterceptPageException(IndexPage.class);
@@ -104,14 +113,25 @@ public class RakeUpWicketApplication extends WebApplication {
                     return true;
                 }
 
+                // 認証不要なページ（ログインページとか）は表示する.
                 if (!RakeUpWebPageBase.class.isAssignableFrom(pComponentClass)) {
                     return true;
                 }
 
+                // 認証済みの場合は表示する.
                 if (session.isAuthenticated()) {
                     return true;
                 }
-                throw new RestartResponseAtInterceptPageException(LoginPage.class);
+
+                // ログインページにリダイレクトする.
+                final Request request = RequestCycle.get().getRequest();
+                final PageParameters parameters = new PageParameters();
+
+                if (!request.getUrl().getPath().isEmpty()) {
+                    final String requestPath = request.getContextPath() + request.getFilterPath() + "/" + request.getUrl().getPath(); //$NON-NLS-1$
+                    parameters.add("u", requestPath); //$NON-NLS-1$
+                }
+                throw new RestartResponseAtInterceptPageException(LoginPage.class, parameters);
             }
         });
     }

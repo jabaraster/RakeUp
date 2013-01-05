@@ -8,7 +8,6 @@ import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.service.impl.EntryServiceImpl;
 import jabara.rakeup.web.ui.page.FilterCondition;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.google.inject.ImplementedBy;
@@ -27,9 +26,8 @@ public interface EntryService {
     /**
      * @param pMarkdownText
      * @return HTML
-     * @throws IOException
      */
-    String encodeMarkdown(String pMarkdownText) throws IOException;
+    String encodeMarkdown(String pMarkdownText);
 
     /**
      * @param pFilterCondition
