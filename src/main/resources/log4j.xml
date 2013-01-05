@@ -44,7 +44,7 @@
     <level value="trace" />
   </logger>
 
-  <logger name="jabara.servlet.RequestDumpFilter">
+  <logger name="jabara.servlet">
     <level value="trace" />
   </logger>
 
