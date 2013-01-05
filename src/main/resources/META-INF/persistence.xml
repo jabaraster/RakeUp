@@ -21,7 +21,7 @@
 			<!--
 			デフォルトのDB接続設定.
 			Supplierクラスを利用している場合、以下の用にJVM引数を与えることで設定を上書きできます.
-			  -Ddatabase.url=postgres://postgres:postgres@localhost:5432/sandbox
+			  -Ddatabase.url=postgres://user:pass@localhost:5432/dbname
 			
 			これを利用し、Herokuで動かす場合は次のようにJVM引数を指定すると所定のDBに接続できます.
 			  -Ddatabase.url=${DATABASE_URL}
