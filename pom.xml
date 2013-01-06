@@ -130,7 +130,7 @@
 		<dependency>
 			<groupId>jabaraster</groupId>
 			<artifactId>jabara-servlet</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 
 		<!-- テスト用 -->

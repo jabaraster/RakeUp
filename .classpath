@@ -66,9 +66,9 @@
       <attribute value="jar:file:/Users/jabaraster/.m2/repository/jabaraster/jabara-jpa-guice/1.0/jabara-jpa-guice-1.0-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/jabaraster/jabara-servlet/1.0/jabara-servlet-1.0.jar" sourcepath="M2_REPO/jabaraster/jabara-servlet/1.0/jabara-servlet-1.0-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/jabaraster/jabara-servlet/1.1/jabara-servlet-1.1.jar" sourcepath="M2_REPO/jabaraster/jabara-servlet/1.1/jabara-servlet-1.1-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/jabaraster/jabara-servlet/1.0/jabara-servlet-1.0-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/jabaraster/jabara-servlet/1.1/jabara-servlet-1.1-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA.jar" sourcepath="M2_REPO/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA-sources.jar">
