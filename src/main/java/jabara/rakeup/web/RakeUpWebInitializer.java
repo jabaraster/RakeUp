@@ -6,8 +6,6 @@ package jabara.rakeup.web;
 import jabara.rakeup.service.DI;
 import jabara.rakeup.web.rest.RakeUpRestApplication;
 import jabara.rakeup.web.ui.RakeUpWicketApplication;
-import jabara.servlet.RequestDumpFilter;
-import jabara.servlet.ResponseDumpFilter;
 import jabara.servlet.UTF8EncodingFilter;
 
 import java.util.EnumSet;
@@ -75,7 +73,7 @@ public class RakeUpWebInitializer implements ServletContextListener {
         // Filterは後に登録したものがより早く適用される.
         // このためWicketFilterが処理するリクエストにもDumpFilterを適用するには
         // WicketFilterより後にDumpFilterを登録するようにする.
-        initializeDumpFilter(servletContext);
+        // initializeDumpFilter(servletContext);
 
         initializeEncodingFilter(servletContext);
 
@@ -90,10 +88,10 @@ public class RakeUpWebInitializer implements ServletContextListener {
         return pContext.addServlet(pServletType.getName(), pServletType);
     }
 
-    private static void initializeDumpFilter(final ServletContext pServletContext) {
-        addFiter(pServletContext, RequestDumpFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, PATH_ALL);
-        addFiter(pServletContext, ResponseDumpFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, PATH_ALL);
-    }
+    // private static void initializeDumpFilter(final ServletContext pServletContext) {
+    // addFiter(pServletContext, RequestDumpFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, PATH_ALL);
+    // addFiter(pServletContext, ResponseDumpFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, PATH_ALL);
+    // }
 
     private static void initializeEncodingFilter(final ServletContext pServletContext) {
         addFiter(pServletContext, UTF8EncodingFilter.class).addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, PATH_ALL);
