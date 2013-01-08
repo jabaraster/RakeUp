@@ -17,3 +17,20 @@ article > span {
 	background: #ffffff;
 	cursor: pointer;
 }
+
+div.pagerContainer {
+    text-align: right;
+    border-radius: 4px;
+    margin: 5px;
+    padding: 5px;
+}
+
+div.pagerContainer span, div.entriesPager a, div.entriesPager em {
+    font-size: large;
+	margin: 0.1em;
+}
+
+div.entriesPager {
+	margin-left: 1em;
+    display: inline;
+}

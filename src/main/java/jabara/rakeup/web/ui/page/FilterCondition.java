@@ -79,6 +79,9 @@ public class FilterCondition implements Serializable {
                 keywords_.add(w.substring(DIRECTIVE_KEYWORD.length()));
             } else if (w.indexOf(DIRECTIVE_TITLE) == 0) {
                 words_.add(w.substring(DIRECTIVE_TITLE.length()));
+            } else {
+                keywords_.add(w);
+                words_.add(w);
             }
         }
 
