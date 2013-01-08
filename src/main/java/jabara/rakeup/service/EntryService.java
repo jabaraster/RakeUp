@@ -19,6 +19,12 @@ import com.google.inject.ImplementedBy;
 public interface EntryService {
 
     /**
+     * @param pFilterCondition
+     * @return -
+     */
+    int count(FilterCondition pFilterCondition);
+
+    /**
      * @return 全レコード数を返します.
      */
     int countAll();
@@ -34,6 +40,14 @@ public interface EntryService {
      * @return -
      */
     List<EEntry> find(FilterCondition pFilterCondition);
+
+    /**
+     * @param pFilterCondition
+     * @param pFirst
+     * @param pCount
+     * @return -
+     */
+    List<EEntry> find(FilterCondition pFilterCondition, int pFirst, int pCount);
 
     /**
      * @param pId

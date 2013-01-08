@@ -25,10 +25,10 @@
 -->
 
   <logger name="org.hibernate.type">
-    <level value="trace" />
+    <level value="warn" />
   </logger>
   <logger name="org.hibernate.SQL">
-    <level value="trace" />
+    <level value="warn" />
   </logger>
   <logger name="org.apache.wicket">
     <level value="warn" />
