@@ -119,7 +119,6 @@ public class IndexPage extends RakeUpWebPageBase {
     private DataView<EEntry> getEntries() {
         if (this.entries == null) {
             this.entries = new DataView<EEntry>("entries", new EntryDataProvider(), 20) {
-
                 @Override
                 protected void populateItem(final Item<EEntry> pItem) {
                     final EEntry entry = pItem.getModelObject();
