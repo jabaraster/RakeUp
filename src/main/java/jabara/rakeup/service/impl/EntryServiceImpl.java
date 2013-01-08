@@ -4,6 +4,7 @@
 package jabara.rakeup.service.impl;
 
 import jabara.general.ArgUtil;
+import jabara.general.ExceptionUtil;
 import jabara.general.IoUtil;
 import jabara.general.NotFound;
 import jabara.jpa.entity.EntityBase_;
@@ -35,6 +36,7 @@ import java.util.concurrent.TimeoutException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -58,6 +60,32 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
 
     @Inject
     KeywordService              keywordService;
+
+    /**
+     * @see jabara.rakeup.service.EntryService#count(jabara.rakeup.web.ui.page.FilterCondition)
+     */
+    @Override
+    public int count(final FilterCondition pFilterCondition) {
+        ArgUtil.checkNull(pFilterCondition, "pFilterCondition"); //$NON-NLS-1$
+
+        final EntityManager em = getEntityManager();
+        final CriteriaBuilder builder = em.getCriteriaBuilder();
+        final CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        final Root<EEntry> root = query.from(EEntry.class);
+        final Predicate[] where = buildFilterConditionWhere(pFilterCondition, builder, root);
+
+        if (where.length != 0) {
+            query.where(builder.or(where));
+        }
+        query.select(builder.count(root.get(EntityBase_.id)));
+
+        final TypedQuery<Long> q = em.createQuery(query);
+        try {
+            return DaoBase.getSingleResult(q).intValue();
+        } catch (final NotFound e) {
+            throw ExceptionUtil.rethrow(e);
+        }
+    }
 
     /**
      * @see jabara.rakeup.service.EntryService#countAll()
@@ -132,23 +160,36 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
         query.distinct(true);
         root.fetch(EEntry_.keywords, JoinType.LEFT);
 
-        final List<Predicate> where = new ArrayList<Predicate>();
-        final List<EKeyword> keywords = this.keywordService.findPersistedByLabels(pFilterCondition.getKeywords());
+        final Predicate[] where = buildFilterConditionWhere(pFilterCondition, builder, root);
 
-        for (final EKeyword keyword : keywords) {
-            where.add(builder.isMember(keyword, root.get(EEntry_.keywords)));
-        }
-        for (final String word : pFilterCondition.getTitleWords()) {
-            where.add(builder.like(root.get(EEntry_.title), "%" + word + "%")); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-
-        if (!where.isEmpty()) {
-            query.where(builder.or(where.toArray(new Predicate[where.size()])));
+        if (where.length > 0) {
+            query.where(builder.or(where));
         }
 
         query.orderBy(builder.desc(root.get(EntityBase_.created)));
 
         return em.createQuery(query).getResultList();
+    }
+
+    /**
+     * @see jabara.rakeup.service.EntryService#find(jabara.rakeup.web.ui.page.FilterCondition, int, int)
+     */
+    @Override
+    public List<EEntry> find(final FilterCondition pFilterCondition, final int pFirst, final int pCount) {
+        ArgUtil.checkNull(pFilterCondition, "pFilterCondition"); //$NON-NLS-1$
+
+        final EntityManager em = getEntityManager();
+        final CriteriaBuilder builder = em.getCriteriaBuilder();
+        final CriteriaQuery<EEntry> query = builder.createQuery(EEntry.class);
+        final Root<EEntry> root = query.from(EEntry.class);
+
+        root.fetch(EEntry_.keywords, JoinType.LEFT);
+
+        final Predicate[] where = buildFilterConditionWhere(pFilterCondition, builder, root);
+        if (where.length != 0) {
+            query.where(builder.or(where));
+        }
+        return em.createQuery(query).setFirstResult(pFirst).setMaxResults(pCount).getResultList();
     }
 
     /**
@@ -227,6 +268,23 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
     EntryServiceImpl setEntityManagerFactory(final EntityManagerFactory e) {
         this.emf = e;
         return this;
+    }
+
+    private Predicate[] buildFilterConditionWhere( //
+            final FilterCondition pFilterCondition //
+            , final CriteriaBuilder builder //
+            , final Root<EEntry> root) {
+
+        final List<Predicate> where = new ArrayList<Predicate>();
+        final List<EKeyword> keywords = this.keywordService.findPersistedByLabels(pFilterCondition.getKeywords());
+
+        for (final EKeyword keyword : keywords) {
+            where.add(builder.isMember(keyword, root.get(EEntry_.keywords)));
+        }
+        for (final String word : pFilterCondition.getTitleWords()) {
+            where.add(builder.like(root.get(EEntry_.title), "%" + word + "%")); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+        return where.toArray(EMPTY_PREDICATE);
     }
 
     private static String encodeMarkdownCore(final String pMarkdownText) throws IOException {
