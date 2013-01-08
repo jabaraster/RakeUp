@@ -33,9 +33,9 @@
 
 		<!-- Jettyでセッションレプリケーションを実現するためのライブラリ. Memcachedを利用したHttpSession実装を提供 -->
 		<dependency>
-			<groupId>com.geishatokyo.jetty</groupId>
-			<artifactId>jetty-nosql-memcached</artifactId>
-			<version>0.3.2-SNAPSHOT-jar-with-dependencies</version>
+			<groupId>jabaraster</groupId>
+			<artifactId>jabara-jetty-memcached</artifactId>
+			<version>1.0</version>
 		</dependency>
 
 		<!-- Wicket -->
@@ -197,7 +197,7 @@
 					<target>1.6</target>
 					<optimize>true</optimize>
 					<debug>true</debug>
-					<encoding>UTF-8</encoding>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 

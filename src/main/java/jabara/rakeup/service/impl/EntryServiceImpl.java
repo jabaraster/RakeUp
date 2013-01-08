@@ -229,7 +229,6 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
         return this;
     }
 
-    @SuppressWarnings("resource")
     private static String encodeMarkdownCore(final String pMarkdownText) throws IOException {
         OutputStream httpOut = null;
         InputStream in = null;

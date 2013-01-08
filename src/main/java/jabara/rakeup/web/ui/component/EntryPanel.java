@@ -14,9 +14,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.ComponentFeedbackPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
@@ -85,7 +85,7 @@ public class EntryPanel extends Panel {
      */
     public FeedbackPanel getBodyFeedback() {
         if (this.bodyFeedback == null) {
-            this.bodyFeedback = new FeedbackPanel("bodyFeedback", new ComponentFeedbackMessageFilter(getBody())); //$NON-NLS-1$
+            this.bodyFeedback = new ComponentFeedbackPanel("bodyFeedback", getBody()); //$NON-NLS-1$
             this.bodyFeedback.setOutputMarkupId(true);
         }
         return this.bodyFeedback;
@@ -140,7 +140,7 @@ public class EntryPanel extends Panel {
      */
     public FeedbackPanel getTitleFeedback() {
         if (this.titleFeedback == null) {
-            this.titleFeedback = new FeedbackPanel("titleFeedback", new ComponentFeedbackMessageFilter(getTitle())); //$NON-NLS-1$
+            this.titleFeedback = new ComponentFeedbackPanel("titleFeedback", getTitle()); //$NON-NLS-1$
             this.titleFeedback.setOutputMarkupId(true);
         }
         return this.titleFeedback;

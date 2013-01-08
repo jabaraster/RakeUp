@@ -5,6 +5,10 @@ article > h3 > a, article > h3 > a:visited {
 	text-decoration: none;
 }
 
+article > h3 > a:hover {
+    text-decoration: underline;
+}
+
 article > span {
 	padding: 0.2em;
 	border: solid 1px #333333;
