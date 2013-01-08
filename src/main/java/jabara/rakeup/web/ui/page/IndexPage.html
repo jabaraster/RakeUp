@@ -20,9 +20,11 @@
     <input type="submit" wicket:id="filterExecutor" value="フィルタ実行" />
   </form>
 
-  <div wicket:id="entriesPager">
+  <div class="pagerContainer">
+    <span wicket:id="count" /> 件
+    <div wicket:id="entriesPager" class="entriesPager">
+    </div>
   </div>
-  <span wicket:id="count" /> 件
   <div wicket:id="entriesContainer">
     <article wicket:id="entries">
       <h3><a wicket:id="goDetail"><span wicket:id="title">クリックしたら詳細画面へ</span></a></h3>
