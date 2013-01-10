@@ -9,7 +9,6 @@
         <class>jabara.rakeup.entity.EEntry</class>
         <class>jabara.rakeup.entity.ELabelableEntityBase</class>
         <class>jabara.rakeup.entity.EKeyword</class>
-        <class>jabara.rakeup.entity.ESource</class>
         <class>jabara.rakeup.entity.ELink</class>
 		<validation-mode>CALLBACK</validation-mode>
 		<properties>

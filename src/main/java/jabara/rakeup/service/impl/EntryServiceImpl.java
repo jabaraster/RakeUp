@@ -183,13 +183,25 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
         final CriteriaQuery<EEntry> query = builder.createQuery(EEntry.class);
         final Root<EEntry> root = query.from(EEntry.class);
 
-        root.fetch(EEntry_.keywords, JoinType.LEFT);
+        // キーワードまでフェッチしたいのでroot.fetch()を呼び出すのが
+        // 最も素直なのだが、これをやるとページングのための件数制限が
+        // Java上で行われてしまうためメモリが大量に消費される可能性がある.
+        // なのでroot.fetcy()は使わず、単一のエンティティを取得した後に
+        // 手動でループを回してフェッチすることにする.
+//        root.fetch(EEntry_.keywords, JoinType.LEFT);
 
         final Predicate[] where = buildFilterConditionWhere(pFilterCondition, builder, root);
         if (where.length != 0) {
             query.where(builder.or(where));
         }
-        return em.createQuery(query).setFirstResult(pFirst).setMaxResults(pCount).getResultList();
+        final List<EEntry> result = em.createQuery(query).setFirstResult(pFirst).setMaxResults(pCount).getResultList();
+
+        // キーワードのフェッチ
+        for (final EEntry e : result) {
+            e.getKeywords().isEmpty(); // isEmpty()でフェッチさせるのはどのJPA実装でも有効なのか・・・？
+        }
+
+        return result;
     }
 
     /**
@@ -254,7 +266,6 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
             return;
         }
         final EEntry merged = em.merge(pEntry);
-        merged.setSource(pEntry.getSource());
         merged.setText(pEntry.getText());
         merged.setTitle(pEntry.getTitle());
 

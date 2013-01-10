@@ -11,22 +11,19 @@
 
   <logger name="jndi">
     <level value="warn" />
-    <appender-ref ref="stdout" />
   </logger>
-  <logger name="org.hibernate">
+  <logger name="org.hibernate.loader">
     <level value="warn" />
-    <appender-ref ref="stdout" />
   </logger>
   <logger name="org.jboss">
     <level value="warn" />
-    <appender-ref ref="stdout" />
   </logger>
 
   <logger name="org.hibernate.type">
-    <level value="warn" />
+    <level value="trace" />
   </logger>
   <logger name="org.hibernate.SQL">
-    <level value="warn" />
+    <level value="trace" />
   </logger>
   <logger name="org.apache.wicket">
     <level value="warn" />
@@ -47,7 +44,7 @@
   </logger>
 
   <root>
-    <level value="debug" />
+    <level value="warn" />
     <appender-ref ref="stdout" />
   </root>
 

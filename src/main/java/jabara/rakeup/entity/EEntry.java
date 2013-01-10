@@ -61,12 +61,6 @@ public class EEntry extends EntityBase<EEntry> {
     protected Set<EKeyword>   keywords             = new HashSet<EKeyword>();
 
     /**
-     * 
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    protected ESource         source;
-
-    /**
      * @return the keywords
      */
     public Set<EKeyword> getKeywords() {
@@ -98,13 +92,6 @@ public class EEntry extends EntityBase<EEntry> {
     }
 
     /**
-     * @return the source
-     */
-    public ESource getSource() {
-        return this.source;
-    }
-
-    /**
      * @return the text
      */
     public String getText() {
@@ -116,13 +103,6 @@ public class EEntry extends EntityBase<EEntry> {
      */
     public String getTitle() {
         return this.title;
-    }
-
-    /**
-     * @param pSource the source to set
-     */
-    public void setSource(final ESource pSource) {
-        this.source = pSource;
     }
 
     /**

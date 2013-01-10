@@ -232,6 +232,7 @@
                         </systemProperty>
                     </systemProperties>
                 </configuration>  
+                <!--
                 <executions>  
                     <execution>  
                         <phase>test</phase>  
@@ -240,6 +241,7 @@
                         </goals>  
                     </execution>  
                 </executions>  
+                -->
             </plugin> 
 
 			<!-- このプロジェクトが依存するJARをクラスパスにコピーする設定 -->
