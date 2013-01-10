@@ -93,13 +93,8 @@
 		<!-- JPA用ユーティリティ -->
 		<dependency>
 			<groupId>jabaraster</groupId>
-			<artifactId>jabara-jpa</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>jabaraster</groupId>
 			<artifactId>jabara-jpa-guice</artifactId>
-			<version>1.1</version>
+			<version>1.2</version>
 		</dependency>
 
 		<!-- Beanの検証(JSR303) -->
@@ -126,11 +121,17 @@
 			<version>1.6.2</version>
 		</dependency>
 
-
 		<!-- Servletに関連するプリミティブライブラリ. リクエストダンプに使う. 河野作成. -->
 		<dependency>
 			<groupId>jabaraster</groupId>
 			<artifactId>jabara-servlet</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<!-- ユーティリティ. 河野作成. -->
+		<dependency>
+			<groupId>jabaraster</groupId>
+			<artifactId>jabara-general</artifactId>
 			<version>1.1</version>
 		</dependency>
 
@@ -213,36 +214,24 @@
 				</configuration>
 			</plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>  
-                <artifactId>exec-maven-plugin</artifactId>  
-                <version>1.2.1</version>  
-                <configuration>  
-                    <mainClass>RakeUpWebStarter</mainClass>  
-                    <systemProperties>
-                        <!--
-                        <systemProperty>
-                            <key>wicket.configuration</key>
-                            <value>deployment</value>
-                        </systemProperty>
-                        -->
-                        <systemProperty>
-                            <key>memcached.servers</key>
-                            <value>localhost:11211</value>
-                        </systemProperty>
-                    </systemProperties>
-                </configuration>  
-                <!--
-                <executions>  
-                    <execution>  
-                        <phase>test</phase>  
-                        <goals>  
-                            <goal>java</goal>  
-                        </goals>  
-                    </execution>  
-                </executions>  
-                -->
-            </plugin> 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>RakeUpWebStarter</mainClass>
+					<systemProperties>
+						<!-- <systemProperty> <key>wicket.configuration</key> <value>deployment</value> 
+							</systemProperty> -->
+						<systemProperty>
+							<key>memcached.servers</key>
+							<value>localhost:11211</value>
+						</systemProperty>
+					</systemProperties>
+				</configuration>
+				<!-- <executions> <execution> <phase>test</phase> <goals> <goal>java</goal> 
+					</goals> </execution> </executions> -->
+			</plugin>
 
 			<!-- このプロジェクトが依存するJARをクラスパスにコピーする設定 -->
 			<!-- これがないとHerokuでのWebアプリ起動に失敗する -->

@@ -1,11 +1,11 @@
 /**
  * 
  */
-package jabara.rakeup.service;
+package jabara.rakeup.model;
 
 import jabara.general.ArgUtil;
 import jabara.jpa.util.SystemPropertyToPostgreJpaPropertiesParser;
-import jabara.jpa_guice.JpaModule;
+import jabara.jpa_guice.SinglePersistenceUnitJpaModule;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -50,7 +50,8 @@ public final class DI {
     }
 
     private static Injector createInjector() {
-        final JpaModule jpaModule = new JpaModule(PERSISTENCE_UNIT_NAME, new SystemPropertyToPostgreJpaPropertiesParser());
+        final SinglePersistenceUnitJpaModule jpaModule = new SinglePersistenceUnitJpaModule(PERSISTENCE_UNIT_NAME,
+                new SystemPropertyToPostgreJpaPropertiesParser());
         return Guice.createInjector(jpaModule);
     }
 }

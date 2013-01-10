@@ -3,7 +3,7 @@
  */
 package jabara.rakeup.web;
 
-import jabara.rakeup.service.DI;
+import jabara.rakeup.model.DI;
 import jabara.rakeup.web.rest.RakeUpRestApplication;
 import jabara.rakeup.web.ui.RakeUpWicketApplication;
 import jabara.servlet.RequestDumpFilter;

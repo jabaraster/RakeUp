@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 import jabara.general.IProducer2;
 import jabara.general.NotFound;
 import jabara.rakeup.entity.EKeyword;
-import jabara.rakeup.service.DI;
+import jabara.rakeup.model.DI;
 import jabara.rakeup.service.KeywordService;
 
 import java.util.Arrays;
@@ -33,8 +33,7 @@ public class KeywordServiceImplTest {
                                                                        new IProducer2<EntityManagerFactory, KeywordServiceImpl>() {
                                                                            @Override
                                                                            public KeywordServiceImpl produce(final EntityManagerFactory pArgument) {
-                                                                               final KeywordServiceImpl ret = new KeywordServiceImpl();
-                                                                               ret.setEntityManagerFactory(pArgument);
+                                                                               final KeywordServiceImpl ret = new KeywordServiceImpl(pArgument);
                                                                                return ret;
                                                                            }
                                                                        });

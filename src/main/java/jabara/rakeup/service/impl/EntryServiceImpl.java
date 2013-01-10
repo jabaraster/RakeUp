@@ -7,8 +7,8 @@ import jabara.general.ArgUtil;
 import jabara.general.ExceptionUtil;
 import jabara.general.IoUtil;
 import jabara.general.NotFound;
+import jabara.jpa.JpaDaoBase;
 import jabara.jpa.entity.EntityBase_;
-import jabara.jpa_guice.DaoBase;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.entity.EEntry_;
 import jabara.rakeup.entity.EKeyword;
@@ -34,6 +34,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -48,18 +49,25 @@ import net.arnx.jsonic.JSON;
 import org.apache.log4j.Logger;
 import org.apache.wicket.util.io.IOUtils;
 
-import com.google.inject.Inject;
-
 /**
  * @author jabaraster
  */
-public class EntryServiceImpl extends DaoBase implements EntryService {
-    private static final long   serialVersionUID = 2363543705605502284L;
+public class EntryServiceImpl extends JpaDaoBase implements EntryService {
+    private static final long    serialVersionUID = 2363543705605502284L;
 
-    private static final Logger _logger          = Logger.getLogger(EntryServiceImpl.class);
+    private static final Logger  _logger          = Logger.getLogger(EntryServiceImpl.class);
 
+    private final KeywordService keywordService;
+
+    /**
+     * @param pEmf
+     * @param pKeywordService
+     */
     @Inject
-    KeywordService              keywordService;
+    public EntryServiceImpl(final EntityManagerFactory pEmf, final KeywordService pKeywordService) {
+        super(pEmf);
+        this.keywordService = pKeywordService;
+    }
 
     /**
      * @see jabara.rakeup.service.EntryService#count(jabara.rakeup.web.ui.page.FilterCondition)
@@ -81,7 +89,7 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
 
         final TypedQuery<Long> q = em.createQuery(query);
         try {
-            return DaoBase.getSingleResult(q).intValue();
+            return JpaDaoBase.getSingleResult(q).intValue();
         } catch (final NotFound e) {
             throw ExceptionUtil.rethrow(e);
         }
@@ -188,7 +196,7 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
         // Java上で行われてしまうためメモリが大量に消費される可能性がある.
         // なのでroot.fetcy()は使わず、単一のエンティティを取得した後に
         // 手動でループを回してフェッチすることにする.
-//        root.fetch(EEntry_.keywords, JoinType.LEFT);
+        // root.fetch(EEntry_.keywords, JoinType.LEFT);
 
         final Predicate[] where = buildFilterConditionWhere(pFilterCondition, builder, root);
         if (where.length != 0) {
@@ -276,11 +284,6 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
         }
     }
 
-    EntryServiceImpl setEntityManagerFactory(final EntityManagerFactory e) {
-        this.emf = e;
-        return this;
-    }
-
     private Predicate[] buildFilterConditionWhere( //
             final FilterCondition pFilterCondition //
             , final CriteriaBuilder builder //
@@ -298,6 +301,7 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
         return where.toArray(EMPTY_PREDICATE);
     }
 
+    @SuppressWarnings("resource")
     private static String encodeMarkdownCore(final String pMarkdownText) throws IOException {
         OutputStream httpOut = null;
         InputStream in = null;

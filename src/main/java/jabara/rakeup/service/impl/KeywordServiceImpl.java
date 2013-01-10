@@ -5,7 +5,7 @@ package jabara.rakeup.service.impl;
 
 import jabara.general.ArgUtil;
 import jabara.general.NotFound;
-import jabara.jpa_guice.DaoBase;
+import jabara.jpa.JpaDaoBase;
 import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.entity.ELabelableEntityBase_;
 import jabara.rakeup.service.KeywordService;
@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -25,8 +26,16 @@ import javax.persistence.criteria.Root;
 /**
  * @author jabaraster
  */
-public class KeywordServiceImpl extends DaoBase implements KeywordService {
+public class KeywordServiceImpl extends JpaDaoBase implements KeywordService {
     private static final long serialVersionUID = -6130802685624628629L;
+
+    /**
+     * @param pEmf
+     */
+    @Inject
+    public KeywordServiceImpl(final EntityManagerFactory pEmf) {
+        super(pEmf);
+    }
 
     /**
      * @see jabara.rakeup.service.KeywordService#findByLabel(java.lang.String)
@@ -127,9 +136,4 @@ public class KeywordServiceImpl extends DaoBase implements KeywordService {
         final EKeyword merged = em.merge(pKeyword);
         merged.setLabel(pKeyword.getLabel());
     }
-
-    void setEntityManagerFactory(final EntityManagerFactory pEntityManagerFactory) {
-        this.emf = pEntityManagerFactory;
-    }
-
 }

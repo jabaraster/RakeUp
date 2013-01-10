@@ -3,7 +3,7 @@
  */
 package jabara.rakeup.web.ui;
 
-import jabara.rakeup.service.DI;
+import jabara.rakeup.model.DI;
 import jabara.rakeup.web.ui.component.PageLink;
 import jabara.rakeup.web.ui.page.EditEntryPage;
 import jabara.rakeup.web.ui.page.IndexPage;

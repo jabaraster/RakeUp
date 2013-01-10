@@ -32,13 +32,10 @@ public class EntryServiceImplTest {
                                                                      new IProducer2<EntityManagerFactory, EntryServiceImpl>() {
                                                                          @Override
                                                                          public EntryServiceImpl produce(final EntityManagerFactory pArgument) {
-                                                                             final KeywordServiceImpl keywordService = new KeywordServiceImpl();
-                                                                             keywordService.setEntityManagerFactory(pArgument);
-
-                                                                             final EntryServiceImpl ret = new EntryServiceImpl();
-                                                                             ret.keywordService = keywordService;
-                                                                             ret.setEntityManagerFactory(pArgument);
-
+                                                                             final KeywordServiceImpl keywordService = new KeywordServiceImpl(
+                                                                                     pArgument);
+                                                                             final EntryServiceImpl ret = new EntryServiceImpl(pArgument,
+                                                                                     keywordService);
                                                                              return ret;
                                                                          }
                                                                      });
