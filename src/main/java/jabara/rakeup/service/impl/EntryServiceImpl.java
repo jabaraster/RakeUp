@@ -313,7 +313,6 @@ public class EntryServiceImpl extends DaoBase implements EntryService {
             map.put("text", pMarkdownText); //$NON-NLS-1$
 
             final String json = JSON.encode(map);
-            System.out.println(json);
 
             httpOut.write(json.getBytes("UTF-8")); //$NON-NLS-1$
             httpOut.flush();
