@@ -5,6 +5,7 @@ package jabara.rakeup.web;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author jabaraster
  */
-@WebServlet(urlPatterns = { "/sessionInvalidate" })
+@WebServlet(urlPatterns = { "/ui/logout" })
 public class SessionInvalidateServlet extends HttpServlet {
     private static final long serialVersionUID = 5360693042689763414L;
 
@@ -21,9 +22,8 @@ public class SessionInvalidateServlet extends HttpServlet {
      * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
     @Override
-    protected void doGet(final HttpServletRequest pRequest, final HttpServletResponse pResponse) throws IOException {
+    protected void doGet(final HttpServletRequest pRequest, final HttpServletResponse pResponse) throws IOException, ServletException {
         pRequest.getSession().invalidate();
-        pResponse.setContentType("text/plain"); //$NON-NLS-1$
-        pResponse.getWriter().append("invalidate session."); //$NON-NLS-1$
+        pRequest.getRequestDispatcher("/WEB-INF/jsp/logout.jsp").forward(pRequest, pResponse); //$NON-NLS-1$
     }
 }

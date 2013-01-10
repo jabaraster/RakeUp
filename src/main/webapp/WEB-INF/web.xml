@@ -5,6 +5,6 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
     <session-config>
-        <session-timeout>0</session-timeout>
+        <session-timeout>360</session-timeout>
     </session-config>
 </web-app>

@@ -11,8 +11,8 @@ import jabara.rakeup.web.ui.component.PageLink;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.Page;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -22,6 +22,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -102,8 +103,8 @@ public abstract class RakeUpWebPageBase extends WebPage {
                             this.setResponsePage(pageLink.getPageType());
                         }
                     };
-                    final Label label = new Label("label", new Model<String>(pageLink.getRel()));
-                    label.add(AttributeModifier.append("class", pageLink.getClassAttributeValue()));
+                    final Label label = new Label("label", new Model<String>(pageLink.getRel())); //$NON-NLS-1$
+                    label.add(AttributeModifier.append("class", pageLink.getClassAttributeValue())); //$NON-NLS-1$
                     link.add(label);
                     pItem.add(link);
                 }
@@ -128,8 +129,8 @@ public abstract class RakeUpWebPageBase extends WebPage {
      */
     public static void renderCommonHead(final IHeaderResponse pResponse) {
         ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
-        pResponse.renderCSSReference(new CssResourceReference(RakeUpWebPageBase.class, "style.css")); //$NON-NLS-1$
-        pResponse.renderCSSReference(new CssResourceReference(RakeUpWebPageBase.class, "RakeUp.css")); //$NON-NLS-1$
+        pResponse.renderCSSReference(RequestCycle.get().getRequest().getContextPath() + "/ui/style.css"); //$NON-NLS-1$
+        pResponse.renderCSSReference(RequestCycle.get().getRequest().getContextPath() + "/ui/RakeUp.css"); //$NON-NLS-1$
         pResponse.renderJavaScriptReference(new JavaScriptResourceReference(RakeUpWebPageBase.class, JavaScriptUtil.COMMON_JS_FILE_PATH));
     }
 }
