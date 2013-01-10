@@ -8,6 +8,10 @@ article > span {
     background: #ffffff;
 }
 
+div.goEditContainer {
+    margin-bottom: 0.5em;
+}
+
 .highlight .kd {
     color: #0000cc;
 }

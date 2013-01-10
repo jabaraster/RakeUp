@@ -15,18 +15,21 @@ import org.apache.wicket.Page;
 public class PageLink implements Serializable {
     private static final long           serialVersionUID = 8545832823057240069L;
 
-    private final String                rel;
     private final Class<? extends Page> pageType;
+    private final String                rel;
+    private final String classAttributeValue;
 
     /**
      * @param pPage ページクラス.
      * @param pRel リンクラベル.
      */
-    public PageLink(final Class<? extends Page> pPage, final String pRel) {
+    public PageLink(final Class<? extends Page> pPage, final String pRel, final String pClassAttributeValue) {
         ArgUtil.checkNull(pPage, "pPage"); //$NON-NLS-1$
         ArgUtil.checkNullOrEmpty(pRel, "pRel"); //$NON-NLS-1$
+        ArgUtil.checkNullOrEmpty(pClassAttributeValue, "pClassAttributeValue"); //$NON-NLS-1$
         this.rel = pRel;
         this.pageType = pPage;
+        this.classAttributeValue = pClassAttributeValue;
     }
 
     /**
@@ -41,5 +44,12 @@ public class PageLink implements Serializable {
      */
     public String getRel() {
         return this.rel;
+    }
+
+    /**
+     * @return classAttributeValueを返す.
+     */
+    public String getClassAttributeValue() {
+        return this.classAttributeValue;
     }
 }

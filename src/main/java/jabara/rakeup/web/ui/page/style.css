@@ -130,7 +130,7 @@ body {
 /* Links */
 a {
   color: #ff3300;
-  text-decoration: underline;
+  text-decoration: none;
 }
 a:visited {
   color: #ff3300;

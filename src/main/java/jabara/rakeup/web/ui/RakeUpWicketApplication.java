@@ -153,8 +153,8 @@ public class RakeUpWicketApplication extends WebApplication {
 
     private static List<PageLink> createNavigationLinks() {
         final List<PageLink> ret = new ArrayList<PageLink>();
-        ret.add(new PageLink(IndexPage.class, "一覧")); //$NON-NLS-1$
-        ret.add(new PageLink(NewEntryPage.class, "新規投稿")); //$NON-NLS-1$
+        ret.add(new PageLink(IndexPage.class, "一覧", "icon-list")); //$NON-NLS-1$
+        ret.add(new PageLink(NewEntryPage.class, "新規投稿", "icon-plus")); //$NON-NLS-1$
         return Collections.unmodifiableList(ret);
     }
 }

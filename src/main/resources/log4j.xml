@@ -9,12 +9,7 @@
      </layout>
   </appender>
 
-<!--
   <logger name="jndi">
-    <level value="warn" />
-    <appender-ref ref="stdout" />
-  </logger>
-  <logger name="org.jboss">
     <level value="warn" />
     <appender-ref ref="stdout" />
   </logger>
@@ -22,7 +17,10 @@
     <level value="warn" />
     <appender-ref ref="stdout" />
   </logger>
--->
+  <logger name="org.jboss">
+    <level value="warn" />
+    <appender-ref ref="stdout" />
+  </logger>
 
   <logger name="org.hibernate.type">
     <level value="warn" />
@@ -49,7 +47,7 @@
   </logger>
 
   <root>
-    <level value="warn" />
+    <level value="debug" />
     <appender-ref ref="stdout" />
   </root>
 

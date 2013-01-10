@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -101,7 +102,9 @@ public abstract class RakeUpWebPageBase extends WebPage {
                             this.setResponsePage(pageLink.getPageType());
                         }
                     };
-                    link.add(new Label("label", new Model<String>(pageLink.getRel()))); //$NON-NLS-1$
+                    final Label label = new Label("label", new Model<String>(pageLink.getRel()));
+                    label.add(AttributeModifier.append("class", pageLink.getClassAttributeValue()));
+                    link.add(label);
                     pItem.add(link);
                 }
             };

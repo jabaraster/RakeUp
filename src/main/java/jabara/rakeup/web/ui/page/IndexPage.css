@@ -18,6 +18,10 @@ article > span {
 	cursor: pointer;
 }
 
+div.goEditContainer {
+    margin-bottom: 0.5em;
+}
+
 div.pagerContainer {
     text-align: right;
     border-radius: 4px;
@@ -34,3 +38,4 @@ div.entriesPager {
 	margin-left: 1em;
     display: inline;
 }
+
