@@ -1,7 +1,7 @@
 /**
  * 
  */
-package jabara.rakeup.web.ui.component;
+package jabara.rakeup.web.ui;
 
 import jabara.general.ArgUtil;
 

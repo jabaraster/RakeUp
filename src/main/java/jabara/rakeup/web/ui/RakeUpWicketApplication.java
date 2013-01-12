@@ -30,7 +30,6 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.CssResourceReference;
 
 /**
  * 
@@ -144,9 +143,6 @@ public class RakeUpWicketApplication extends WebApplication {
         this.mountPage("/entry/edit/new", NewEntryPage.class);
         this.mountPage("/entry/edit", EditEntryPage.class);
         this.mountPage("/entry", ShowEntryPage.class);
-
-        mountResource("RakeUp.css", new CssResourceReference(RakeUpWicketApplication.class, "page/RakeUp.css"));
-        mountResource("style.css", new CssResourceReference(RakeUpWicketApplication.class, "page/style.css"));
     }
 
     /**

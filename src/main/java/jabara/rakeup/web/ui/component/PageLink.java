@@ -17,11 +17,12 @@ public class PageLink implements Serializable {
 
     private final Class<? extends Page> pageType;
     private final String                rel;
-    private final String classAttributeValue;
+    private final String                classAttributeValue;
 
     /**
      * @param pPage ページクラス.
      * @param pRel リンクラベル.
+     * @param pClassAttributeValue class属性値.
      */
     public PageLink(final Class<? extends Page> pPage, final String pRel, final String pClassAttributeValue) {
         ArgUtil.checkNull(pPage, "pPage"); //$NON-NLS-1$
@@ -30,6 +31,13 @@ public class PageLink implements Serializable {
         this.rel = pRel;
         this.pageType = pPage;
         this.classAttributeValue = pClassAttributeValue;
+    }
+
+    /**
+     * @return classAttributeValueを返す.
+     */
+    public String getClassAttributeValue() {
+        return this.classAttributeValue;
     }
 
     /**
@@ -44,12 +52,5 @@ public class PageLink implements Serializable {
      */
     public String getRel() {
         return this.rel;
-    }
-
-    /**
-     * @return classAttributeValueを返す.
-     */
-    public String getClassAttributeValue() {
-        return this.classAttributeValue;
     }
 }

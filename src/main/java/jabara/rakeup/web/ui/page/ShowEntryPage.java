@@ -9,7 +9,7 @@ import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.EntryService;
 
 import org.apache.wicket.RestartResponseException;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.link.Link;
@@ -69,7 +69,7 @@ public class ShowEntryPage extends RakeUpWebPageBase {
     }
 
     /**
-     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.head.IHeaderResponse)
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
@@ -95,10 +95,19 @@ public class ShowEntryPage extends RakeUpWebPageBase {
 
     private MultiLineLabel getBody() {
         if (this.body == null) {
-            this.body = new MultiLineLabel("body", this.entryService.encodeMarkdown(this.entryValue.getText())); //$NON-NLS-1$
+            final String bodyText = getBodyText();
+            this.body = new MultiLineLabel("body", bodyText); //$NON-NLS-1$
             this.body.setEscapeModelStrings(false);
         }
         return this.body;
+    }
+
+    private String getBodyText() {
+        try {
+            return this.entryValue.getMarkdownHtmlText();
+        } catch (final NotFound e) {
+            return this.entryValue.getText();
+        }
     }
 
     @SuppressWarnings("serial")

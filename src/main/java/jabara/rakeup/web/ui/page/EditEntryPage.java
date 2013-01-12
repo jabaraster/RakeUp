@@ -6,15 +6,16 @@ package jabara.rakeup.web.ui.page;
 import jabara.general.NotFound;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.service.EntryService;
+import jabara.rakeup.web.ui.JavaScriptUtil;
 import jabara.rakeup.web.ui.component.EntryPanel;
 import jabara.rakeup.web.ui.component.ErrorClassAppender;
-import jabara.rakeup.web.ui.component.JavaScriptUtil;
 
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -68,13 +69,13 @@ public class EditEntryPage extends RakeUpWebPageBase {
     }
 
     /**
-     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(IHeaderResponse)
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
 
-        pResponse.renderOnDomReadyJavaScript(JavaScriptUtil.getFocusScript(getEntry().getTitle()));
+        pResponse.render(OnDomReadyHeaderItem.forScript(JavaScriptUtil.getFocusScript(getEntry().getTitle())));
     }
 
     /**

@@ -3,6 +3,7 @@
  */
 package jabara.rakeup.entity;
 
+import jabara.general.NotFound;
 import jabara.jpa.entity.EntityBase;
 
 import java.util.ArrayList;
@@ -11,10 +12,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 
@@ -60,6 +64,13 @@ public class EEntry extends EntityBase<EEntry> {
     protected Set<EKeyword>   keywords             = new HashSet<EKeyword>();
 
     /**
+     * 
+     */
+    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = true)
+    protected EMarkdownHtml   markdownHtml;
+
+    /**
      * @return the keywords
      */
     public Set<EKeyword> getKeywords() {
@@ -73,6 +84,24 @@ public class EEntry extends EntityBase<EEntry> {
         final List<EKeyword> ret = new ArrayList<EKeyword>(this.keywords);
         Collections.sort(ret);
         return ret;
+    }
+
+    /**
+     * @return markdownHtmlを返す.
+     */
+    public EMarkdownHtml getMarkdownHtml() {
+        return this.markdownHtml;
+    }
+
+    /**
+     * @return マークダウンをHTMLに変換した結果.
+     * @throws NotFound 変換されていない場合.
+     */
+    public String getMarkdownHtmlText() throws NotFound {
+        if (this.markdownHtml == null) {
+            throw NotFound.GLOBAL;
+        }
+        return this.markdownHtml.getConverted();
     }
 
     /**
@@ -102,6 +131,13 @@ public class EEntry extends EntityBase<EEntry> {
      */
     public String getTitle() {
         return this.title;
+    }
+
+    /**
+     * @param pMarkdownHtml markdownHtmlを設定.
+     */
+    public void setMarkdownHtml(final EMarkdownHtml pMarkdownHtml) {
+        this.markdownHtml = pMarkdownHtml;
     }
 
     /**

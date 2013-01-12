@@ -6,6 +6,7 @@ package jabara.rakeup.service;
 import jabara.general.NotFound;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.service.impl.EntryServiceImpl;
+import jabara.rakeup.service.impl.FailEncodingMarkdown;
 import jabara.rakeup.web.ui.page.FilterCondition;
 
 import java.util.List;
@@ -32,8 +33,9 @@ public interface EntryService {
     /**
      * @param pMarkdownText
      * @return HTML
+     * @throws FailEncodingMarkdown
      */
-    String encodeMarkdown(String pMarkdownText);
+    String encodeMarkdown(String pMarkdownText) throws FailEncodingMarkdown;
 
     /**
      * @param pFilterCondition

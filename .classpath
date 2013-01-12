@@ -19,9 +19,9 @@
   <classpathentry kind="var" path="M2_REPO/asm/asm/3.1/asm-3.1.jar" sourcepath="M2_REPO/asm/asm/3.1/asm-3.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/asm/asm-commons/3.3.1/asm-commons-3.3.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/asm/asm-tree/3.3.1/asm-tree-3.3.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/cglib/cglib/2.2/cglib-2.2.jar" sourcepath="M2_REPO/cglib/cglib/2.2/cglib-2.2-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/cglib/cglib/2.2.2/cglib-2.2.2.jar" sourcepath="M2_REPO/cglib/cglib/2.2.2/cglib-2.2.2-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/cglib/cglib/2.2/cglib-2.2-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/cglib/cglib/2.2.2/cglib-2.2.2-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jdt/core/3.1.1/core-3.1.1.jar"/>
@@ -234,9 +234,9 @@
       <attribute value="jar:file:/Users/jabaraster/.m2/repository/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.6.2/slf4j-log4j12-1.6.2.jar" sourcepath="M2_REPO/org/slf4j/slf4j-log4j12/1.6.2/slf4j-log4j12-1.6.2-sources.jar">
@@ -244,34 +244,34 @@
       <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/slf4j/slf4j-log4j12/1.6.2/slf4j-log4j12-1.6.2-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-core/1.5.8/wicket-core-1.5.8.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-core/1.5.8/wicket-core-1.5.8-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-core/6.4.0/wicket-core-6.4.0.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-core/6.4.0/wicket-core-6.4.0-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-core/1.5.8/wicket-core-1.5.8-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-core/6.4.0/wicket-core-6.4.0-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-extensions/1.5.8/wicket-extensions-1.5.8.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-extensions/1.5.8/wicket-extensions-1.5.8-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-extensions/6.4.0/wicket-extensions-6.4.0.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-extensions/6.4.0/wicket-extensions-6.4.0-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-extensions/1.5.8/wicket-extensions-1.5.8-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-extensions/6.4.0/wicket-extensions-6.4.0-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-guice/1.5.8/wicket-guice-1.5.8.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-guice/1.5.8/wicket-guice-1.5.8-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-guice/6.4.0/wicket-guice-6.4.0.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-guice/6.4.0/wicket-guice-6.4.0-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-guice/1.5.8/wicket-guice-1.5.8-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-guice/6.4.0/wicket-guice-6.4.0-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-ioc/1.5.8/wicket-ioc-1.5.8.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-ioc/1.5.8/wicket-ioc-1.5.8-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-ioc/6.4.0/wicket-ioc-6.4.0.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-ioc/6.4.0/wicket-ioc-6.4.0-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-ioc/1.5.8/wicket-ioc-1.5.8-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-ioc/6.4.0/wicket-ioc-6.4.0-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-request/1.5.8/wicket-request-1.5.8.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-request/1.5.8/wicket-request-1.5.8-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-request/6.4.0/wicket-request-6.4.0.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-request/6.4.0/wicket-request-6.4.0-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-request/1.5.8/wicket-request-1.5.8-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-request/6.4.0/wicket-request-6.4.0-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-util/1.5.8/wicket-util-1.5.8.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-util/1.5.8/wicket-util-1.5.8-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-util/6.4.0/wicket-util-6.4.0.jar" sourcepath="M2_REPO/org/apache/wicket/wicket-util/6.4.0/wicket-util-6.4.0-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-util/1.5.8/wicket-util-1.5.8-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/apache/wicket/wicket-util/6.4.0/wicket-util-6.4.0-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>

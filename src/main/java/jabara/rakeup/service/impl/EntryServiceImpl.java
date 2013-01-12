@@ -12,6 +12,7 @@ import jabara.jpa.entity.EntityBase_;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.entity.EEntry_;
 import jabara.rakeup.entity.EKeyword;
+import jabara.rakeup.entity.EMarkdownHtml;
 import jabara.rakeup.service.EntryService;
 import jabara.rakeup.service.KeywordService;
 import jabara.rakeup.web.ui.page.FilterCondition;
@@ -114,9 +115,9 @@ public class EntryServiceImpl extends JpaDaoBase implements EntryService {
      * @see jabara.rakeup.service.EntryService#encodeMarkdown(java.lang.String)
      */
     @Override
-    public String encodeMarkdown(final String pMarkdownText) {
+    public String encodeMarkdown(final String pMarkdownText) throws FailEncodingMarkdown {
         if (pMarkdownText == null) {
-            return ""; //$NON-NLS-1$
+            return null;
         }
 
         final ExecutorService worker = Executors.newSingleThreadExecutor();
@@ -139,17 +140,17 @@ public class EntryServiceImpl extends JpaDaoBase implements EntryService {
             if (_logger.isInfoEnabled()) {
                 _logger.info("Markdownのエンコードに失敗.", e); //$NON-NLS-1$
             }
-            return pMarkdownText;
+            throw new FailEncodingMarkdown();
 
         } catch (final ExecutionException e) {
             _logger.warn("Markdownのエンコードに失敗.", e.getCause()); //$NON-NLS-1$
-            return pMarkdownText;
+            throw new FailEncodingMarkdown();
 
         } catch (final TimeoutException e) {
             if (_logger.isInfoEnabled()) {
                 _logger.info("Markdownのエンコードに失敗.", e); //$NON-NLS-1$
             }
-            return pMarkdownText;
+            throw new FailEncodingMarkdown();
         }
     }
 
@@ -259,6 +260,17 @@ public class EntryServiceImpl extends JpaDaoBase implements EntryService {
         for (final EKeyword keyword : pEntry.getKeywords()) {
             this.keywordService.insertOrUpdate(keyword);
         }
+
+        try {
+            final EMarkdownHtml html = new EMarkdownHtml();
+            html.setSource(pEntry.getText());
+            html.setConverted(encodeMarkdown(pEntry.getText()));
+            pEntry.setMarkdownHtml(html);
+
+        } catch (final FailEncodingMarkdown e) {
+            _logger.warn("マークダウンのHTML化に失敗."); //$NON-NLS-1$
+        }
+
         em.persist(pEntry);
     }
 
@@ -276,11 +288,29 @@ public class EntryServiceImpl extends JpaDaoBase implements EntryService {
         final EEntry merged = em.merge(pEntry);
         merged.setText(pEntry.getText());
         merged.setTitle(pEntry.getTitle());
+        if (pEntry.getMarkdownHtml() != null) {
+            merged.setMarkdownHtml(em.merge(pEntry.getMarkdownHtml()));
+        }
 
         merged.getKeywords().clear();
         merged.getKeywords().addAll(pEntry.getKeywords());
         for (final EKeyword keyword : merged.getKeywords()) {
             this.keywordService.insertOrUpdate(keyword);
+        }
+
+        try {
+            final EMarkdownHtml markdownHtml;
+            if (pEntry.getMarkdownHtml() == null) {
+                markdownHtml = new EMarkdownHtml();
+                merged.setMarkdownHtml(markdownHtml);
+            } else {
+                markdownHtml = merged.getMarkdownHtml();
+            }
+            markdownHtml.setSource(pEntry.getText());
+            markdownHtml.setConverted(encodeMarkdown(pEntry.getText()));
+
+        } catch (final FailEncodingMarkdown e) {
+            _logger.warn("マークダウンのHTML化に失敗."); //$NON-NLS-1$
         }
     }
 

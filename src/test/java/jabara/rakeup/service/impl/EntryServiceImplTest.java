@@ -22,23 +22,11 @@ import org.junit.Test;
  * 
  * @author jabaraster
  */
-public class EntryServiceImplTest {
+public class EntryServiceImplTest implements IProducer2<EntityManagerFactory, EntryServiceImpl> {
 
-    EntityManagerFactory                              emf;
+    private final ServiceTestHelper<EntryServiceImpl> helper = new ServiceTestHelper<EntryServiceImpl>(this);
 
-    EntryServiceImpl                                  service;
-
-    private final ServiceTestHelper<EntryServiceImpl> helper = new ServiceTestHelper<EntryServiceImpl>(
-                                                                     new IProducer2<EntityManagerFactory, EntryServiceImpl>() {
-                                                                         @Override
-                                                                         public EntryServiceImpl produce(final EntityManagerFactory pArgument) {
-                                                                             final KeywordServiceImpl keywordService = new KeywordServiceImpl(
-                                                                                     pArgument);
-                                                                             final EntryServiceImpl ret = new EntryServiceImpl(pArgument,
-                                                                                     keywordService);
-                                                                             return ret;
-                                                                         }
-                                                                     });
+    private EntryServiceImpl                          service;
 
     /**
      * 
@@ -108,6 +96,16 @@ public class EntryServiceImplTest {
         for (final EEntry entry : this.service.getAll()) {
             System.out.println(entry);
         }
+    }
+
+    /**
+     * @see jabara.general.IProducer2#produce(java.lang.Object)
+     */
+    @Override
+    public EntryServiceImpl produce(final EntityManagerFactory pArgument) {
+        final KeywordServiceImpl keywordService = new KeywordServiceImpl(pArgument);
+        final EntryServiceImpl ret = new EntryServiceImpl(pArgument, keywordService);
+        return ret;
     }
 
     /**

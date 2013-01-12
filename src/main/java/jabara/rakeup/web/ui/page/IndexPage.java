@@ -6,7 +6,7 @@ package jabara.rakeup.web.ui.page;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.EntryService;
-import jabara.rakeup.web.ui.component.JavaScriptUtil;
+import jabara.rakeup.web.ui.JavaScriptUtil;
 
 import java.util.Iterator;
 import java.util.Locale;
@@ -18,7 +18,8 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxLink;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -76,13 +77,13 @@ public class IndexPage extends RakeUpWebPageBase {
     }
 
     /**
-     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#renderHead(org.apache.wicket.markup.head.IHeaderResponse)
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
         addPageCssReference(pResponse);
-        pResponse.renderOnDomReadyJavaScript(JavaScriptUtil.getFocusScript(getFilterCondition()));
+        pResponse.render(OnDomReadyHeaderItem.forScript(JavaScriptUtil.getFocusScript(getFilterCondition())));
     }
 
     /**
@@ -259,8 +260,8 @@ public class IndexPage extends RakeUpWebPageBase {
 
         @SuppressWarnings("synthetic-access")
         @Override
-        public Iterator<? extends EEntry> iterator(final int pFirst, final int pCount) {
-            return IndexPage.this.entryService.find(IndexPage.this.filterConditionValue, pFirst, pCount).iterator();
+        public Iterator<? extends EEntry> iterator(final long pFirst, final long pCount) {
+            return IndexPage.this.entryService.find(IndexPage.this.filterConditionValue, (int) pFirst, (int) pCount).iterator();
         }
 
         @Override
@@ -270,7 +271,7 @@ public class IndexPage extends RakeUpWebPageBase {
 
         @SuppressWarnings("synthetic-access")
         @Override
-        public int size() {
+        public long size() {
             final int ret = IndexPage.this.entryService.count(IndexPage.this.filterConditionValue);
             IndexPage.this.countValue.set(ret);
             return ret;

@@ -4,8 +4,8 @@
 package jabara.rakeup.web.ui.page;
 
 import jabara.general.ArgUtil;
+import jabara.rakeup.web.ui.JavaScriptUtil;
 import jabara.rakeup.web.ui.RakeUpWicketApplication;
-import jabara.rakeup.web.ui.component.JavaScriptUtil;
 import jabara.rakeup.web.ui.component.PageLink;
 
 import java.util.ArrayList;
@@ -13,7 +13,9 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.StatelessLink;
@@ -22,7 +24,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -55,7 +56,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
     }
 
     /**
-     * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.head.IHeaderResponse)
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
@@ -121,7 +122,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
     public static void addPageCssReference(final IHeaderResponse pResponse, final Class<? extends Page> pPageType) {
         ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
         ArgUtil.checkNull(pPageType, "pPageType"); //$NON-NLS-1$
-        pResponse.renderCSSReference(new CssResourceReference(pPageType, pPageType.getSimpleName() + ".css")); //$NON-NLS-1$
+        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(pPageType, pPageType.getSimpleName() + ".css"))); //$NON-NLS-1$
     }
 
     /**
@@ -129,8 +130,10 @@ public abstract class RakeUpWebPageBase extends WebPage {
      */
     public static void renderCommonHead(final IHeaderResponse pResponse) {
         ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
-        pResponse.renderCSSReference(RequestCycle.get().getRequest().getContextPath() + "/ui/style.css"); //$NON-NLS-1$
-        pResponse.renderCSSReference(RequestCycle.get().getRequest().getContextPath() + "/ui/RakeUp.css"); //$NON-NLS-1$
-        pResponse.renderJavaScriptReference(new JavaScriptResourceReference(RakeUpWebPageBase.class, JavaScriptUtil.COMMON_JS_FILE_PATH));
+        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "style.css"))); //$NON-NLS-1$
+        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "RakeUp.css"))); //$NON-NLS-1$
+        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "fonts/icomoon/style.css"))); //$NON-NLS-1$
+        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(RakeUpWebPageBase.class,
+                JavaScriptUtil.COMMON_JS_FILE_PATH)));
     }
 }

@@ -1,13 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <meta content-type="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="UTF-8" />
-    <title>Index.</title>
-    <link href="./style.css" rel="stylesheet" type="text/css" />
-    <link href="./RakeUp.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+<wicket:remove>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="RakeUp.css" />
+    <link rel="stylesheet" type="text/css" href="fonts/icomoon/style.css" />
+    <script src="RakeUp.js"></script>
+</wicket:remove>
+    <title wicket:id="titleLabel">サブクラスのgetTitleLabelModel()でここの文字列を指定して下さい.</title>
   </head>
   <body>
+
+    <nav>
+      <ul>
+        <li wicket:id="navigationLinks"><a wicket:id="link"><span wicket:id="label"></span></a></li>
+<wicket:remove>
+        <li><a><span class="icon-plus">新規投稿</span></a></li>
+</wicket:remove>
+      </ul>
+    </nav>
+    <hr/>
 
 <wicket:extend>
 

@@ -4,11 +4,12 @@
 package jabara.rakeup.web.ui.page;
 
 import jabara.rakeup.web.ui.FailAuthentication;
+import jabara.rakeup.web.ui.JavaScriptUtil;
 import jabara.rakeup.web.ui.RakeUpSession;
-import jabara.rakeup.web.ui.component.JavaScriptUtil;
 
 import org.apache.wicket.Session;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -40,14 +41,14 @@ public class LoginPage extends WebPage {
     }
 
     /**
-     * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+     * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.head.IHeaderResponse)
      */
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
         RakeUpWebPageBase.renderCommonHead(pResponse);
         RakeUpWebPageBase.addPageCssReference(pResponse, this.getClass());
-        pResponse.renderOnDomReadyJavaScript(JavaScriptUtil.getFocusScript(getPassword()));
+        pResponse.render(OnDomReadyHeaderItem.forScript(JavaScriptUtil.getFocusScript(getPassword())));
     }
 
     private FeedbackPanel getFeedback() {
