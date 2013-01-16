@@ -1,42 +1,23 @@
-@CHARSET "UTF-8";
-
-body {
-	margin: 1em;
-}
-
 textarea {
-	width: 90%;
-	height: 25em;
+  width: 90%;
+  height: 25em;
 }
-
 article {
-	border-radius: 6px;
-	border: solid 2px #339933;
-	margin-top: 0.5em;
-	margin-left: 0.5em;
-	margin-right: 0.5em;
-	padding: 0.5em;
-	background: #ccffcc;
-	box-shadow: 2px 2px 5px #003300;
+  border-radius: 6px;
+  border: solid 2px #339933;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding: 0.5em;
+  background: #ccffcc;
+  box-shadow: 2px 2px 5px #003300;
 }
-
-input.error,textarea.error {
-	color: black;
-	background: #ffcccc;
-}
-
 span.required:after {
-	content: '(*)';
-	color: red;
+  content: '(*)';
+  color: red;
 }
-
-nav li {
-	list-style: none;
-	float: left;
-	width: 5em;
-    font-size: large;
-}
-
-nav + hr {
-	clear: both;
+input.error,
+textarea.error {
+  color: #000000;
+  background: #ffcccc;
 }

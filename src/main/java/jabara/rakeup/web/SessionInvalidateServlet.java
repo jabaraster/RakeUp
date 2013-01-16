@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author jabaraster
  */
-@WebServlet(urlPatterns = { "/ui/logout" })
+@WebServlet(urlPatterns = { "/ui/logou" })
 public class SessionInvalidateServlet extends HttpServlet {
     private static final long serialVersionUID = 5360693042689763414L;
 

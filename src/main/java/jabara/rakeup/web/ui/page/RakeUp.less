@@ -1,0 +1,27 @@
+@import "common-const.less";
+
+textarea {
+	width: 90%;
+	height: 25em;
+}
+
+article {
+	border-radius: 6px;
+	border: solid 2px #339933;
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	padding: 0.5em;
+	background: #ccffcc;
+	box-shadow: 2px 2px 5px #003300;
+}
+
+span.required:after {
+	content: '(*)';
+	color: red;
+}
+
+input.error, textarea.error {
+	color: @error-color;
+	background: @error-background;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Refresh" content="5;./">
+    <meta charset="UTF-8" />
+<wicket:remove>
+    <link rel="stylesheet" type="text/css" href="RakeUp.css" />
+    <link rel="stylesheet" type="text/css" href="LogoutPage.css" />
+    <link rel="stylesheet" type="text/css" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <script src="RakeUp.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</wicket:remove>
+    <title>ログアウト</title>
+  </head>
+<body>
+  <header></header>
+
+  <div class="row-fluid">
+    <aside class="span2 sideBar"></aside>
+
+    <div class="span8 mainBox">
+      <h2>ログアウトしました</h2>
+      <p>
+      <span id="delay">5</span>秒後に<a href="./">ログイン画面</a>に移動します。
+      </p>
+    </div>
+
+    <aside class="span2 sideBar"></aside>
+  </div>
+
+  <footer></footer>
+  <script>
+     var delay = 5;
+     setInterval(function() {
+       document.getElementById('delay').innerText = delay;
+       delay -= 1;
+     }, 1000);
+  </script>
+
+</body>
+</html>

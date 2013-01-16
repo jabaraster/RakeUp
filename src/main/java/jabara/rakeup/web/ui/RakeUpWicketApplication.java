@@ -8,6 +8,7 @@ import jabara.rakeup.web.ui.component.PageLink;
 import jabara.rakeup.web.ui.page.EditEntryPage;
 import jabara.rakeup.web.ui.page.IndexPage;
 import jabara.rakeup.web.ui.page.LoginPage;
+import jabara.rakeup.web.ui.page.LogoutPage;
 import jabara.rakeup.web.ui.page.NewEntryPage;
 import jabara.rakeup.web.ui.page.RakeUpWebPageBase;
 import jabara.rakeup.web.ui.page.ShowEntryPage;
@@ -139,6 +140,7 @@ public class RakeUpWicketApplication extends WebApplication {
     @SuppressWarnings("nls")
     private void mountPages() {
         this.mountPage("/login", LoginPage.class);
+        this.mountPage("/logout", LogoutPage.class);
 
         this.mountPage("/entry/edit/new", NewEntryPage.class);
         this.mountPage("/entry/edit", EditEntryPage.class);
@@ -156,6 +158,7 @@ public class RakeUpWicketApplication extends WebApplication {
         final List<PageLink> ret = new ArrayList<PageLink>();
         ret.add(new PageLink(IndexPage.class, "一覧", "icon-list")); //$NON-NLS-1$ //$NON-NLS-2$
         ret.add(new PageLink(NewEntryPage.class, "新規投稿", "icon-plus")); //$NON-NLS-1$ //$NON-NLS-2$
+        ret.add(new PageLink(LogoutPage.class, "ログアウト", "")); //$NON-NLS-1$ //$NON-NLS-2$
         return Collections.unmodifiableList(ret);
     }
 }
