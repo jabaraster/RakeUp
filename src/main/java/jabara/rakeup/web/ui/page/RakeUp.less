@@ -1,0 +1,62 @@
+@import "common-const.less";
+
+body {
+    margin: 0;
+    padding: 0;
+    color: @main-color;
+    background: @base-color;
+    text-shadow: rgba(0,0,0,.3) 1px 1px;
+}
+
+h1, h2, h3, h4, h5, h6  {
+    color: @main-color;
+    text-shadow: rgba(0,0,0,.3) 1px 1px;
+}
+
+textarea {
+	width: 90%;
+	height: 25em;
+    border-radius: 5px;
+}
+
+input[type='text'] {
+    border-radius: 5px;
+}
+
+article {
+	border-radius: 6px;
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+    padding: 0.5em;
+
+/* for gradient */
+    background: rgb(246,230,180); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(246,230,180,1) 0%, rgba(237,144,23,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,230,180,1)), color-stop(100%,rgba(237,144,23,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6e6b4', endColorstr='#ed9017',GradientType=0 ); /* IE6-9 */
+
+}
+
+header, footer {
+	height: 2em;
+	background: @main-color;
+}
+
+div.mainBox {
+	text-align: center;
+}
+
+span.required:after {
+	content: '(*)';
+	color: red;
+}
+
+input.error, textarea.error {
+	color: @error-color;
+	background: @error-background;
+}

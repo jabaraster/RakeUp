@@ -3,27 +3,44 @@
   <head>
     <meta content-type="text/html; charset=UTF-8" />
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>ログイン - RakeUp</title>
 <wicket:remove>
-      <link href="./style.css" rel="stylesheet" type="text/css" />
-      <link href="./RakeUp.css" rel="stylesheet" type="text/css" />
-      <link href="./LoginPage.css" rel="stylesheet" type="text/css" />
-      <script src="./RakeUp.js"></script>
+    <link rel="stylesheet" type="text/css" href="RakeUp.css" />
+    <link rel="stylesheet" type="text/css" href="LoginPage.css" />
+    <link rel="stylesheet" type="text/css" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <script src="RakeUp.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 </wicket:remove>
   </head>
   <body>
 
-  <h1>ログイン - RakeUp</h1>
+<div class="container-fluid">
+    <header id="header">
+    </header>
 
-  <form wicket:id="form">
-    <div wicket:id="feedback" />
-    <fieldset>
-      <ul>
-        <li>パスワードを入力：<input type="password" wicket:id="password" /></li>
-        <li><input type="submit" wicket:id="submitter" value="ログイン" /></li>
-      </ul>
-    </fieldset>
-  </form>
+    <div class="row-fluid">
+        <aside class="span2 sideBar"></aside>
 
+        <div class="span8 mainBox">
+          <h1>RakeUpにログイン</h1>
+          <form wicket:id="form">
+            <div wicket:id="feedback" />
+            <fieldset>
+              <ul>
+                <li>パスワードを入力：<input type="password" wicket:id="password" /></li>
+                <li><input type="submit" wicket:id="submitter" value="ログイン" /></li>
+              </ul>
+            </fieldset>
+          </form>
+        </div>
+
+        <aside class="span2 "></aside>
+    </div>
+
+    <footer id="footer">
+    </footer>
+</div>
   </body>
 </html>
