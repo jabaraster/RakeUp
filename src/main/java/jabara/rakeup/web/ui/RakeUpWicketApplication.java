@@ -108,7 +108,7 @@ public class RakeUpWicketApplication extends WebApplication {
 
                 // 認証済みなのにログインページを表示しようとした場合、メインページにリダイレクトさせる.
                 if (LoginPage.class.equals(pComponentClass)) {
-                    if (session.isAuthenticated()) {
+                    if (!session.isSessionInvalidated() && session.isAuthenticated()) {
                         throw new RestartResponseAtInterceptPageException(IndexPage.class);
                     }
                     return true;

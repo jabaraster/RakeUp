@@ -133,7 +133,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
         //        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "style.css"))); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "RakeUp.css"))); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "fonts/icomoon/style.css"))); //$NON-NLS-1$
-        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "bootstrap/css/bootstrap.min.css"))); //$NON-NLS-1$
+        //        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "bootstrap/css/bootstrap.min.css"))); //$NON-NLS-1$
         pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(RakeUpWebPageBase.class,
                 JavaScriptUtil.COMMON_JS_FILE_PATH)));
     }

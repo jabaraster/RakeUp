@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="Refresh" content="5;./">
+    <meta http-equiv="Refresh" content="5;./login">
     <meta charset="UTF-8" />
 <wicket:remove>
     <link rel="stylesheet" type="text/css" href="RakeUp.css" />
@@ -12,6 +12,18 @@
     <script src="RakeUp.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </wicket:remove>
+    <script>
+    function countDown(pInitial) {
+      var delay = pInitial;
+      setInterval(function() {
+        document.getElementById('delay').innerText = delay;
+        if (delay === 0) {
+          location.href = './';
+        }
+        delay -= 1;
+      }, 1000);
+    }
+    </script>
     <title>ログアウト</title>
   </head>
 <body>
@@ -23,7 +35,7 @@
     <div class="span8 mainBox">
       <h2>ログアウトしました</h2>
       <p>
-      <span id="delay">5</span>秒後に<a href="./">ログイン画面</a>に移動します。
+      <span id="delay">5</span>秒後にログイン画面に移動します。<br/>自動的に移動しない場合は<a href="./">ここ</a>をクリックして下さい。
       </p>
     </div>
 

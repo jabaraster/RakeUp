@@ -1,12 +1,1 @@
-header {
-  height: 2em;
-  background: #ffcc99;
-}
-footer {
-  height: 2em;
-  background: #ffcc99;
-}
-div.mainBox {
-  text-align: center;
-  background: #ffffff;
-}
+div.mainBox{text-align:center}

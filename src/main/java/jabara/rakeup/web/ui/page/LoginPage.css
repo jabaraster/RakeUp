@@ -1,15 +1,1 @@
-fieldset li {
-  list-style: none;
-}
-header {
-  height: 2em;
-  background: #ffcc99;
-}
-footer {
-  height: 2em;
-  background: #ffcc99;
-}
-div.mainBox {
-  text-align: center;
-  background: #ffffff;
-}
+fieldset li{list-style:none}div.mainBox{text-align:center}
