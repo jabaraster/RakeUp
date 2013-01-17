@@ -10,6 +10,7 @@
         <class>jabara.rakeup.entity.ELabelableEntityBase</class>
         <class>jabara.rakeup.entity.EKeyword</class>
         <class>jabara.rakeup.entity.ELink</class>
+        <class>jabara.rakeup.entity.EMarkdownHtml</class>
 		<validation-mode>CALLBACK</validation-mode>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
@@ -34,7 +35,7 @@
 			DIクラスを利用している場合、以下の環境変数によって設定を上書きできます..
 			  HIBERNATE_HBM2DDL_AUTO
 			 -->
-			<!-- property name="hibernate.hbm2ddl.auto" value="create-drop" / -->
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 
 		</properties>
 	</persistence-unit>
