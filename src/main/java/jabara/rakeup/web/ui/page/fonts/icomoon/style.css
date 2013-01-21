@@ -20,23 +20,28 @@
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-[class^="icon-"]:before, [class*=" icon-"]:before {
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"]:before {
+*/
+.icon-list:before, .icon-plus:before, .icon-pencil:before, .icon-exit:before {
 	font-family: 'icomoon';
-	font-style: normal;
 	speak: none;
+	font-style: normal;
 	font-weight: normal;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 }
-.icon-pencil:before {
-	content: "\e001";
-}
-.icon-remove:before {
-	content: "\e002";
-}
-.icon-plus:before {
+.icon-list:before {
 	content: "\e000";
 }
-.icon-list:before {
+.icon-plus:before {
+	content: "\e001";
+}
+.icon-pencil:before {
+	content: "\e002";
+}
+.icon-exit:before {
 	content: "\e003";
 }

@@ -158,7 +158,7 @@ public class RakeUpWicketApplication extends WebApplication {
         final List<PageLink> ret = new ArrayList<PageLink>();
         ret.add(new PageLink(IndexPage.class, "一覧", "icon-list")); //$NON-NLS-1$ //$NON-NLS-2$
         ret.add(new PageLink(NewEntryPage.class, "新規投稿", "icon-plus")); //$NON-NLS-1$ //$NON-NLS-2$
-        ret.add(new PageLink(LogoutPage.class, "ログアウト", "")); //$NON-NLS-1$ //$NON-NLS-2$
+        ret.add(new PageLink(LogoutPage.class, "ログアウト", "icon-exit")); //$NON-NLS-1$ //$NON-NLS-2$
         return Collections.unmodifiableList(ret);
     }
 }
