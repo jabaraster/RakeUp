@@ -1,22 +1,25 @@
 @import "common-const.less";
 
 body {
-    margin: 0.3em;
     padding: 0;
-    color: @main-color;
     background: @base-color;
     text-shadow: rgba(0,0,0,.3) 1px 1px;
 }
 
-h1, h2, h3, h4, h5, h6  {
+body h1 {
+    color: @accent-color;
+    text-shadow: rgba(0,0,0,.3) 1px 1px;
+}
+
+h2, h3, h4, h5, h6  {
     color: @main-color;
     text-shadow: rgba(0,0,0,.3) 1px 1px;
 }
 
-textarea {
+body textarea {
 	width: 90%;
-	height: 25em;
-    border-radius: 5px;
+	height: 20em;
+    border-radius: @border-radius-small;
 }
 
 input[type='text'] {
@@ -26,21 +29,53 @@ input[type='text'] {
 .header-footer () {
     height: 2em;
     background: @main-color;
+    box-shadow: rgba(0,0,0,.3) 1px 1px;
+}
+
+.top-radius (@radius) {
+    border-bottom-left-radius: @radius;
+    border-bottom-right-radius: @radius;
+}
+
+.bottom-radius (@radius) {
+    border-top-left-radius: @radius;
+    border-top-right-radius: @radius;
 }
 
 header {
 	.header-footer();
+    .top-radius(@border-radius-small);
+
+    padding-top: 0.3em;
+    background: @main-color;
+
+    li {
+       display: inline-block;
+       margin-right: 1em;
+       a {
+           color: @link-in-nav;
+       }
+       .icon-exit {
+           margin-left: 5em;
+       }
+    }
 }
 
 footer {
 	.header-footer();
-	margin-top: 0.3em;
+    .bottom-radius(@border-radius-small);
+
+    padding-top: 0.3em;
+	margin-top: 1em;
+
+    color: @base-color;
+    text-align: right;
+    padding-right: 0.3em;
+    text-shadow: rgba(0,0,0,1) 3px 3px;
 }
 
-div {
-	.mainBox {
-    	text-align: center;
-    }
+div.mainBox {
+    text-align: center;
 }
 
 span.required:after {
@@ -57,17 +92,10 @@ fieldset {
 	border: none;
 }
 
-nav {
-    background: @main-color;
-    padding-top: 0.05em;
-    li {
-       display: inline-block;
-       margin-right: 1em;
-       a {
-           color: @link-in-nav;
-       }
-       .icon-exit {
-           margin-left: 5em;
-       }
-    }
+ul {
+    list-style-type: none;
+}
+
+body form {
+    margin-bottom: 0.1em;
 }

@@ -55,6 +55,7 @@ public class NewEntryPage extends RakeUpWebPageBase {
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
 
+        addPageCssReference(pResponse);
         pResponse.render(OnDomReadyHeaderItem.forScript(JavaScriptUtil.getFocusScript(getEntry().getTitle())));
     }
 

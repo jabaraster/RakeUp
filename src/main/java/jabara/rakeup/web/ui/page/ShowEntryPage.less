@@ -12,77 +12,40 @@ article {
     margin-right: 0.5em;
     padding: 0.5em;
 
-/* for gradient */
-    background: rgb(246,230,180); /* Old browsers */
-    background: -moz-linear-gradient(top, rgba(246,230,180,1) 0%, rgba(237,144,23,1) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,230,180,1)), color-stop(100%,rgba(237,144,23,1))); /* Chrome,Safari4+ */
-    background: -o-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6e6b4', endColorstr='#ed9017',GradientType=0 ); /* IE6-9 */
-
     background: -webkit-linear-gradient(top, @article-gradient-top 0%, @article-gradient-bottom 100%); /* Chrome10+,Safari5.1+ */
 
     box-shadow: rgba(0,0,0,.3) 1px 1px;
 
-    > h3 > a, > h3 > a:visited {
-        color: @main-color;
-        text-decoration: none;
-    }
-
-    > h3 > a:hover {
-        text-decoration: underline;
-    }
-
-    > span {
-        padding: 0.2em;
-        border: solid 1px #333333;
-        border-radius: 4px;
-        margin-right: 0.3em;
-        background: #ffffff;
-        font-size: smaller;
-    }
-    /*
-    > span {
-        padding: 0.2em;
-        border: solid 1px #333333;
-        border-radius: 4px;
-        margin-right: 0.3em;
-        background: #ffffff;
-    }
-    */
-
-    div.code {
+    div.highlight {
         text-shadow: none;
-
         pre {
-            color: rgb(0, 0, 0);
-            background: @cell-background;
-            padding: 3px;
-            font-family: monospace;
+            span.nt { color: #007020; font-weight: bold; }
+            span.kw { color: #007020; font-weight: bold; }
+            span.nt { color: #007020; font-weight: bold; }
+            span.dt { color: #902000; }
+            span.dv { color: #40a070; }
+            span.bn { color: #40a070; }
+            span.fl { color: #40a070; }
+            span.ch { color: #4070a0; }
+            span.st { color: #4070a0; }
+            span.co { color: #60a0b0; font-style: italic; }
+            span.ot { color: #007020; }
+            span.al { color: #ff0000; font-weight: bold; }
+            span.fu { color: #06287e; }
+            span.er { color: #ff0000; font-weight: bold; }
+            span.dt { color: #902000; }
 
-            span {
-                /* SourceCode highight */
-                .kw { color: #007020; font-weight: bold; }
-                .nt { color: #007020; font-weight: bold; }
-                .dt { color: #902000; }
-                .dv { color: #40a070; }
-                .bn { color: #40a070; }
-                .fl { color: #40a070; }
-                .ch { color: #4070a0; }
-                .st { color: #4070a0; }
-                .co { color: #60a0b0; font-style: italic; }
-                .ot { color: #007020; }
-                .al { color: #ff0000; font-weight: bold; }
-                .fu { color: #06287e; }
-                .er { color: #ff0000; font-weight: bold; }
-            }
+            span.n  { color: #902000; }
+            span.na { color: #0000ea; }
+            span.nf { color: #902000; }
+
+            span.kd { color: #4b0082; font-weight: bold; }
+            span.k  { color: #4b0082; font-weight: bold; }
+
+            span.o  { color: #666666; }
+
+            span.cm { color: #999999; font-weight: bold; }
+            span.c1 { color: #999999; font-weight: bold; }
         }
     }
 }
-
-
-div.goEditContainer {
-    margin-bottom: 0.5em;
-}
-

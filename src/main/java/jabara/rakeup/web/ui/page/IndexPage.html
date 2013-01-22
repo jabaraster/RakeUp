@@ -27,24 +27,23 @@
 
 <wicket:extend>
 
-  <h1><wicket:message key="exampleList" /></h1>
+    <h1><wicket:message key="exampleList" /></h1>
 
-  <form wicket:id="filterForm">
-    フィルタ：<input type="text" wicket:id="filterCondition" />
-    <input type="submit" wicket:id="filterExecutor" value="フィルタ実行" />
-  </form>
-  <div class="pagerContainer">
-    <span wicket:id="count" /> 件
-    <div wicket:id="entriesPager" class="entriesPager">
+    <form wicket:id="filterForm">
+        フィルタ：<input type="text" wicket:id="filterCondition" />
+        <button wicket:id="filterExecutor" class="btn btn-info"><i class="icon-white icon-filter"></i> フィルタをかける</button>
+    </form>
+    <div class="pagerContainer">
+        <span wicket:id="count" /> 件
+        <div wicket:id="entriesPager" class="entriesPager"></div>
     </div>
-  </div>
-  <div wicket:id="entriesContainer">
-    <article wicket:id="entries">
-      <h3><a wicket:id="goDetail"><span wicket:id="title">クリックしたら詳細画面へ</span></a></h3>
-      <div class="goEditContainer"><a wicket:id="goEdit" class="icon-pencil">編集</a></div>
-      <span wicket:id="keywords"><a wicket:id="goFiltered"><span wicket:id="label"></span></a></span>
-    </article>
-  </div>
+    <div wicket:id="entriesContainer">
+        <article wicket:id="entries">
+            <h3><a wicket:id="goDetail"><span wicket:id="title">クリックしたら詳細画面へ</span></a></h3>
+            <div class="goEditContainer"><a wicket:id="goEdit"><span class="icon-pencil"/>編集</a></div>
+            <span wicket:id="keywords"><a wicket:id="goFiltered"><span wicket:id="label"></span></a></span>
+        </article>
+    </div>
 
 </wicket:extend>
 
