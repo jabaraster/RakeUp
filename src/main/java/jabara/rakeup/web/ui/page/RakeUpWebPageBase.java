@@ -104,9 +104,10 @@ public abstract class RakeUpWebPageBase extends WebPage {
                             this.setResponsePage(pageLink.getPageType());
                         }
                     };
-                    final Label label = new Label("label", new Model<String>(pageLink.getRel())); //$NON-NLS-1$
+                    final Label label = new Label("icon", ""); //$NON-NLS-1$
                     label.add(AttributeModifier.append("class", pageLink.getClassAttributeValue())); //$NON-NLS-1$
                     link.add(label);
+                    link.add(new Label("label", pageLink.getRel()));
                     pItem.add(link);
                 }
             };
@@ -133,7 +134,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
         //        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "style.css"))); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "RakeUp.css"))); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "fonts/icomoon/style.css"))); //$NON-NLS-1$
-        //        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "bootstrap/css/bootstrap.min.css"))); //$NON-NLS-1$
+        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "bootstrap/css/bootstrap.min.css"))); //$NON-NLS-1$
         pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(RakeUpWebPageBase.class,
                 JavaScriptUtil.COMMON_JS_FILE_PATH)));
     }

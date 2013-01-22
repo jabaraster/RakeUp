@@ -15,18 +15,29 @@
   </head>
   <body>
 
-    <nav>
-      <ul>
-        <li wicket:id="navigationLinks"><a wicket:id="link"><span wicket:id="label"></span></a></li>
-<wicket:remove>
-        <li><a><span class="icon-plus">新規投稿</span></a></li>
-</wicket:remove>
-      </ul>
-    </nav>
+<div class="container-fluid">
+    <header>
+       <ul>
+           <li wicket:id="navigationLinks"><a wicket:id="link"><span wicket:id="icon"/><span wicket:id="label"/></a></li>
+           <wicket:remove>
+               <li><a><span class="icon-plus"/>新規投稿</a></li>
+           </wicket:remove>
+       </ul>
+    </header>
+    <div class="row-fluid">
+        <aside class="span1"></aside>
 
-    <wicket:child>
-      ここに子クラスのコンテンツが入ります。
-    </wicket:child>
+            <div class="span8">
+                <wicket:child>
+                    ここに子クラスのコンテンツが入ります。
+                </wicket:child>
+            </div>
 
+        <aside class="span1"></aside>
+    </div>
+
+    <footer id="footer">
+    </footer>
+</div>
   </body>
 </html>
