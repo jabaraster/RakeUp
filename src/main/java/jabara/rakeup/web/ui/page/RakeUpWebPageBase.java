@@ -5,25 +5,16 @@ package jabara.rakeup.web.ui.page;
 
 import jabara.general.ArgUtil;
 import jabara.rakeup.web.ui.JavaScriptUtil;
-import jabara.rakeup.web.ui.RakeUpWicketApplication;
-import jabara.rakeup.web.ui.component.PageLink;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.StatelessLink;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -33,11 +24,9 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
  * @author jabaraster
  */
 public abstract class RakeUpWebPageBase extends WebPage {
-    private static final long    serialVersionUID     = -4825633194551616360L;
+    private static final long serialVersionUID = -4825633194551616360L;
 
-    private final List<PageLink> navigationLinksValue = new ArrayList<PageLink>();
-
-    private ListView<PageLink>   navigationLinks;
+    private Panel             headerPanel;
 
     /**
      * 
@@ -74,6 +63,22 @@ public abstract class RakeUpWebPageBase extends WebPage {
     }
 
     /**
+     * @param pId パネルに与えるwicket:id.
+     * @return headerタグの中に入れるパネル.
+     */
+    protected abstract Panel createHeaderPanel(String pId);
+
+    /**
+     * @return ヘッダに入れるパネル.
+     */
+    protected Panel getHeaderPanel() {
+        if (this.headerPanel == null) {
+            this.headerPanel = createHeaderPanel("headerPanel"); //$NON-NLS-1$
+        }
+        return this.headerPanel;
+    }
+
+    /**
      * @return HTMLのtitleタグの内容
      */
     protected abstract IModel<String> getTitleLabelModel();
@@ -86,34 +91,7 @@ public abstract class RakeUpWebPageBase extends WebPage {
                 return getTitleLabelModel().getObject() + " - RakeUp";
             }
         }));
-        this.add(getNavigationLinks());
-
-        this.navigationLinksValue.addAll(RakeUpWicketApplication.getNavigationLinks());
-    }
-
-    @SuppressWarnings("serial")
-    private ListView<PageLink> getNavigationLinks() {
-        if (this.navigationLinks == null) {
-            this.navigationLinks = new ListView<PageLink>("navigationLinks", this.navigationLinksValue) { //$NON-NLS-1$
-                @Override
-                protected void populateItem(final ListItem<PageLink> pItem) {
-                    final PageLink pageLink = pItem.getModelObject();
-                    final StatelessLink<?> link = new StatelessLink<String>("link") { //$NON-NLS-1$
-                        @Override
-                        public void onClick() {
-                            this.setResponsePage(pageLink.getPageType());
-                        }
-                    };
-                    final Label label = new Label("icon", ""); //$NON-NLS-1$
-                    label.add(AttributeModifier.append("class", pageLink.getClassAttributeValue())); //$NON-NLS-1$
-                    link.add(label);
-                    link.add(new Label("label", pageLink.getRel()));
-                    pItem.add(link);
-                }
-            };
-
-        }
-        return this.navigationLinks;
+        this.add(getHeaderPanel());
     }
 
     /**

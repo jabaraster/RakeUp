@@ -26,7 +26,7 @@ import com.google.inject.Inject;
  * 
  * @author jabaraster
  */
-public class NewEntryPage extends RakeUpWebPageBase {
+public class NewEntryPage extends RestrictedPageBase {
     private static final long        serialVersionUID   = -4814540956069264138L;
 
     @Inject

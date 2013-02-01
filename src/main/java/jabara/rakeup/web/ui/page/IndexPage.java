@@ -43,7 +43,7 @@ import com.google.inject.Inject;
  * @author jabaraster
  */
 @SuppressWarnings("serial")
-public class IndexPage extends RakeUpWebPageBase {
+public class IndexPage extends RestrictedPageBase {
 
     @Inject
     EntryService                       entryService;

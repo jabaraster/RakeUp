@@ -1,12 +1,20 @@
 @import "common-const.less";
 
-body {
+html body {
+	margin-right: 1em;
+	margin-left: 1em;
     padding: 0;
     background: @base-color;
-    text-shadow: rgba(0,0,0,.3) 1px 1px;
+    
+    > div {
+        margin-top: 3em;
+        margin-bottom: 3em;
+    }
 }
 
 body h1 {
+	padding: 0;
+	margin-top: 0.3em;
     color: @accent-color;
     text-shadow: rgba(0,0,0,.3) 1px 1px;
 }
@@ -27,9 +35,10 @@ input[type='text'] {
 }
 
 .header-footer () {
-    height: 2em;
     background: @main-color;
     box-shadow: rgba(0,0,0,.3) 1px 1px;
+    left: 1em;
+    right: 1em;
 }
 
 .top-radius (@radius) {
@@ -46,17 +55,24 @@ header {
 	.header-footer();
     .top-radius(@border-radius-small);
 
+    top: 0;
+    position: fixed;
     padding-top: 0.3em;
     background: @main-color;
+    min-height: 1.5em;
+
+    img {
+        margin-left: .3em;
+        margin-top: .3em;
+        height: 32px;
+        float: left;
+    }
 
     li {
        display: inline-block;
        margin-right: 1em;
        a {
            color: @link-in-nav;
-       }
-       .icon-exit {
-           margin-left: 5em;
        }
     }
 }
@@ -65,8 +81,10 @@ footer {
 	.header-footer();
     .bottom-radius(@border-radius-small);
 
+    bottom: 0;
+    position: fixed;
     padding-top: 0.3em;
-	margin-top: 1em;
+	margin-top: .1em;
 
     color: @base-color;
     text-align: right;

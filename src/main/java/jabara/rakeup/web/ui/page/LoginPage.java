@@ -10,12 +10,15 @@ import jabara.rakeup.web.ui.RakeUpSession;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.pages.RedirectPage;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
@@ -23,7 +26,7 @@ import org.apache.wicket.util.string.StringValue;
 /**
  * @author jabaraster
  */
-public class LoginPage extends WebPage {
+public class LoginPage extends RakeUpWebPageBase {
     private static final long serialVersionUID = -8987437226988765476L;
 
     private StatelessForm<?>  form;
@@ -49,6 +52,29 @@ public class LoginPage extends WebPage {
         RakeUpWebPageBase.renderCommonHead(pResponse);
         RakeUpWebPageBase.addPageCssReference(pResponse, this.getClass());
         pResponse.render(OnDomReadyHeaderItem.forScript(JavaScriptUtil.getFocusScript(getPassword())));
+    }
+
+    /**
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#createHeaderPanel(java.lang.String)
+     */
+    @Override
+    protected Panel createHeaderPanel(final String pId) {
+        return new EmptyPanel(pId);
+    }
+
+    /**
+     * @see jabara.rakeup.web.ui.page.RakeUpWebPageBase#getTitleLabelModel()
+     */
+    @SuppressWarnings("serial")
+    @Override
+    protected IModel<String> getTitleLabelModel() {
+        return new AbstractReadOnlyModel<String>() {
+
+            @Override
+            public String getObject() {
+                return "ログイン"; //$NON-NLS-1$
+            }
+        };
     }
 
     private FeedbackPanel getFeedback() {

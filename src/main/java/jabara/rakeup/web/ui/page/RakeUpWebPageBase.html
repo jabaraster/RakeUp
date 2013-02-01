@@ -15,30 +15,18 @@
   </head>
   <body>
 
-<div class="container-fluid">
     <header>
-       <ul>
-           <li wicket:id="navigationLinks"><a wicket:id="link"><span wicket:id="icon"/><span wicket:id="label"/></a></li>
-           <wicket:remove>
-               <li><a><span class="icon-plus"/>新規投稿</a></li>
-           </wicket:remove>
-       </ul>
+      <img src="rakeup_logo.png" />
+      <div wicket:id="headerPanel">
+      </div>
     </header>
-    <div class="row-fluid">
-        <aside class="span1"></aside>
-
-            <div class="span8">
-                <wicket:child>
-                    ここに子クラスのコンテンツが入ります。
-                </wicket:child>
-            </div>
-
-        <aside class="span1"></aside>
+    <div>
+        <wicket:child>
+            ここに子クラスのコンテンツが入ります。
+        </wicket:child>
     </div>
-
     <footer id="footer">
         Powered by Jabaraster
     </footer>
-</div>
   </body>
 </html>

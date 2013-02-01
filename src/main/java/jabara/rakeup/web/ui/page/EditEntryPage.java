@@ -31,7 +31,7 @@ import com.google.inject.Inject;
  * 
  * @author jabaraster
  */
-public class EditEntryPage extends RakeUpWebPageBase {
+public class EditEntryPage extends RestrictedPageBase {
     private static final long        serialVersionUID   = -71314295479777894L;
 
     @Inject

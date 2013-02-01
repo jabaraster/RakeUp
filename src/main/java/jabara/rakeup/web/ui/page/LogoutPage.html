@@ -11,24 +11,13 @@
     <script src="RakeUp.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </wicket:remove>
-    <script>
-    function countDown(pInitial) {
-      var delay = pInitial;
-      setInterval(function() {
-        document.getElementById('delay').innerText = delay;
-        if (delay === 0) {
-          location.href = './';
-        }
-        delay -= 1;
-      }, 1000);
-    }
-    </script>
     <title>ログアウト - RakeUp</title>
   </head>
   <body>
+
+<wicket:extend>
+
 <div class="container-fluid">
-    <header>
-    </header>
 
     <div class="row-fluid">
         <aside class="span1"></aside>
@@ -41,11 +30,21 @@
 
         <aside class="span1"></aside>
     </div>
-
-    <footer>
-        Powered by Jabaraster
-    </footer>
 </div>
+    <script>
+    function countDown(pInitial) {
+      var delay = pInitial;
+      setInterval(function() {
+        document.getElementById('delay').innerText = delay;
+        if (delay === 0) {
+          location.href = './';
+        }
+        delay -= 1;
+      }, 1000);
+    }
+    </script>
+
+</wicket:extend>
 
   </body>
 </html>
