@@ -25,7 +25,7 @@
 			これを利用し、Herokuで動かす場合は次のようにJVM引数を指定すると所定のDBに接続できます.
 			  -Ddatabase.url=${DATABASE_URL}
 			 -->
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/rakeup" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
 			<property name="javax.persistence.jdbc.password" value="postgres" />
 
@@ -34,7 +34,7 @@
 			DIクラスを利用している場合、以下の環境変数によって設定を上書きできます..
 			  HIBERNATE_HBM2DDL_AUTO
 			 -->
-            <!-- property name="hibernate.hbm2ddl.auto" value="create-drop" / -->
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 
 		</properties>
 	</persistence-unit>
