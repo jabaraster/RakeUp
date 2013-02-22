@@ -1,20 +1,10 @@
-@import "common-const.less";
+@import "common.less";
 
 @article-gradient-top: rgb(200, 255, 200);
 @article-gradient-bottom: rgb(180,220,180);
 
 article {
-    border: solid 1px rgb(100, 100, 100);
-    border-radius: 6px;
-
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-    padding: 0.5em;
-
-    background: -webkit-linear-gradient(top, @article-gradient-top 0%, @article-gradient-bottom 100%); /* Chrome10+,Safari5.1+ */
-
-    box-shadow: rgba(0,0,0,.3) 1px 1px;
+    .entry-gradient();
 
     div.highlight {
         text-shadow: none;

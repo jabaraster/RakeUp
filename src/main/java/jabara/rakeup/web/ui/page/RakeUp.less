@@ -1,4 +1,6 @@
-@import "common-const.less";
+@import "common.less";
+
+@header-height: 60px;
 
 html body {
 	margin-right: 1em;
@@ -35,10 +37,11 @@ input[type='text'] {
 }
 
 .header-footer () {
+    @offset: 8px;
     background: @main-color;
     box-shadow: rgba(0,0,0,.3) 1px 1px;
-    left: 1em;
-    right: 1em;
+    left: @offset;
+    right: @offset;
 }
 
 .top-radius (@radius) {
@@ -57,23 +60,30 @@ header {
 
     top: 0;
     position: fixed;
-    padding-top: 0.3em;
+    padding-top: 5px;
     background: @main-color;
-    min-height: 1.5em;
-
-    img {
-        margin-left: .3em;
-        margin-top: .3em;
-        height: 32px;
-        float: left;
-    }
+    height: @header-height;
 
     li {
        display: inline-block;
-       margin-right: 1em;
+       margin-right: 10px;
        a {
            color: @link-in-nav;
        }
+    }
+
+    li:last-child {
+        width: 300px;
+        text-align: right;
+    }
+
+    > div.logo {
+        font-size: xx-large;
+        margin-top: 8px;
+        margin-left: 8px;
+        margin-bottom: 8px;
+        color: @base-color;
+        text-shadow: rgba(255,0,100,.3) 2px 1px
     }
 }
 
@@ -92,8 +102,8 @@ footer {
     text-shadow: rgba(0,0,0,1) 3px 3px;
 }
 
-div.mainBox {
-    text-align: center;
+div.mainContent {
+    margin-top: @header-height + 14;
 }
 
 span.required:after {

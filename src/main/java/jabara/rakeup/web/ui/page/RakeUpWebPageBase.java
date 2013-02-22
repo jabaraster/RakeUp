@@ -32,16 +32,22 @@ public abstract class RakeUpWebPageBase extends WebPage {
      * 
      */
     public RakeUpWebPageBase() {
-        super();
-        build();
+        this(new PageParameters());
     }
 
     /**
      * @param pParameters パラメータ情報.
      */
+    @SuppressWarnings({ "nls", "serial" })
     public RakeUpWebPageBase(final PageParameters pParameters) {
         super(pParameters);
-        build();
+        this.add(new Label("titleLabel", new AbstractReadOnlyModel<String>() {
+            @Override
+            public String getObject() {
+                return getTitleLabelModel().getObject() + " - RakeUp";
+            }
+        }));
+        this.add(getHeaderPanel());
     }
 
     /**
@@ -83,17 +89,6 @@ public abstract class RakeUpWebPageBase extends WebPage {
      */
     protected abstract IModel<String> getTitleLabelModel();
 
-    @SuppressWarnings({ "nls", "serial" })
-    private void build() {
-        this.add(new Label("titleLabel", new AbstractReadOnlyModel<String>() {
-            @Override
-            public String getObject() {
-                return getTitleLabelModel().getObject() + " - RakeUp";
-            }
-        }));
-        this.add(getHeaderPanel());
-    }
-
     /**
      * @param pResponse 書き込み用レスポンス.
      * @param pPageType CSSファイルの基準となるページクラス.
@@ -109,10 +104,9 @@ public abstract class RakeUpWebPageBase extends WebPage {
      */
     public static void renderCommonHead(final IHeaderResponse pResponse) {
         ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
-        //        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "style.css"))); //$NON-NLS-1$
-        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "RakeUp.css"))); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "fonts/icomoon/style.css"))); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "bootstrap/css/bootstrap.min.css"))); //$NON-NLS-1$
+        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(RakeUpWebPageBase.class, "RakeUp.css"))); //$NON-NLS-1$
         pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(RakeUpWebPageBase.class,
                 JavaScriptUtil.COMMON_JS_FILE_PATH)));
     }

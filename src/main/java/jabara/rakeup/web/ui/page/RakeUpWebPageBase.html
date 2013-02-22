@@ -5,22 +5,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
 <wicket:remove>
-    <link rel="stylesheet" type="text/css" href="RakeUp.css" />
     <link rel="stylesheet" type="text/css" href="fonts/icomoon/style.css" />
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
-    <script src="RakeUp.js"></script>
+    <link rel="stylesheet" type="text/css" href="RakeUp.css" />
     <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="RakeUp.js"></script>
 </wicket:remove>
     <title wicket:id="titleLabel">サブクラスのgetTitleLabelModel()でここの文字列を指定して下さい.</title>
   </head>
   <body>
 
     <header>
-      <img src="rakeup_logo.png" />
+      <div class="logo">
+        <span>RakeUp</span>
+      </div>
       <div wicket:id="headerPanel">
       </div>
     </header>
-    <div>
+    <div class="mainContent">
         <wicket:child>
             ここに子クラスのコンテンツが入ります。
         </wicket:child>

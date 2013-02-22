@@ -18,33 +18,18 @@
 
 <wicket:extend>
 
-<div class="container-fluid">
-    <header>
-    </header>
-
-    <div class="row-fluid">
-        <aside class="span1"></aside>
-
-        <div class="span8 mainBox">
-          <h1>RakeUpにログイン</h1>
-          <form wicket:id="form">
-            <div wicket:id="feedback" />
-            <fieldset>
-              <ul>
-                <li>パスワードを入力：<input type="password" wicket:id="password" /></li>
-                <li><button wicket:id="submitter" class="btn btn-success"><i class="icon-white icon-user"></i> ログイン</button></li>
-              </ul>
-            </fieldset>
-          </form>
-        </div>
-
-        <aside class="span1"></aside>
+    <div class="loginBox">
+      <h1>ログイン</h1>
+      <form wicket:id="form">
+        <div wicket:id="feedback" />
+        <fieldset>
+          <ul>
+            <li>パスワード：<input type="password" wicket:id="password" /></li>
+            <li><button wicket:id="submitter" class="btn btn-success"><i class="icon-white icon-user"></i> ログイン</button></li>
+          </ul>
+        </fieldset>
+      </form>
     </div>
-
-    <footer>
-        Powered by Jabaraster
-    </footer>
-</div>
 
 </wicket:extend>
 
