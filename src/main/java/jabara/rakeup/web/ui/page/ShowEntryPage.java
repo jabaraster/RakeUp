@@ -3,13 +3,19 @@
  */
 package jabara.rakeup.web.ui.page;
 
+import jabara.general.ArgUtil;
 import jabara.general.NotFound;
 import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.EntryService;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.link.Link;
@@ -35,11 +41,13 @@ public class ShowEntryPage extends RestrictedPageBase {
 
     private final EEntry       entryValue;
 
-    private StatelessLink<?>   goEdit;
-
     private Label              title;
     private ListView<EKeyword> keywords;
     private MultiLineLabel     body;
+
+    private Label              updated;
+    private StatelessLink<?>   goEdit;
+    private StatelessLink<?>   deleter;
 
     /**
      * @param pParameters パラメータ情報.
@@ -57,6 +65,9 @@ public class ShowEntryPage extends RestrictedPageBase {
             this.add(getTitle());
             this.add(getKeywords());
             this.add(getBody());
+
+            this.add(getUpdated());
+            this.add(getDeleter());
 
             setStatelessHint(true);
 
@@ -76,6 +87,9 @@ public class ShowEntryPage extends RestrictedPageBase {
         super.renderHead(pResponse);
 
         addPageCssReference(pResponse);
+        addJQueryJavaSriptReference(pResponse);
+        addPageJavaScriptReference(pResponse);
+        pResponse.render(OnDomReadyHeaderItem.forScript("prepareDeleteConfirmation('" + getDeleter().getMarkupId() + "')")); //$NON-NLS-1$ //$NON-NLS-2$ 
     }
 
     /**
@@ -108,6 +122,21 @@ public class ShowEntryPage extends RestrictedPageBase {
         } catch (final NotFound e) {
             return this.entryValue.getText();
         }
+    }
+
+    @SuppressWarnings({ "serial", "nls" })
+    private StatelessLink<?> getDeleter() {
+        if (this.deleter == null) {
+            this.deleter = new StatelessLink<Object>("deleter") {
+                @SuppressWarnings("synthetic-access")
+                @Override
+                public void onClick() {
+                    ShowEntryPage.this.entryService.delete(ShowEntryPage.this.entryValue);
+                    this.setResponsePage(IndexPage.class);
+                }
+            };
+        }
+        return this.deleter;
     }
 
     @SuppressWarnings("serial")
@@ -144,5 +173,75 @@ public class ShowEntryPage extends RestrictedPageBase {
             this.title = new Label("title", this.entryValue.getTitle()); //$NON-NLS-1$
         }
         return this.title;
+    }
+
+    @SuppressWarnings({ "nls", "serial" })
+    private Label getUpdated() {
+        if (this.updated == null) {
+            this.updated = new Label("updated", new AbstractReadOnlyModel<String>() {
+                @SuppressWarnings("synthetic-access")
+                @Override
+                public String getObject() {
+                    return format(ShowEntryPage.this.entryValue.getUpdated());
+                }
+            });
+        }
+        return this.updated;
+    }
+
+    /**
+     * この画面に特定の投稿を表示するためのパラメータを作成します.
+     * 
+     * @param pEntry この画面に表示する投稿.
+     * @return この画面に特定の投稿を表示するためのパラメータ.
+     */
+    public static PageParameters createShowEntryPageParameter(final EEntry pEntry) {
+        ArgUtil.checkNull(pEntry, "pEntry"); //$NON-NLS-1$
+
+        final PageParameters ret = new PageParameters();
+        ret.set(0, pEntry.getId());
+        return ret;
+    }
+
+    private static String format(final Date pUpdated) {
+        if (isToday(pUpdated)) {
+            return toTimeFormat(pUpdated);
+        } else if (isYesterday(pUpdated)) {
+            return "昨日"; //$NON-NLS-1$
+        } else {
+            return toDateFormat(pUpdated);
+        }
+    }
+
+    private static boolean isSameDay(final Calendar pCalendar1, final Calendar pCalendar2) {
+        return pCalendar1.get(Calendar.YEAR) == pCalendar2.get(Calendar.YEAR) //
+                && pCalendar1.get(Calendar.DAY_OF_YEAR) == pCalendar2.get(Calendar.DAY_OF_YEAR) //
+        ;
+    }
+
+    private static boolean isToday(final Date pDate) {
+        final Calendar now = Calendar.getInstance();
+        final Calendar cal = toCalendar(pDate);
+        return isSameDay(now, cal);
+    }
+
+    private static boolean isYesterday(final Date pDate) {
+        final Calendar now = Calendar.getInstance();
+        now.add(Calendar.MILLISECOND, -1000 * 60/* 秒 */* 60/* 分 */* 24/* 時間 */); // 昨日の日付
+        return isSameDay(now, toCalendar(pDate));
+    }
+
+    private static Calendar toCalendar(final Date pDate) {
+        final Calendar ret = Calendar.getInstance();
+        ret.setTime(pDate);
+        return ret;
+    }
+
+    private static String toDateFormat(final Date pUpdated) {
+        return new SimpleDateFormat("MM/dd").format(pUpdated); //$NON-NLS-1$
+    }
+
+    private static String toTimeFormat(final Date pDate) {
+        return new SimpleDateFormat("HH:mm").format(pDate); //$NON-NLS-1$
     }
 }

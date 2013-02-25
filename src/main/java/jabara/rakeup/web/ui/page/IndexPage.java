@@ -127,8 +127,7 @@ public class IndexPage extends RestrictedPageBase {
                     final Link<?> goDetail = new Link<String>("goDetail") {
                         @Override
                         public void onClick() {
-                            final PageParameters parameters = new PageParameters();
-                            parameters.set(0, entry.getId());
+                            final PageParameters parameters = ShowEntryPage.createShowEntryPageParameter(entry);
                             this.setResponsePage(ShowEntryPage.class, parameters);
                         }
                     };
@@ -151,16 +150,6 @@ public class IndexPage extends RestrictedPageBase {
                         }
                     };
                     pItem.add(keywords);
-
-                    final Link<?> goEdit = new Link<String>("goEdit") {
-                        @Override
-                        public void onClick() {
-                            final PageParameters parameters = new PageParameters();
-                            parameters.set(0, entry.getId());
-                            this.setResponsePage(EditEntryPage.class, parameters);
-                        }
-                    };
-                    pItem.add(goEdit);
                 }
             };
         }

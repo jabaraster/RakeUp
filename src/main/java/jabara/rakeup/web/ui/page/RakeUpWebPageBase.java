@@ -65,7 +65,19 @@ public abstract class RakeUpWebPageBase extends WebPage {
      * @param pResponse ヘッダ描画用オブジェクト.
      */
     protected void addPageCssReference(final IHeaderResponse pResponse) {
+        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
         addPageCssReference(pResponse, this.getClass());
+    }
+
+    /**
+     * ページに固有の処理を記述したJavaScriptファイルを参照するscriptタグをheadタグに追加します. <br>
+     * 「ページに固有の処理を記述したJavaScriptファイル」とは、ページクラス名と同名のjsファイルのことを指します. <br>
+     * 
+     * @param pResponse ヘッダ描画用オブジェクト.
+     */
+    protected void addPageJavaScriptReference(final IHeaderResponse pResponse) {
+        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
+        addPageJavaScriptReference(pResponse, this.getClass());
     }
 
     /**
@@ -90,6 +102,14 @@ public abstract class RakeUpWebPageBase extends WebPage {
     protected abstract IModel<String> getTitleLabelModel();
 
     /**
+     * @param pResponse
+     */
+    public static void addJQueryJavaSriptReference(final IHeaderResponse pResponse) {
+        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
+        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(RakeUpWebPageBase.class, "jquery-1.8.3.min.js"))); //$NON-NLS-1$
+    }
+
+    /**
      * @param pResponse 書き込み用レスポンス.
      * @param pPageType CSSファイルの基準となるページクラス.
      */
@@ -97,6 +117,16 @@ public abstract class RakeUpWebPageBase extends WebPage {
         ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
         ArgUtil.checkNull(pPageType, "pPageType"); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(pPageType, pPageType.getSimpleName() + ".css"))); //$NON-NLS-1$
+    }
+
+    /**
+     * @param pResponse 書き込み用レスポンス.
+     * @param pPageType jsファイルの基準となるページクラス.
+     */
+    public static void addPageJavaScriptReference(final IHeaderResponse pResponse, final Class<? extends Page> pPageType) {
+        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
+        ArgUtil.checkNull(pPageType, "pPageType"); //$NON-NLS-1$
+        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(pPageType, pPageType.getSimpleName() + ".js"))); //$NON-NLS-1$
     }
 
     /**

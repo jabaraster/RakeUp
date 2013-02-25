@@ -112,6 +112,16 @@ public class EntryServiceImpl extends JpaDaoBase implements EntryService {
     }
 
     /**
+     * @see jabara.rakeup.service.EntryService#delete(jabara.rakeup.entity.EEntry)
+     */
+    @Override
+    public void delete(final EEntry pEntry) {
+        ArgUtil.checkNull(pEntry, "pEntry"); //$NON-NLS-1$
+        final EntityManager em = getEntityManager();
+        em.remove(em.merge(pEntry));
+    }
+
+    /**
      * @see jabara.rakeup.service.EntryService#encodeMarkdown(java.lang.String)
      */
     @Override

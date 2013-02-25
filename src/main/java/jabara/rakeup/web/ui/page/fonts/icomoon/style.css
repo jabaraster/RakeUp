@@ -2,9 +2,9 @@
 	font-family: 'icomoon';
 	src:url('fonts/icomoon.eot');
 	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.svg#icomoon') format('svg'),
 		url('fonts/icomoon.woff') format('woff'),
-		url('fonts/icomoon.ttf') format('truetype');
+		url('fonts/icomoon.ttf') format('truetype'),
+		url('fonts/icomoon.svg#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -25,7 +25,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"]:before {
 */
-.icon-list:before, .icon-plus:before, .icon-pencil:before, .icon-exit:before {
+.icon-pencil:before, .icon-plus:before, .icon-exit:before, .icon-remove:before, .icon-list:before, .icon-list-2:before, .icon-numbered-list:before {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -33,15 +33,24 @@ you can use the generic selector below, but it's slower:
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 }
-.icon-list:before {
+.icon-pencil:before {
 	content: "\e000";
 }
 .icon-plus:before {
 	content: "\e001";
 }
-.icon-pencil:before {
+.icon-exit:before {
 	content: "\e002";
 }
-.icon-exit:before {
+.icon-remove:before {
 	content: "\e003";
+}
+.icon-list:before {
+	content: "\e004";
+}
+.icon-list-2:before {
+	content: "\e005";
+}
+.icon-numbered-list:before {
+	content: "\e006";
 }

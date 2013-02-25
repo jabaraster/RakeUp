@@ -31,6 +31,11 @@ public interface EntryService {
     int countAll();
 
     /**
+     * @param pEntryValue
+     */
+    void delete(EEntry pEntryValue);
+
+    /**
      * @param pMarkdownText
      * @return HTML
      * @throws FailEncodingMarkdown
