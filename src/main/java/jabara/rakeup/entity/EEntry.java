@@ -21,8 +21,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 /**
  * @author jabaraster
@@ -34,7 +33,7 @@ public class EEntry extends EntityBase<EEntry> {
     /**
      * 
      */
-    public static final int   MAX_CHAR_COUNT_TEXT  = 10000;
+    public static final int   MAX_CHAR_COUNT_TEXT  = 100000;
     /**
      * 
      */
@@ -44,7 +43,7 @@ public class EEntry extends EntityBase<EEntry> {
      * 
      */
     @NotNull
-    @Length(min = 1, max = MAX_CHAR_COUNT_TITLE)
+    @Size(min = 1, max = MAX_CHAR_COUNT_TITLE)
     @Column(nullable = false, length = MAX_CHAR_COUNT_TITLE * 3)
     protected String          title;
 
@@ -52,7 +51,7 @@ public class EEntry extends EntityBase<EEntry> {
      * 
      */
     @NotNull
-    @Length(min = 1, max = MAX_CHAR_COUNT_TEXT)
+    @Size(min = 1, max = MAX_CHAR_COUNT_TEXT)
     @Column(nullable = false, length = MAX_CHAR_COUNT_TEXT * 3)
     protected String          text;
 

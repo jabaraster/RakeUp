@@ -1,9 +1,9 @@
-#Tue Jan 08 09:54:37 JST 2013
-encoding//src/main/java=${project.build.sourceEncoding}
+#Tue Mar 05 22:08:21 JST 2013
+encoding//src/main/java=UTF-8
 org.eclipse.jdt.core.compiler.compliance=1.6
-encoding//src/main/resources=${project.build.sourceEncoding}
-encoding//src/test/resources=${project.build.sourceEncoding}
-encoding//src/test/java=${project.build.sourceEncoding}
+encoding//src/main/resources=UTF-8
+encoding//src/test/resources=UTF-8
+encoding//src/test/java=UTF-8
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.6
 org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
 eclipse.preferences.version=1

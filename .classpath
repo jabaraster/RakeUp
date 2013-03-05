@@ -80,6 +80,11 @@
       <attribute value="jar:file:/Users/jabaraster/.m2/repository/jabaraster/jabara-servlet/1.1/jabara-servlet-1.1-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/jabaraster/jabara-wicket/0.1/jabara-wicket-0.1.jar" sourcepath="M2_REPO/jabaraster/jabara-wicket/0.1/jabara-wicket-0.1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/Users/jabaraster/.m2/repository/jabaraster/jabara-wicket/0.1/jabara-wicket-0.1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA.jar" sourcepath="M2_REPO/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA-sources.jar">
     <attributes>
       <attribute value="jar:file:/Users/jabaraster/.m2/repository/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA-javadoc.jar!/" name="javadoc_location"/>

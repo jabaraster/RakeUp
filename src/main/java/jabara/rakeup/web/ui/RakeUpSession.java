@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -63,6 +64,13 @@ public class RakeUpSession extends WebSession {
      */
     public boolean isAuthenticated() {
         return this.authenticated.get();
+    }
+
+    /**
+     * @return {@link RakeUpSession}オブジェクト.
+     */
+    public static RakeUpSession get() {
+        return (RakeUpSession) Session.get();
     }
 
     private static void invalidateHttpSession() {
