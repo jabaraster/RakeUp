@@ -9,7 +9,7 @@ import jabara.rakeup.entity.EEntry;
 import jabara.rakeup.entity.EEntry_;
 import jabara.rakeup.entity.EKeyword;
 import jabara.rakeup.service.KeywordService;
-import jabara.rakeup.web.ui.ValidatorUtil;
+import jabara.wicket.ValidatorUtil;
 
 import java.io.Serializable;
 import java.util.HashSet;
