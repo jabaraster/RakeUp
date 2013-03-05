@@ -12,6 +12,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
@@ -24,13 +25,21 @@ public final class ValidatorUtil {
         //
     }
 
-    /**
-     * @param <T>
-     * @param pCheckTargetObjectType
-     * @param pPropertyName
-     * @return
-     */
-    public static <T> IValidator<String> createStringValidator(final Class<T> pCheckTargetObjectType, final SingularAttribute<T, String> pPropertyName) {
+    public static <T> void setSimpleStringValidator( //
+            final FormComponent<String> pComponent //
+            , final Class<T> pCheckTargetObjectType //
+            , final SingularAttribute<T, String> pPropertyName) {
+
+        ArgUtil.checkNull(pComponent, "pComponent"); //$NON-NLS-1$
+        ArgUtil.checkNull(pCheckTargetObjectType, "pCheckTargetObjectType"); //$NON-NLS-1$
+        ArgUtil.checkNull(pPropertyName, "pPropertyName"); //$NON-NLS-1$
+
+        pComponent.setRequired(isRequired(pCheckTargetObjectType, pPropertyName));
+        pComponent.add(createStringValidator(pCheckTargetObjectType, pPropertyName));
+    }
+
+    private static <T> IValidator<String> createStringValidator(final Class<T> pCheckTargetObjectType,
+            final SingularAttribute<T, String> pPropertyName) {
         ArgUtil.checkNull(pCheckTargetObjectType, "pCheckTargetObjectType"); //$NON-NLS-1$
         ArgUtil.checkNull(pPropertyName, "pPropertyName"); //$NON-NLS-1$
 
@@ -48,24 +57,18 @@ public final class ValidatorUtil {
         }
     }
 
-    /**
-     * @param <T>
-     * @param pCheckTargetObjectType
-     * @param pPropertyName
-     * @return
-     */
-    public static <T> boolean isRequired(final Class<T> pCheckTargetObjectType, final SingularAttribute<T, ?> pPropertyName) {
-        ArgUtil.checkNull(pCheckTargetObjectType, "pCheckTargetObjectType"); //$NON-NLS-1$
-        ArgUtil.checkNull(pPropertyName, "pPropertyName"); //$NON-NLS-1$
-        final Field field = getField(pCheckTargetObjectType, pPropertyName);
-        return field.isAnnotationPresent(NotNull.class);
-    }
-
     private static Field getField(final Class<?> pCheckTargetObjectType, final SingularAttribute<?, ?> pPropertyName) {
         try {
             return pCheckTargetObjectType.getDeclaredField(pPropertyName.getName());
         } catch (final NoSuchFieldException e) {
             throw ExceptionUtil.rethrow(e);
         }
+    }
+
+    private static <T> boolean isRequired(final Class<T> pCheckTargetObjectType, final SingularAttribute<T, ?> pPropertyName) {
+        ArgUtil.checkNull(pCheckTargetObjectType, "pCheckTargetObjectType"); //$NON-NLS-1$
+        ArgUtil.checkNull(pPropertyName, "pPropertyName"); //$NON-NLS-1$
+        final Field field = getField(pCheckTargetObjectType, pPropertyName);
+        return field.isAnnotationPresent(NotNull.class);
     }
 }

@@ -76,8 +76,7 @@ public class EntryPanel extends Panel {
         if (this.body == null) {
             this.body = new TextArea<String>("body", new PropertyModel<String>(this.entry, EEntry_.text.getName())); //$NON-NLS-1$
             this.body.setOutputMarkupId(true);
-            this.body.setRequired(ValidatorUtil.isRequired(EEntry.class, EEntry_.text));
-            this.body.add(ValidatorUtil.createStringValidator(EEntry.class, EEntry_.title));
+            ValidatorUtil.setSimpleStringValidator(this.body, EEntry.class, EEntry_.text);
         }
         return this.body;
     }
@@ -132,8 +131,7 @@ public class EntryPanel extends Panel {
         if (this.title == null) {
             this.title = new TextField<String>("title", new PropertyModel<String>(this.entry, EEntry_.title.getName())); //$NON-NLS-1$
             this.title.setOutputMarkupId(true);
-            this.title.setRequired(ValidatorUtil.isRequired(EEntry.class, EEntry_.title));
-            this.title.add(ValidatorUtil.createStringValidator(EEntry.class, EEntry_.title));
+            ValidatorUtil.setSimpleStringValidator(this.title, EEntry.class, EEntry_.title);
         }
         return this.title;
     }
